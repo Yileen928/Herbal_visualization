@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div class="herbal">
+    <h1>本草页面</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'Herbal'
 }
 </script>
