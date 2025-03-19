@@ -1,0 +1,29 @@
+/* 主容器样式 */
+.home {
+  padding: 20px;
+  text-align: center;
+}
+
+/* 标题样式 */
+.home h1 {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* 按钮样式 */
+.home button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+/* 按钮悬停效果 */
+.home button:hover {
+  background-color: #45a049;
+}
