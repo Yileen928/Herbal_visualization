@@ -16,11 +16,6 @@ export default {
 }
 </script>
 
-<style scoped>
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-}
+<style>
+@import '../assets/styles/ancient.css';
 </style>
