@@ -1,0 +1,74 @@
+.herbal {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* 改为固定高度 */
+    width: 100%;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.herbal-detail {
+    flex: 0 0 300px;
+    height: calc(100vh - 40px); /* 调整计算值匹配父容器padding */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: aqua solid 1px;
+    box-sizing: border-box; /* 确保padding计入总宽高 */
+}
+
+.herbal-list {
+    flex: 1;
+    height: calc(100vh - 40px);
+    border: rgb(75, 219, 115) solid 1px;
+    border-radius: 8px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.herbal-png {
+    width: 60%;
+    height: 100%;
+    border: rgb(48, 39, 151) solid 1px;
+}
+.herbal-data {
+    display: flex;
+    width: 40%;
+        padding: 3px;
+        height: 100%;
+        border: rgb(223, 136, 136) solid 1px;
+        flex-direction: column;
+}
+.herbal-map {
+    width: 100%;
+    flex: 1;
+    height: 50%;
+    border: rgb(136, 223, 136) solid 1px;
+}
+.herbal-chart {
+    width: 100%;
+    height: 50%;
+    border: rgb(136, 136, 223) solid 1px;
+}
+/* 媒体查询，适应小屏幕 */
+@media screen and (max-width: 768px) {
+    .herbal {
+        flex-direction: column;
+    }
+
+    .herbal-detail {
+        flex: none;
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+    }
+
+    .herbal-list {
+        width: 100%;
+        height: auto;
+        min-height: 400px;
+    }
+}
