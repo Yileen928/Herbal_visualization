@@ -1,59 +1,57 @@
-.map {
-  /* 设置背景图片及其属性 */
-  background-image: url('../assets/images/background.JPG');
+.map-container {
+  background-image: url('../assets/images/background.JPG');  /* 指定背景图片路径 */
+  background-size: cover;      /* 确保背景图片覆盖整个容器 */
+  background-position: center; /* 背景图片居中显示 */
+  background-repeat: no-repeat;/* 防止背景图片重复 *//* 容器尺寸设置 */
+  min-height: 100vh;          /* 最小高度为视口高度 */
+  width: 100vw;              /* 宽度为视口宽度 *//* 重置默认边距 */
+  margin: 0;
+  padding: 0;  /* Flex布局设置 */
+  display: flex;
+  flex-direction: column;     /* 子元素垂直排列 */
+  justify-content: center;    /* 垂直居中 */
+  align-items: center;        /* 水平居中 */
+  text-align: center;         /* 文本居中 *//* 定位设置 */
+  position: fixed;            /* 固定定位，防止滚动 */
+  top: 0;                    /* 顶部对齐 */
+  left: 0; 
+}
+
+#china-map {
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  background-image: url('../assets/images/background2.JPG');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  min-height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-.map-background {
-  width: 90%;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row-reverse; /* 改为垂直排列 */
+  width: 95%;
+  height: 90vh;  /* 改用视口高度 */
   margin: 20px;
-  border: #45a049 2px solid;
-  border-radius: 10px;
-  padding: 20px;
-  position: relative;
-  z-index: 2;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(5px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;  /* 改为相对定位 */
 }
 
-.map h1 {
+h1 {
+  text-align: center;
   color: #333;
   margin-bottom: 30px;
-  position: relative;
-  z-index: 3;
+  font-size: 24px;
 }
 
-.map button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+button {
   margin-top: 20px;
-  background-color: #4CAF50;
+  padding: 12px 24px;
+  background: #4CAF50;
   color: white;
   border: none;
   border-radius: 4px;
-  transition: background-color 0.3s;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
 }
 
-.map button:hover {
-  background-color: #45a049;
+button:hover {
+  background: #45a049;
 }

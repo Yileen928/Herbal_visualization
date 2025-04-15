@@ -1,10 +1,53 @@
-.ancient {
-  padding: 20px;
+/* 确保页面占满整个 viewport */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #e7dfd0;
+  overflow: hidden;
 }
 
-.ancient button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
+/* 外部容器使内容居中 */
+.book-wrapper {
+  visibility: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* flipbook 本体设置尺寸并居中 */
+#flipbook {
+  width: 1600px;
+  height: 900px;
+  box-shadow: none;
+  border: none;
+  visibility: visible;
+}
+
+/* 每一页大小必须固定，并无边框/阴影 */
+.page,
+.hard {
+  width: 800px;
+  height: 900px;
+  margin: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border: none;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 图片完全铺满页 */
+.page img,
+.hard img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+
 }

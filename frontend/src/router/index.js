@@ -2,16 +2,18 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Achievement from '../views/Achievement.vue'
 import Ancient from '../views/Ancient.vue'
-import Herbal from '../views/Herbal.vue'
 import Map from '../views/Map.vue'
 import HerbalProduct from '../views/HerbalProduct.vue'
 import Hci from '../views/Hci.vue'
+import TimeHistory from '../views/TimeHistory.vue'  // 注意路径是 views 不是 components
+import Corona from '../views/Corona.vue'
+
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     path: '/achievement',
@@ -22,11 +24,6 @@ const routes = [
     path: '/ancient',
     name: 'Ancient',
     component: Ancient
-  },
-  {
-    path: '/herbal',
-    name: 'Herbal',
-    component: Herbal
   },
   {
     path: '/map',
@@ -42,6 +39,16 @@ const routes = [
     path: '/hci',
     name: 'Hci',
     component: Hci
+  },
+  {
+    path: '/time-history',
+    name: 'TimeHistory',
+    component: TimeHistory
+  },
+  {
+    path: '/corona',
+    name: 'Corona',
+    component: Corona
   }
 ]
 

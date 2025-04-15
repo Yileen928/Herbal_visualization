@@ -1,8 +1,18 @@
 <template>
   <div class="herbal-product">
     <div class="herbal-product-background">
-      <h1>药品页面</h1>
-      <button @click="goToHci">前往人机交互页面</button>
+      <div class="herbal-product-container1">
+        <div class="herbal-product-chart1"></div>
+        <div class="herbal-product-chart2">  </div>   
+      </div>
+      <div class="herbal-product-container2">
+        <div class="herbal-product-chart3"></div>
+        <div class="herbal-product-chart2"></div>
+      </div>
+      <div class="herbal-product-container3">
+        <div class="herbal-product-chart1"></div>
+        <div class="herbal-product-chart2"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -15,3 +25,7 @@ const goToHci = () => {
   router.push('/hci')
 }
 </script>
+
+<style scoped>
+@import './HerbalProduct.css';
+</style>

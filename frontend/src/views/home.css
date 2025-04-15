@@ -24,20 +24,36 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* 容器尺寸设置 */
+  display: flex;
+  flex-direction: row-reverse; /* 改为垂直排列 */
   width: 95%;
-  height: 90%;
+  height: 90vh;  /* 改用视口高度 */
   margin: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  /* 定位设置 */
-  position: absolute;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;  /* 改为相对定位 */
 }
 
-/* 标题样式 */
-.home h1 {
-  color: #333;               /* 标题颜色 */
-  margin-bottom: 30px;       /* 下方间距 */
+.home-content {
+  flex: 1;
+  width: 100%;
 }
+
+.home-map {
+  flex: 1;  /* 占据更多空间 */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-container {
+  /* 子容器样式 */
+  width: 80%;
+  height: 80%;
+  background-color: rgba(255, 255, 255, 0.8); /* 背景色 */
+  border-radius: 10px;                        /* 圆角边框 */
+}
+
 
 /* 按钮样式 */
 .home button {
