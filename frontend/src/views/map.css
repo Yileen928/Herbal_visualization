@@ -53,5 +53,8 @@ button {
 }
 
 button:hover {
-  background: #45a049;
+  background: #9c8544;
+}
+#china-map + div[style*="南海诸岛"] {
+  display: none !important;
 }
