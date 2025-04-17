@@ -1,35 +1,54 @@
 <template>
   <div class="herbal-product">
     <div class="herbal-product-background">
+      <!-- 第一行：趋势图 -->
       <div class="herbal-product-container1">
-        <div class="herbal-product-chart1"></div>
-        <div class="herbal-product-chart2"></div>
+        <HerbalTrendChart />
+        <div class="herbal-product-chart2">
+          <PharmacyNum />
+        </div>
       </div>
+
       <div class="herbal-product-container2">
-        <div class="herbal-product-chart3" ref="yunnanMap" style="position: relative;">
-          <div id="map-container" ref="mapContainer" style="width: 100%; height: 500px;"></div>
-          <div class="map-footer" style="position: absolute; bottom: 10px; left: 0; right: 0; text-align: center;">
+        <div class="herbal-product-chart3" style="position: relative">
+          <div
+            id="map-container"
+            ref="mapContainer"
+            style="width: 100%; height: 500px"
+          ></div>
+          <div class="map-footer">
             <span>数据来源：数字云药平台、中医百科网站</span>
           </div>
         </div>
-        <div class="herbal-product-chart2"></div>
+        
+        <!-- 药品表格组件 -->
+        <MedicineTable />
       </div>
+
+      <!-- 第三行：采购图表 -->
       <div class="herbal-product-container3">
-        <div class="herbal-product-chart1"></div>
-        <div class="herbal-product-chart2"></div>
+        <PurchaseChart />
+        <div class="herbal-product-chart2">
+          <PharmacyType />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { onMounted, ref } from 'vue';
-import * as echarts from 'echarts';
-import yunnanJson from '../assets/yunnan.json';
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import * as echarts from 'echarts'
+import yunnanJson from '../assets/yunnan.json'
+import HerbalTrendChart from '../components/HerbalTrendChart.vue' // 中药材趋势图
+import MedicineTable from '../components/MedicineTable.vue' // 药品表格
+import PurchaseChart from '../components/PurchaseChart.vue' // 采购投入赋码图
+import PharmacyType from '../components/PharmacyType.vue' // 药店类型
+import PharmacyNum from '../components/PharmacyNum.vue' // 药店数量
 
-const router = useRouter();
-const mapContainer = ref(null);
+const router = useRouter()
+const mapContainer = ref(null)
 
 // 城市数据
 const cityData = {
@@ -51,16 +70,17 @@ const cityData = {
   '西双版纳傣族自治州': { plantingArea: 28.0, agriculturalYield: 1.2, agriculturalValue: 8.4, processingOutput: 2.9, processingValue: 13.3, medicineCount: 23 }
 };
 
-// 处理地图点击事件
+// 地图点击事件处理
 const handleMapClick = (params) => {
   if (params.data) {
-    router.push('/herbal-product');
+    router.push('/herbal-product')
   }
-};
+}
 
+// 初始化地图
 onMounted(() => {
-  const chart = echarts.init(mapContainer.value);
-  echarts.registerMap('yunnan', yunnanJson);
+  const chart = echarts.init(mapContainer.value)
+  echarts.registerMap('yunnan', yunnanJson)
 
   const option = {
     title: {
@@ -68,13 +88,13 @@ onMounted(() => {
       left: 'center',
       textStyle: {
         fontSize: 24,
-        color: '#333'
-      }
+        color: '#333',
+      },
     },
     tooltip: {
       trigger: 'item',
       formatter: (params) => {
-        const cityInfo = cityData[params.name];
+        const cityInfo = cityData[params.name]
         if (cityInfo) {
           return `${params.name}<br/>
             中药材种植面积：${cityInfo.plantingArea} 万亩<br/>
@@ -82,51 +102,47 @@ onMounted(() => {
             农业产值：${cityInfo.agriculturalValue} 亿元<br/>
             加工产量：${cityInfo.processingOutput} 万吨<br/>
             加工产值：${cityInfo.processingValue} 亿元<br/>
-            药材数量：${cityInfo.medicineCount} 种`;
+            药材数量：${cityInfo.medicineCount} 种`
         }
-        return params.name; // 如果没有找到数据，返回城市名称
-      }
+        return params.name
+      },
     },
     visualMap: {
       min: 0,
-      max: 230, // 根据数据调整
+      max: 40,
       left: 'left',
       top: 'bottom',
       text: ['高', '低'],
       calculable: true,
       inRange: {
-        color: ['#e0f7e0', '#1a6d1a']
-      }
-    },
-    series: [{
-      name: '中药材品种',
-      type: 'map',
-      map: 'yunnan', // 使用云南省的地图
-      roam: true,
-      emphasis: {
-        label: {
-          show: true
-        }
+        color: ['#E8C4A3', '#C07F49'],
       },
-      data: Object.entries(cityData).map(([name, data]) => ({
-        name,
-        value: data.medicineCount // 以药材数量为值
-      }))
-    }]
-  };
+    },
+    series: [
+      {
+        name: '中药材品种',
+        type: 'map',
+        map: 'yunnan',
+        roam: true,
+        emphasis: {
+          label: {
+            show: true,
+          },
+        },
+        data: Object.entries(cityData).map(([name, data]) => ({
+          name,
+          value: data.medicineCount,
+        })),
+      },
+    ],
+  }
 
-  chart.setOption(option);
-
-  // 监听点击事件
-  chart.on('click', handleMapClick);
-
-  // 监听窗口大小变化
-  window.addEventListener('resize', () => {
-    chart.resize();
-  });
-});
+  chart.setOption(option)
+  chart.on('click', handleMapClick)
+})
 </script>
 
 <style scoped>
-@import './HerbalProduct.css';
+/* 原有样式保持不变 */
+@import "./HerbalProduct.css";
 </style>
