@@ -1,7 +1,7 @@
 //药师技能要求词云图
 
 <template>
-  <div class="doctor-skills-wordcloud">
+  <div class="PharmacistSkillsWordCloud">
     <h3>药师技能要求词云图</h3>
     <p>这里将显示医师技能要求的词云图</p>
   </div>

@@ -68,19 +68,25 @@
   gap: 2px;
 }
 
-.chart-container {
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 8px;
-  padding: 10px;
-  }
 
-#container1, #container2 {
+
+#container1 {
   width: 25%;
-  background-color: #d7dbd8;
+  background-color: transparent; 
   margin-top: -4%;
 }
-
+#container2{
+  width: 30%;
+  background-color: transparent; 
+  margin-top: -4%;
+}
 #container3, #container4, #container5, #container6 {
   width: 25%;
-  margin-bottom: -4%;
+  margin-bottom: -6%;
+}
+
+#container7 {
+  width: 35%;
+  background-color: #d7dbd8;
+  margin-top: -1%;
 }

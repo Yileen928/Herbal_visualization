@@ -1,22 +1,38 @@
 <template>
   <div class="companies">
     <div class="companies-background">
-      <h3 class="title">云南省企业分布</h3>
       <div ref="mapContainer" class="map-container"></div>
+      <div class="map-footer">
+            <span>数据来源：爱企查</span>
+          </div>
       <div v-if="showKunmingInfo" class="info-panel right">
-        <h4>昆明市企业概况</h4>
-        <p>昆明市作为云南省省会，拥有全省最多的企业数量...</p>
-        <div class="stats">
-          
+        <h4 class="yunnanbaiyao" @click="goToYunnanBaiyao">云南白药集团股份有限公司</h4>
+        <h5 style="text-align: left;">公司概况</h5>
+        <p style="margin-top: -4%;">
+          云南白药集团创制于1902年，由云南民间名医曲焕章根据云南民间中草药配方创制出“曲焕章百宝丹”，后更名为“云南白药”，以止血愈伤功效闻名。
+        </p>
+        <p>1971年，根据周恩来总理指示，国营云南白药厂正式成立。</p>
+        <p>
+          1993年，云南白药完成股份制改革，并在深圳证券交易所成功上市，成为云南第一家上市公司。
+        </p>
+        <p>2001年，云南白药集团股份有限公司成立，成为云南白药的控股母公司。</p>
+        <p> 
+          2004-2025年，云南白药集团在全世界各大交易所上市，均成为全球首家中药上市公司。
+        </p>
+    
+        <p style="margin-top: 20px">
+          云南白药集团通过持续的产品创新和市场拓展，逐步从传统的中成药企业转型为涵盖药品、健康品、中药资源等多领域的综合性药企。其经典产品如云南白药气雾剂、创可贴、牙膏等，
+          不仅巩固了其在医药领域的领先地位，还成功跨界进入消费品市场，成为国内知名的“国民级”品牌。
+        </p>
+        <div class="stats"></div>
+        <div class="decorative-icon">
+           <img src="../assets/images/yunnanbaiyao.png" alt="云南白药图标">
         </div>
-        <div class="decorative-icon">昆</div>
       </div>
       <div v-if="showBaoshanInfo" class="info-panel left">
-        <h4>保山市企业概况</h4>
+        <h4>云南腾药制药股份有限公司</h4>
         <p>保山市位于滇西边境，特色企业以中药材加工为主...</p>
-        <div class="stats">
-            
-        </div>
+        <div class="stats"></div>
         <div class="decorative-icon">保</div>
       </div>
     </div>
@@ -26,107 +42,134 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import * as echarts from "echarts";
-import yunnanJson from '../assets/yunnan.json';
-
-console.log(yunnanJson);
+import yunnanJson from "../assets/yunnan.json";
+import { useRouter } from "vue-router"; // 添加路由导入
 
 
 
 const mapContainer = ref<HTMLElement | null>(null);
 const showKunmingInfo = ref(false);
 const showBaoshanInfo = ref(false);
+const router = useRouter(); // 获取路由实例
+
 let chartInstance: echarts.ECharts | null = null;
 
-// 城市数据
-const cityData = {
-  '昆明市': { plantingArea: 16.1, agriculturalYield: 5.0, agriculturalValue: 30.9, processingOutput: 11.0, processingValue: 158.9, medicineCount: 38 },
-  '曲靖市': { plantingArea: 90.1, agriculturalYield: 26.8, agriculturalValue: 82.7, processingOutput: 7.2, processingValue: 29.1, medicineCount: 35 },
-  '玉溪市': { plantingArea: 9.3, agriculturalYield: 6.5, agriculturalValue: 4.6, processingOutput: 1.4, processingValue: 13.7, medicineCount: 19 },
-  '保山市': { plantingArea: 51.6, agriculturalYield: 5.8, agriculturalValue: 39.3, processingOutput: 5.3, processingValue: 51.3, medicineCount: 29 },
-  '昭通市': { plantingArea: 46.6, agriculturalYield: 5.2, agriculturalValue: 54.7, processingOutput: 1.1, processingValue: 36.4, medicineCount: 22 },
-  '丽江市': { plantingArea: 31.3, agriculturalYield: 4.8, agriculturalValue: 17.7, processingOutput: 5.0, processingValue: 21.2, medicineCount: 38 },
-  '普洱市': { plantingArea: 48.0, agriculturalYield: 9.7, agriculturalValue: 42.7, processingOutput: 2.5, processingValue: 13.8, medicineCount: 36 },
-  '临沧市': { plantingArea: 69.0, agriculturalYield: 3.1, agriculturalValue: 11.7, processingOutput: 0.1, processingValue: 1.2, medicineCount: 18 },
-  '德宏傣族景颇族自治州': { plantingArea: 26.6, agriculturalYield: 2.5, agriculturalValue: 13.3, processingOutput: 0.2, processingValue: 1.8, medicineCount: 12 },
-  '怒江傈僳族自治州': { plantingArea: 127.1, agriculturalYield: 2.2, agriculturalValue: 6.6, processingOutput: 1.8, processingValue: 5.5, medicineCount: 6 },
-  '迪庆藏族自治州': { plantingArea: 14.2, agriculturalYield: 2.5, agriculturalValue: 7.0, processingOutput: 0.3, processingValue: 0.8, medicineCount: 3 },
-  '大理白族自治州': { plantingArea: 38.3, agriculturalYield: 4.8, agriculturalValue: 38.7, processingOutput: 2.8, processingValue: 41.2, medicineCount: 9 },
-  '楚雄彝族自治州': { plantingArea: 44.0, agriculturalYield: 13.8, agriculturalValue: 37.0, processingOutput: 3.3, processingValue: 15.8, medicineCount: 6 },
-  '红河哈尼族彝族自治州': { plantingArea: 160.9, agriculturalYield: 20.4, agriculturalValue: 51.4, processingOutput: 11.3, processingValue: 33.0, medicineCount: 15 },
-  '文山壮族苗族自治州': { plantingArea: 229.5, agriculturalYield: 30.1, agriculturalValue: 88.8, processingOutput: 10.9, processingValue: 51.6, medicineCount: 16 },
-  '西双版纳傣族自治州': { plantingArea: 28.0, agriculturalYield: 1.2, agriculturalValue: 8.4, processingOutput: 2.9, processingValue: 13.3, medicineCount: 23 }
+// 添加跳转方法
+const goToYunnanBaiyao = () => {
+  router.push('/yunnanbaiyao'); // 跳转到Yunnanbaiyao.vue
 };
+
+// 修正后的城市数据格式
+const cityData = [
+  { name: "昆明市", value: 8980, coord: [102.833, 24.879] },
+  { name: "保山市", value: 3137, coord: [99.161, 25.112] },
+  { name: "曲靖市", value: 5527 },
+  { name: "玉溪市", value: 1578 },
+  { name: "昭通市", value: 3302 },
+  { name: "丽江市", value: 4523 },
+  { name: "普洱市", value: 2722 },
+  { name: "临沧市", value: 1431 },
+  { name: "楚雄彝族自治州", value: 2248 },
+  { name: "红河哈尼族彝族自治州", value: 3665 },
+  { name: "文山壮族苗族自治州", value: 4978 },
+  { name: "西双版纳傣族自治州", value: 910 },
+  { name: "大理白族自治州", value: 3721 },
+  { name: "德宏傣族景颇族自治州", value: 711 },
+  { name: "怒江傈僳族自治州", value: 1459 },
+  { name: "迪庆藏族自治州", value: 2238 },
+];
 
 // 初始化地图
 onMounted(() => {
-  const chart = echarts.init(mapContainer.value)
-  echarts.registerMap('yunnan', yunnanJson)
+  if (!mapContainer.value) return;
+
+  chartInstance = echarts.init(mapContainer.value);
+  echarts.registerMap("yunnan", yunnanJson);
+
+  // 转换数据格式为ECharts需要的格式
+  const seriesData = cityData.map((item) => ({
+    name: item.name,
+    value: item.value,
+  }));
 
   const option = {
     title: {
-      text: '云南省中药材地理分布',
-      left: 'center',
-      top: '2%',
+      text: "云南省中药相关企业分布",
+      left: "center",
+      top: "2%",
       textStyle: {
         fontSize: 24,
-        color: '#333',
+        color: "#333",
       },
     },
-    gird:{
-      top: '100%',
-    },
     tooltip: {
-      trigger: 'item',
-      formatter: (params) => {
-        const cityInfo = cityData[params.name]
-        if (cityInfo) {
-          return `${params.name}<br/>
-            中药材种植面积：${cityInfo.plantingArea} 万亩<br/>
-            农业产量：${cityInfo.agriculturalYield} 万吨<br/>
-            农业产值：${cityInfo.agriculturalValue} 亿元<br/>
-            加工产量：${cityInfo.processingOutput} 万吨<br/>
-            加工产值：${cityInfo.processingValue} 亿元<br/>
-            药材数量：${cityInfo.medicineCount} 种`
-        }
-        return params.name
+      trigger: "item",
+      formatter: (params: any) => {
+        return `${params.name}<br/>企业数量: ${params.value || 0}`;
       },
     },
     visualMap: {
       min: 0,
-      max: 40,
-      left: 'left',
-      top: 'bottom',
-      text: ['高', '低'],
+      max: 9000,
+      left: "left",
+      top: "bottom",
+      text: ["高", "低"],
       calculable: true,
       inRange: {
-        color: ['#E8C4A3', '#C07F49'],
+        color: ["#E8C4A3", "#C07F49"],
       },
     },
     series: [
       {
-        name: '中药材品种',
-        type: 'map',
-        map: 'yunnan',
+        name: "企业分布",
+        type: "map",
+        map: "yunnan",
         roam: false,
-        zoom:1.1,
+        zoom: 1.1,
+        label: {
+          show: true,
+          color: "#333",
+        },
         emphasis: {
           label: {
             show: true,
+            color: "#333",
+          },
+          itemStyle: {
+            areaColor: "#D4B483",
           },
         },
-        data: Object.entries(cityData).map(([name, data]) => ({
-          name,
-          value: data.medicineCount,
-        })),
+        itemStyle: {
+          areaColor: "#E8C4A3",
+          borderColor: "#8C4E2A",
+          borderWidth: 0.5,
+        },
+        data: seriesData,
       },
     ],
-  }
+  };
 
-  chart.setOption(option)
-})
+  chartInstance.setOption(option);
+
+  // 添加点击事件
+  chartInstance.on("click", (params: any) => {
+    if (params.name === "昆明市") {
+      showKunmingInfo.value = true;
+      showBaoshanInfo.value = false;
+    } else if (params.name === "保山市") {
+      showBaoshanInfo.value = true;
+      showKunmingInfo.value = false;
+    } else {
+      showKunmingInfo.value = false;
+      showBaoshanInfo.value = false;
+    }
+  });
+});
+
 onBeforeUnmount(() => {
   if (chartInstance) {
     chartInstance.dispose();
+    chartInstance = null;
   }
 });
 </script>

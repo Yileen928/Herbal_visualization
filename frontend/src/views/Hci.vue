@@ -5,11 +5,11 @@
       <div class="container-grid">
         <!-- 上排两个容器 -->
         <div class="top-row">
-          <div class="chart-container" id="container1">
+          <div class="chart-container" id="container1" style="width: 25%; height: 120%;">
             <!-- 药师工作经验-南丁格尔图 -->
             <PharmacistExperienceChart />
           </div>
-          <div class="chart-container" id="container2">
+          <div class="chart-container" id="container2" style="width: 25%; height: 120%;">
             <!-- 医师工作经验-南丁格尔图 -->
             <DoctorExperienceChart />
           </div>
@@ -18,7 +18,7 @@
         <!-- 下排四个容器 -->
         <div class="bottom-row">
           <div class="chart-container" id="container3">
-            <!-- 药师薪资-横向柱状折线图 -->
+            <!-- 药师薪资-横向柱状图 -->
             <PharmacistSalaryChart />
           </div>
           <div class="chart-container" id="container4">
@@ -30,7 +30,7 @@
             <DoctorSkillsWordCloud />
           </div>
           <div class="chart-container" id="container6">
-            <!-- 医师薪资-横向柱状折线图 -->
+            <!-- 医师薪资-横向柱状图 -->
             <DoctorSalaryChart />
           </div>
         </div>

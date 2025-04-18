@@ -69,18 +69,16 @@
 }
 
 .chart-container {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: '#c0bab254';
   border-radius: 8px;
   padding: 10px;
   }
 
-#container1, #container2 {
-  width: 25%;
-  background-color: #d7dbd8;
-  margin-top: -4%;
-}
 
-#container3, #container4, #container5, #container6 {
+
+#container3, #container4, #container5 , #container6{
+
+  height: 110%;
   width: 25%;
   margin-bottom: -4%;
 }
