@@ -1,9 +1,9 @@
-//药店类型
+//医师工作经验
 
 <template>
   <div class="doctor-skills-wordcloud">
-    <h3>药店类型分布</h3>
-    <p>这里将显示药店类型分布的柱状图/饼图</p>
+    <h3>云南白药膏药词云图</h3>
+    <p>这里将显示云南白药膏药的词云图</p>
   </div>
 </template>
 
@@ -11,6 +11,4 @@
 // 这里可以留空，但必须有 script 部分
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,16 +1,26 @@
-//中药产业趋势图
+//中药产业趋势图 HerbalTrendChart.vue
 <template>
-  <div ref="chart1" style="height: 400px"></div>
+  <div ref="chartRef" style="height: 400px"></div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, onUnmounted } from "vue";
 import * as echarts from "echarts";
 
-const chart1 = ref(null);
+const chartRef = ref<HTMLElement | null>(null);
+let chartInstance: echarts.ECharts | null = null;
+let timer: number | null = null;
 
 const renderChart = () => {
-  const chart = echarts.init(chart1.value);
+  if (!chartRef.value) return;
+  
+  // 检查并销毁旧实例
+  if (chartInstance) {
+    chartInstance.dispose();
+    chartInstance = null;
+  }
+
+  chartInstance = echarts.init(chartRef.value);
 
   const chartData = {
     years: ["2019", "2020", "2021", "2022", "2023"],
@@ -26,54 +36,57 @@ const renderChart = () => {
       left: "center",
     },
     tooltip: {
-      trigger: "item",
-      formatter: (params) => {
-        const yearIndex = parseInt(params.name);
-        if (!isNaN(yearIndex)) {
-          const year = chartData.years[yearIndex];
-          const totalValue = chartData.totalValue[yearIndex];
-          const totalVolume = chartData.totalVolume[yearIndex];
-          const totalArea = chartData.totalArea[yearIndex];
-
-          return `
-            <div style="text-align: left;">
-              <strong>${year} 年</strong><br>
-              <span style="color: rgba(240, 226, 70, 0.47);">总产值: ${totalValue} 亿元</span><br>
-              <span style="color: rgba(211, 190, 106, 0.59);">总产量: ${totalVolume} 万吨</span><br>
-              <span style="color: rgba(128, 104, 24, 0.48);">总面积: ${totalArea} 万亩</span>
-            </div>
-          `;
-        }
-        return params.name;
+      trigger: "axis",
+      backgroundColor: "rgba(0, 0, 0, 0.6)",
+      borderColor: "transparent",
+      formatter: (params: any) => {
+        const html = params.map((item: any) => {
+          return `<div class="tooltip-item">
+            <span class="label">${item.marker}${item.seriesName}:</span>
+            <span class="text">${item.value}</span>
+          </div>`;
+        });
+        return `<div class="tooltip-box">${html.join("")}</div>`;
       },
     },
     legend: {
       data: ["总产值", "总产量", "总面积"],
-      top: "10%",
+      top: "15%",
     },
     xAxis: {
       type: "category",
       data: chartData.years,
       boundaryGap: false,
     },
+    grid: {
+      top: "30%",
+      bottom: "8%",
+    },
     yAxis: [
       {
         type: "value",
         name: "产值（亿元）",
         position: "left",
-        splitLine: { show: false },
-        min: 0,
-        max: 700,
-        interval: 100,
+        axisLine: {
+          show: false,
+          lineStyle: {
+            color: "gray",
+          },
+        },
       },
       {
         type: "value",
         name: "种植面积（万亩）",
         position: "right",
-        splitLine: { show: false },
-        min: 0,
-        max: 1200,
-        interval: 200,
+        axisLabel: {
+          formatter: "{value}",
+        },
+        axisLine: {
+          show: false,
+          lineStyle: {
+            color: "gray",
+          },
+        },
       },
     ],
     series: [
@@ -96,7 +109,6 @@ const renderChart = () => {
         data: chartData.totalVolume,
         smooth: true,
         lineStyle: { color: "rgb(211, 190, 106)" },
-        yAxisIndex: 1,
       },
       {
         name: "总面积",
@@ -106,27 +118,59 @@ const renderChart = () => {
         },
         data: chartData.totalArea,
         smooth: true,
-        lineStyle: { color: "rgba(128, 104, 24, 0.7)" },
         yAxisIndex: 1,
+        lineStyle: { color: "rgba(128, 104, 24, 0.7)" },
       },
     ],
   };
 
-  chart.setOption(option);
-  window.addEventListener("resize", () => chart.resize());
+  chartInstance.setOption(option);
+  window.addEventListener("resize", () => chartInstance?.resize());
 
+  // 自动轮播提示
   let currentIndex = 0;
-  setInterval(() => {
-    chart.dispatchAction({
+  clearInterval(timer);
+  timer = setInterval(() => {
+    chartInstance?.dispatchAction({
       type: "showTip",
       seriesIndex: 0,
       dataIndex: currentIndex,
     });
     currentIndex = (currentIndex + 1) % chartData.years.length;
-  }, 2000);
+  }, 2000) as unknown as number;
 };
 
 onMounted(() => {
   renderChart();
 });
+
+onUnmounted(() => {
+  if (timer) clearInterval(timer);
+  if (chartInstance) {
+    chartInstance.dispose();
+    chartInstance = null;
+  }
+  // 清除DOM残留
+  chartRef.value?.removeAttribute('_echarts_instance_');
+});
 </script>
+
+<style>
+.tooltip-box {
+  padding: 0 6px;
+}
+.tooltip-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+}
+.tooltip-item .label {
+  color: rgba(255, 255, 255, 0.9);
+}
+.tooltip-item .text {
+  color: white;
+  font-weight: bold;
+  margin-left: 24px;
+}
+</style>

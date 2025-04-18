@@ -1,54 +1,41 @@
 <template>
-  <div class="herbal-product">
-    <div class="herbal-product-background">
-      <!-- 第一行：趋势图 -->
-      <div class="herbal-product-container1">
-        <HerbalTrendChart />
-        <div class="herbal-product-chart2">
-          <PharmacyNum />
+  <div class="companies">
+    <div class="companies-background">
+      <h3 class="title">云南省企业分布</h3>
+      <div ref="mapContainer" class="map-container"></div>
+      <div v-if="showKunmingInfo" class="info-panel right">
+        <h4>昆明市企业概况</h4>
+        <p>昆明市作为云南省省会，拥有全省最多的企业数量...</p>
+        <div class="stats">
+          
         </div>
+        <div class="decorative-icon">昆</div>
       </div>
-
-      <div class="herbal-product-container2">
-        <div class="herbal-product-chart3" style="position: relative">
-          <div
-            id="map-container"
-            ref="mapContainer"
-            style="width: 100%; height: 500px"
-          ></div>
-          <div class="map-footer">
-            <span>数据来源：数字云药平台、中医百科网站</span>
-          </div>
+      <div v-if="showBaoshanInfo" class="info-panel left">
+        <h4>保山市企业概况</h4>
+        <p>保山市位于滇西边境，特色企业以中药材加工为主...</p>
+        <div class="stats">
+            
         </div>
-        
-        <!-- 药品表格组件 -->
-        <MedicineTable />
+        <div class="decorative-icon">保</div>
       </div>
-
-      <!-- 第三行：采购图表 -->
-      <div class="herbal-product-container3">
-        <PurchaseChart />
-        <div class="herbal-product-chart2">
-          <PharmacyType />
-        </div>
-      </div>  
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import * as echarts from 'echarts'
-import yunnanJson from '../assets/yunnan.json'
-import HerbalTrendChart from '../components/HerbalTrendChart.vue' // 中药材趋势图
-import MedicineTable from'../components/MedicineTable.vue' // 药品表格
-import PurchaseChart from '../components/PurchaseChart.vue' // 采购投入赋码图
-import PharmacyType from '../components/PharmacyType.vue' // 药店类型
-import PharmacyNum from '../components/PharmacyNum.vue' // 药店数量
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import * as echarts from "echarts";
+import yunnanJson from '../assets/yunnan.json';
 
-const router = useRouter()
-const mapContainer = ref(null)
+console.log(yunnanJson);
+
+
+
+const mapContainer = ref<HTMLElement | null>(null);
+const showKunmingInfo = ref(false);
+const showBaoshanInfo = ref(false);
+let chartInstance: echarts.ECharts | null = null;
 
 // 城市数据
 const cityData = {
@@ -70,13 +57,6 @@ const cityData = {
   '西双版纳傣族自治州': { plantingArea: 28.0, agriculturalYield: 1.2, agriculturalValue: 8.4, processingOutput: 2.9, processingValue: 13.3, medicineCount: 23 }
 };
 
-// 地图点击事件处理
-const handleMapClick = (params) => {
-  if (params.data) {
-    router.push('/herbal-product')
-  }
-}
-
 // 初始化地图
 onMounted(() => {
   const chart = echarts.init(mapContainer.value)
@@ -86,6 +66,7 @@ onMounted(() => {
     title: {
       text: '云南省中药材地理分布',
       left: 'center',
+      top: '2%',
       textStyle: {
         fontSize: 24,
         color: '#333',
@@ -127,6 +108,7 @@ onMounted(() => {
         type: 'map',
         map: 'yunnan',
         roam: false,
+        zoom:1.1,
         emphasis: {
           label: {
             show: true,
@@ -141,11 +123,14 @@ onMounted(() => {
   }
 
   chart.setOption(option)
-  chart.on('click', handleMapClick)
 })
+onBeforeUnmount(() => {
+  if (chartInstance) {
+    chartInstance.dispose();
+  }
+});
 </script>
 
-<style scoped>
-/* 原有样式保持不变 */
-@import "./HerbalProduct.css";
+<style>
+@import "./companies.css";
 </style>

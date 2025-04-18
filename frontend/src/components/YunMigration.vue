@@ -1,9 +1,9 @@
-//药店类型
+//医师薪资
 
 <template>
   <div class="doctor-skills-wordcloud">
-    <h3>药店类型分布</h3>
-    <p>这里将显示药店类型分布的柱状图/饼图</p>
+    <h3>云南白药气喷雾的词云图</h3>
+    <p>这里将显示云南白药气喷雾的词云图</p>
   </div>
 </template>
 
@@ -12,5 +12,4 @@
 </script>
 
 <style scoped>
-
 </style>

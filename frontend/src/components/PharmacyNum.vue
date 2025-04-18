@@ -3,8 +3,8 @@
 
 <template>
   <div class="doctor-skills-wordcloud">
-    <h3>医师工作经验</h3>
-    <p>这里将显示医师技能要求的词云图</p>
+    <h3>各省份店铺数量</h3>
+    <p>这里将各省份店铺数量的南丁格尔图</p>
   </div>
 </template>
 

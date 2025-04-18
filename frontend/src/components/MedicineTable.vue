@@ -1,4 +1,4 @@
-//药材数据表格
+//药材数据表格 MedicineTable.vue
 <template>
   <div class="text-table" style="width: 100%; height: 390px">
     <table
@@ -72,6 +72,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
-// No script needed for this static table
+<script lang="ts">
+export default {
+  name: 'MedicineTable'
+}
 </script>
