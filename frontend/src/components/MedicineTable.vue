@@ -62,7 +62,7 @@
           <td>普洱等</td>
           <td>90%以上</td>
         </tr>
-        <tr style="color: rgba(39, 38, 38, 0.63);fontSize:11px;">
+        <tr style="color: rgba(39, 38, 38, 0.63);fontSize:10px;">
           <td colspan="6" style="text-align: right;">
             数据来源：云南省人民政府
           </td>

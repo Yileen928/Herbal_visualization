@@ -1,6 +1,6 @@
 //中药产业趋势图 HerbalTrendChart.vue
 <template>
-  <div ref="chartRef" style="height: 400px"></div>
+  <div ref="chartRef" style="height: 350px"></div>
 </template>
 
 <script setup lang="ts">

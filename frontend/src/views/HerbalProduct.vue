@@ -89,6 +89,7 @@ onMounted(() => {
       textStyle: {
         fontSize: 24,
         color: '#333',
+        padding: [20, 0, 0, 0]
       },
     },
     gird:{
