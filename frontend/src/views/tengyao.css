@@ -1,0 +1,74 @@
+.YunnanBaiYao {
+    /* 设置背景图片及其属性 */
+    background-image: url('../assets/images/background.JPG');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
+  .YunnanBaiYao-background {
+    /* 容器尺寸和位置设置 */
+    width: 90%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    /* 边框和间距 */
+    margin: 20px;
+    border: #45a049 1px solid;
+    border-radius: 10px;
+    padding: 20px;
+    
+    /* 背景效果 */
+    position: relative;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+  }
+  
+  .hci h1 {
+    color: #333;
+    position: relative;
+    top: -6%;
+  }
+  
+  .container-grid {
+    width: 100%;
+    height: calc(90vh - 100px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    height: 45%;
+    gap: 5px;
+  }
+  
+  .bottom-row {
+    display: flex;
+    justify-content: space-between;
+    height: 45%;
+    gap: 2px;
+  }
+  
+  
+  h2:hover{
+    cursor: pointer;
+  }

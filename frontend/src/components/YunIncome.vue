@@ -1,7 +1,7 @@
 //云南白药集团工业年收入
 
 <template>
-  <div class="doctor-skills-wordcloud">
+  <div class="YunIncome">
     <p class="titie1">云南白药集团近十年工业销售年收入</p>
     <canvas ref="incomeChart" width="400" height="200"></canvas>
   </div>
@@ -36,8 +36,8 @@ onMounted(() => {
         datasets: [{
           label: '销售收入（万元）',
           data: salesData,
-          borderColor: 'rgba(75, 192, 192, 1)',
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(213, 195, 151, 0.817)',
+          backgroundColor: 'rgba(213, 195, 151, 0.4)',
           borderWidth: 2,
           fill: true,
         }],
@@ -78,7 +78,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.doctor-skills-wordcloud {
+.YunIncome {
   max-width: 600px;
   margin: 0 auto;
 }
@@ -91,7 +91,7 @@ onMounted(() => {
     margin-top: 0%;
     margin-bottom: 5px;
     font-size: 1em;
-    color: #333;
+    color: #333333;
 }
 
 </style>

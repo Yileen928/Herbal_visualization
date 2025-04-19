@@ -29,11 +29,20 @@
            <img src="../assets/images/yunnanbaiyao.png" alt="云南白药图标">
         </div>
       </div>
-      <div v-if="showBaoshanInfo" class="info-panel left">
-        <h4>云南腾药制药股份有限公司</h4>
-        <p>保山市位于滇西边境，特色企业以中药材加工为主...</p>
+      <div v-if="showBaoshanInfo" class="info-panel left ">
+        <h4 class="Tengyao" @click="goToTengyao">云南腾药制药股份有限公司</h4>
+        <h5 style="text-align: left;">公司概况</h5>
+        <p style="margin-top: -4%;">云南腾药制药股份有限公司（以下简称“腾药”）发祥于拥有近400年历史的“药王宫”，前身为腾冲制药厂，成立于1956年。</p>
+         <p> 1997年，经腾冲县政府批准，腾冲制药厂改制为股份合作制企业。</p>
+         <p> 2011年9月，完成股份制改造，并更名为云南腾药制药股份有限公司。公司位于云南省腾冲市，是一家以心脑血管现代中药为主，传统中药为辅，功效日化保健品为补的国家级高新技术企业</p>
+        <p style="margin-top: 15px">腾药的主营业务涵盖药品生产、研发、销售、中药饮片加工及中药材种养殖。
+          公司主要剂型包括注射剂、丸剂、片剂、颗粒剂、散剂、酒剂、酊剂、糖浆剂等，拥有130个国药准字批文，87个品种，137个品规。
+          其代表品种有心脉隆注射液（国家二类新药）、藿香正气水、安宫牛黄丸、六味地黄丸、人参再造丸等。
+          腾药通过道地选材、遵古炮制与现代科技相结合，不断推出新产品，满足市场需求。</p>
         <div class="stats"></div>
-        <div class="decorative-icon">保</div>
+        <div class="decorative-icon">
+          <img src="../assets/images/tengyao.jpg" alt="云南腾药图标">
+        </div>
       </div>
     </div>
   </div>
@@ -58,7 +67,9 @@ let chartInstance: echarts.ECharts | null = null;
 const goToYunnanBaiyao = () => {
   router.push('/yunnanbaiyao'); // 跳转到Yunnanbaiyao.vue
 };
-
+const goToTengyao = () => {
+  router.push('/tengyao'); // 跳转到tengyao.vue
+};
 // 修正后的城市数据格式
 const cityData = [
   { name: "昆明市", value: 8980, coord: [102.833, 24.879] },
@@ -111,7 +122,7 @@ onMounted(() => {
     visualMap: {
       min: 0,
       max: 9000,
-      left: "left",
+      left: "30%",
       top: "bottom",
       text: ["高", "低"],
       calculable: true,

@@ -1,85 +1,84 @@
 <template>
-  <div class="doctor-skills-wordcloud" ref="wordcloud" style="height: 330px;"></div>
+  <div class="PharmacistSkillsWordCloud">
+    <div v-if="loading" class="loading">数据加载中...</div>
+    <div v-else-if="error" class="error">数据加载失败: {{ error }}</div>
+    <div v-else-if="filteredData.length === 0" class="no-data">没有找到医师相关技能数据</div>
+    <div v-else ref="wordCloudChart" style="width: 100%; height: 100%;"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, nextTick } from 'vue';
-import * as echarts from 'echarts';
-import 'echarts-wordcloud';
+import { ref, onMounted, onUnmounted, watch, nextTick, computed } from 'vue'
+import * as echarts from 'echarts'
+import 'echarts-wordcloud'
 
-const wordcloud = ref<HTMLElement | null>(null);
+const wordCloudChart = ref<HTMLElement | null>(null)
+const loading = ref(true)
+const error = ref<string | null>(null)
+const rawData = ref<any[]>([])
+let chartInstance: echarts.ECharts | null = null
 
-// 静态数据 - 医师技能
-const doctorSkills = [
-  { skillRequirement: "中医医师资格证", count: 3566, job: "医师" },
-  { skillRequirement: "无销售性质", count: 2095, job: "医师" },
-  { skillRequirement: "中医执业医师资格证", count: 1910, job: "医师" },
-  { skillRequirement: "执业药师资格证", count: 1211, job: "医师" },
-  { skillRequirement: "中医内科", count: 1169, job: "医师" },
-  { skillRequirement: "接受兼职", count: 1043, job: "医师" },
-  { skillRequirement: "中医科医生", count: 1004, job: "医师" },
-  { skillRequirement: "有中医科医生经验", count: 684, job: "医师" },
-  { skillRequirement: "独立诊疗经验", count: 631, job: "医师" },
-  { skillRequirement: "中医医生", count: 621, job: "医师" },
-  { skillRequirement: "针灸科", count: 485, job: "医师" },
-  { skillRequirement: "门诊部/诊所", count: 447, job: "医师" },
-  { skillRequirement: "中医推拿", count: 445, job: "医师" },
-  { skillRequirement: "中西医结合医学", count: 432, job: "医师" },
-  { skillRequirement: "可兼职", count: 399, job: "医师" },
-  { skillRequirement: "有销售性质", count: 392, job: "医师" },
-  { skillRequirement: "中医执业医师证", count: 322, job: "医师" },
-  { skillRequirement: "中医儿科", count: 305, job: "医师" },
-  { skillRequirement: "中医馆", count: 304, job: "医师" },
-  { skillRequirement: "中医妇科", count: 279, job: "医师" }
-];
+// 计算属性：过滤出job为"医师"的数据
+const filteredData = computed(() => {
+  return rawData.value.filter(item => item.job === "医师")
+})
 
-// 根据计数获取颜色
-function getColorByCount(count: number): string {
-  // 获取排序后的前5个技能
-  const top5Skills = doctorSkills
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 5)
-    .map(skill => skill.skillRequirement);
-
-  // 检查当前技能是否在前5名中
-  const isTop5 = top5Skills.includes(doctorSkills.find(skill => skill.count === count)?.skillRequirement || '');
-
-  return isTop5 ? "#6F4C3E" : "#B98E6D";
+const fetchData = async () => {
+  try {
+    loading.value = true
+    error.value = null
+    const response = await fetch('http://106.55.169.134:10010/medical/skills/top20')
+    if (!response.ok) throw new Error('网络响应不正常')
+    const data = await response.json()
+    rawData.value = data
+  } catch (err) {
+    error.value = err instanceof Error ? err.message : '未知错误'
+    console.error('获取数据失败:', err)
+  } finally {
+    loading.value = false
+  }
 }
 
-onMounted(async () => {
-  await nextTick(); // 确保DOM已渲染
+const initChart = () => {
+  if (!wordCloudChart.value || filteredData.value.length === 0) return
   
-  if (!wordcloud.value) {
-    console.error('Wordcloud container not found');
-    return;
+  // 先销毁之前的实例
+  if (chartInstance) {
+    chartInstance.dispose()
   }
 
-  // 提取技能名称和计数，设置颜色
-  const wordCloudData = doctorSkills.map(item => ({
+  // 处理数据，按count降序排序
+  const sortedData = [...filteredData.value].sort((a, b) => b.count - a.count)
+  
+  // 准备词云数据
+  const wordCloudData = sortedData.map(item => ({
     name: item.skillRequirement,
     value: item.count,
-    itemStyle: {
-      color: getColorByCount(item.count)
+    // 前5项使用不透明颜色，其余使用半透明
+    textStyle: {
+      color: sortedData.indexOf(item) < 5 
+        ? 'rgba(185, 142, 109, 1)' 
+        : 'rgba(185, 142, 109, 0.5)'
     }
-  }));
+  }))
 
-  // 初始化 ECharts 实例
-  const myChart = echarts.init(wordcloud.value);
-
-  // 配置词云图的选项
+  chartInstance = echarts.init(wordCloudChart.value)
+  
   const option = {
+    backgroundColor: 'rgba(222, 204, 184, 0.1)',
     title: {
-      text: '医师技能词云',
       left: 'center',
       textStyle: {
+        color: 'rgba(59, 65, 25, 0.7)',
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
       }
     },
     tooltip: {
       show: true,
-      formatter: (params: any) => `${params.name}: ${params.value}次`
+      formatter: params => {
+        return `${params.name}: ${params.value}次`
+      }
     },
     series: [{
       type: 'wordCloud',
@@ -88,42 +87,59 @@ onMounted(async () => {
       top: 'center',
       width: '90%',
       height: '90%',
-      right: null,
-      bottom: null,
-      sizeRange: [2, 20], // 调整字体大小范围
-      rotationRange: [-90, 90], // 调整旋转角度范围
-      rotationStep: 45,
+      sizeRange: [8, 35],
+      rotationRange: [-45, 45],  // 修正了旋转范围，原代码有误写为-450
+      rotationStep: 15,
       gridSize: 8,
       drawOutOfBound: false,
       textStyle: {
         fontFamily: 'sans-serif',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'rgba(168, 117, 89, 0.4)'
       },
       emphasis: {
         focus: 'self',
         textStyle: {
-          shadowBlur: 10,
-          shadowColor: '#333'
+          shadowBlur: 8,
+          shadowColor: 'gray'
         }
       },
       data: wordCloudData
     }]
-  };
+  }
 
-  // 设置图表的选项
-  myChart.setOption(option);
+  chartInstance.setOption(option)
+  
+  const handleResize = () => chartInstance?.resize()
+  window.addEventListener('resize', handleResize)
+  
+  onUnmounted(() => {
+    window.removeEventListener('resize', handleResize)
+    chartInstance?.dispose()
+    chartInstance = null
+  })
+}
 
-  // 响应式调整
-  window.addEventListener('resize', () => {
-    myChart.resize();
-  });
-});
+onMounted(async () => {
+  await fetchData()
+  // 使用nextTick确保DOM已渲染
+  await nextTick()
+  initChart()
+})
+
+// 监听过滤后的数据变化重新渲染图表
+watch(filteredData, () => {
+  nextTick(() => initChart())
+}, { deep: true })
 </script>
 
 <style scoped>
-.doctor-skills-wordcloud {
-  border: 1px solid #ccc;
-  margin: 5px auto;
-  border-radius: 8px;
+.PharmacistSkillsWordCloud {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  position: relative;
 }
+
 </style>

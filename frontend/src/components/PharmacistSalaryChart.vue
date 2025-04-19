@@ -43,7 +43,7 @@ onMounted(async () => {
     { range: "4k-6k", min: 4000, max: 6000 },
     { range: "6k-8k", min: 6000, max: 8000 },
     { range: "8k-10k", min: 8000, max: 10000 },
-    { range: "10k以上", min: 100000, max: Infinity },
+    { range: "10k以上", min: 10000, max: Infinity },
   ];
 
   // 计算各薪资范围内的数量
@@ -85,7 +85,27 @@ onMounted(async () => {
       type: "value",
       name: "数量",
       fontSize: 9,
-      position: "bottom", // 将 x 轴放置在底部
+      position: "bottom",// 将 x 轴放置在底部
+      axisLine: {
+        show: true, // 显示 X 轴的轴线
+        lineStyle: {
+          color: 'gray', // 轴线颜色
+          width: 1,      // 轴线宽度
+          type: 'solid', // 轴线样式（实线）
+        }
+      },
+      axisTick: {
+        show: true, // 显示 X 轴的刻度
+        lineStyle: {
+          color: 'gray', // 刻度颜色
+        }
+      },
+      axisLabel: {
+        show: true, // 显示 X 轴的标签
+        textStyle: {
+          color: 'gray', // 标签颜色
+        }
+      }
     },
     yAxis: {
       type: "category",
@@ -116,7 +136,7 @@ onMounted(async () => {
         },
         barWidth: "30%", // 设置柱状宽度
         itemStyle: {
-          color: "#E1B7A6", // 最低薪资颜色
+          color:  "rgba(226, 160, 109,0.5)", // 最低薪资颜色
         },
       },
       {
@@ -128,7 +148,7 @@ onMounted(async () => {
         },
         barWidth: "30%", // 设置柱状宽度
         itemStyle: {
-          color: "#E4C6B2", // 最高薪资颜色
+          color: "rgba(226, 160, 109,1)", // 最高薪资颜色
         },
       },
     ],

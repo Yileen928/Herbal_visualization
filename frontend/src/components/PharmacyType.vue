@@ -44,6 +44,9 @@ const createChart = (data) => {
     title: {
       text: "药店类型TOP5的分布",
       left: "center",
+      textStyle: {
+        top: "25%",
+      },
     },
     tooltip: {
       trigger: "item",
@@ -55,7 +58,7 @@ const createChart = (data) => {
       {
         name: "类型",
         type: "pie",
-        radius: "45%",
+        radius: "50%",
         data: labels.map((label, index) => ({
           name: label,
           value: sizes[index],

@@ -85,7 +85,7 @@ const renderChart = () => {
         smooth: true,
         lineStyle: { color: "#ff7f50" },
         areaStyle: {
-          color: "rgba(255, 127, 80, 0.32)",
+          color: "rgba(255, 127, 80, 0.8)",
         },
         yAxisIndex: 0,
       },
@@ -95,9 +95,9 @@ const renderChart = () => {
         yAxisIndex: 0,
         data: chartData.investment,
         smooth: true,
-        lineStyle: { color: "#87cefa" },
+        lineStyle: { color: "rgba(226, 160, 109,1)" },
         areaStyle: {
-          color: "rgba(135, 206, 250, 0.3)",
+          color: "rgba(226, 160, 109,0.7",
         },
       },
       {
@@ -106,9 +106,9 @@ const renderChart = () => {
         yAxisIndex: 1,
         data: chartData.code,
         smooth: true,
-        lineStyle: { color: "#da70d6" },
+        lineStyle: { color: "rgba(183, 142, 120,1)" },
         areaStyle: {
-          color: "rgba(218, 112, 214, 0.3)",
+          color: "rgba(183, 142, 120,0.3)",
         },
       },
     ],

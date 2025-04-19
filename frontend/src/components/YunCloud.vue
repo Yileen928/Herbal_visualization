@@ -2,7 +2,7 @@
 
 <template>
   <div class="doctor-skills-wordcloud">
-    <h3>云南白药膏药词云图</h3>
+    <h3>云南白药膏药词云图/关联图关联分析</h3>
     <p>这里将显示云南白药膏药的词云图</p>
   </div>
 </template>

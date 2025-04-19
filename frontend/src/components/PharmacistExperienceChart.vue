@@ -70,7 +70,7 @@ const drawChart = (sortedData: { name: string; value: number }[]) => {
           itemStyle: {
             borderRadius: 8,
             color: (params) => {
-              const colors = ["#E4C6B2", "#E1B7A6"];
+              const colors = ["rgba(226, 160, 109,1)", "rgba(226, 160, 109,0.5)"];
               return colors[params.dataIndex % colors.length];
             }
           },

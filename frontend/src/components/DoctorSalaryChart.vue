@@ -1,6 +1,9 @@
 <template>
   <div class="DoctorSalaryChart">
-    <div ref="chart" style="width: 100%; height: 350px; background-color: transparent;"></div>
+    <div
+      ref="chart"
+      style="width: 100%; height: 350px; background-color: transparent"
+    ></div>
   </div>
 </template>
 
@@ -35,10 +38,10 @@ onMounted(async () => {
   const salaryRanges = [
     { range: '0-2k', min: 0, max: 2000 },
     { range: '2k-4k', min: 2000, max: 4000 },
-    { range: '4k-6k', min: 4000, max: 6000 },
-    { range: '6k-8k', min: 6000, max: 8000 },
-    { range: '8k-10k', min: 8000, max: 10000 },
-    { range: '10k以上', min: 100000, max: Infinity },
+    { range: '4k-6k', min: 4001, max: 6000 },
+    { range: '6k-8k', min: 6001, max: 8000 },
+    { range: '8k-10k', min: 8001, max: 10000 },
+    { range: '10k以上', min: 10000, max: Infinity },
   ];
 
   // 计算各薪资范围内的数量
@@ -61,6 +64,7 @@ onMounted(async () => {
     title: {
       text: '医师薪资',
       left: 'right',
+      padding: [0, 0, 10, 0], // 上、右、下、左的内边距
       fontSize: 11,
     },
     tooltip: {
@@ -70,7 +74,27 @@ onMounted(async () => {
       type: 'value',
       name: '数量',
       fontSize: 9,
-      position: 'bottom' // 将 x 轴放置在底部
+      position: 'bottom', // 将 x 轴放置在底部
+      axisLine: {
+        show: true, // 显示 X 轴的轴线
+        lineStyle: {
+          color: 'gray', // 轴线颜色
+          width: 1,      // 轴线宽度
+          type: 'solid', // 轴线样式（实线）
+        }
+      },
+      axisTick: {
+        show: true, // 显示 X 轴的刻度
+        lineStyle: {
+          color: 'gray', // 刻度颜色
+        }
+      },
+      axisLabel: {
+        show: true, // 显示 X 轴的标签
+        textStyle: {
+          color: 'gray', // 标签颜色
+        }
+      }
     },
     yAxis: {
       type: 'category',
@@ -82,9 +106,10 @@ onMounted(async () => {
         fontSize: 9, // 调整字体大小
         margin: 2, // 标签与轴之间的间距
       }
-    },legend: {
+    },
+    legend: {
       data: ["最低薪资数量", "最高薪资数量"], // 图例显示的名称
-      top:"7%",
+      top: "5%",
       right: "1%", // 图例位置（可根据需要调整）
       textStyle: {
         color: "#333", // 图例文字颜色
@@ -100,7 +125,7 @@ onMounted(async () => {
         },
         barWidth: '30%', // 设置柱状宽度
         itemStyle: {
-          color:  "#B98E6D", // 最低薪资颜色
+          color: 'rgba(185, 142, 109, 0.5)' // 最低薪资颜色
         }
       },
       {
@@ -112,13 +137,13 @@ onMounted(async () => {
         },
         barWidth: '30%', // 设置柱状宽度
         itemStyle: {
-          color: "#6F4C3E"// 最高薪资颜色
+          color: 'rgba(185, 142, 109, 1)'// 最高薪资颜色
         }
       }
     ],
     grid: {
       left: '10%', // 左侧间距
-      right: '10%', // 右侧间距
+      right: '11%', // 右侧间距
       top: '10%', // 顶部间距
       bottom: '10%', // 底部间距
     }
