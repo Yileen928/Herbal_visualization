@@ -1,4 +1,4 @@
-.YunnanBaiYao {
+.Competitor {
     /* 设置背景图片及其属性 */
     background-image: url('../assets/images/background.JPG');
     background-size: cover;
@@ -18,7 +18,7 @@
     left: 0;
   }
   
-  .YunnanBaiYao-background {
+  .Competitor-background {
     /* 容器尺寸和位置设置 */
     width: 90%;
     height: 90vh;

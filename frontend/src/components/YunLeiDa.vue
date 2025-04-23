@@ -1,18 +1,63 @@
 <template>
-  <div class="YunLeiDa ">
-   
-    <div ref="chartRef" class="chart-container"> 
-      <p class="YunLeiDa-footer">数据来源：2024年年报</p>
-      </div>
+  <div class="YunLeiDa">
+    
+    <div ref="chartRef" class="chart-container"></div>
+
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import * as echarts from 'echarts';
+import { ref, onMounted, onUnmounted } from "vue";
+import * as echarts from "echarts";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const chartRef = ref<HTMLElement | null>(null);
 let chart: echarts.ECharts | null = null;
+
+// 同仁堂数据
+const tengyaoData = {
+  value: [3200, 530, 2600, 400, 500, 1353, 28],
+  name: "同仁堂",
+  symbol: "circle",
+  symbolSize: 6,
+  lineStyle: {
+    color: "rgba(226, 160, 109, 1)", // 棕色
+    width: 2
+  },
+  areaStyle: {
+    color: "rgba(226, 160, 109, 0.5)"
+  },
+  label: {
+    show: true,
+    formatter: "{c}",
+    color: "#333",
+    fontSize: 10,
+    position: "top"
+  }
+};
+
+// 云南白药数据
+const yunnanbaiyaoData = {
+  value: [3257, 567, 2580, 222, 420, 1353, 21],
+  name: "云南白药",
+  symbol: "circle",
+  symbolSize: 6,
+  lineStyle: {
+    color: "#3890ff", // 蓝色
+    width: 2
+  },
+  areaStyle: {
+    color: "rgba(56, 144, 255, 0.3)"
+  },
+  label: {
+    show: true,
+    formatter: "{c}",
+    color: "#333",
+    fontSize: 10,
+    position: "bottom"
+  }
+};
 
 const initChart = () => {
   if (!chartRef.value) return;
@@ -20,101 +65,138 @@ const initChart = () => {
 
   const option = {
     title: {
-      //text: '云南白药集团产品覆盖度',
-      left: 'left',  
+      text: "产品覆盖度对比",
+      left: "left",
       textStyle: {
-        color: '#333',
-        fontSize: 13, // 调整字体大小
+        color: "#333",
+        fontSize: 16,
+        fontWeight: "bold"
       },
+      //subtext: "各自的24年年报及诚通证券研究所",
+      triggerEvent: true // 允许触发事件
     },
-    tooltip: true, // 鼠标悬停提示
+    tooltip: {
+      trigger: "item",
+      formatter: (params: any) => {
+        return `
+          <div style="font-weight:bold;margin-bottom:5px">${params.seriesName} - ${params.name}</div>
+          <div style="display:flex;justify-content:space-between">
+            <span>产品品种：</span>
+            <span>${params.value[0]}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span>药品批文：</span>
+            <span>${params.value[1]}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span>医药品种类：</span>
+            <span>${params.value[2]}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span>中成药品种：</span>
+            <span>${params.value[3]}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span>非医药品种：</span>
+            <span>${params.value[4]}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span>中药饮片：</span>
+            <span>${params.value[5]}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span>全球销售范围：</span>
+            <span>${params.value[6]}</span>
+          </div>
+        `;
+      }
+    },
     legend: {
-      data: ['产品覆盖度'],
-      orient: 'vertical',
-      left: 'right',
+      data: [
+        {
+          name: "同仁堂",
+          icon: "circle",
+          itemStyle: { color: "rgba(226, 160, 109, 1)" } // 棕色图例
+        },
+        {
+          name: "云南白药",
+          icon: "circle",
+          itemStyle: { color: "#3890ff" } // 蓝色图例
+        }
+      ],
+      orient: "vertical",
+      right: 10,
+      top: 40,
       textStyle: {
-        fontSize: 12, // 调整字体大小
-      },
+        fontSize: 12,
+        color: "#333"
+      }
     },
     radar: {
-      name: {
-        textStyle: {
-          color: '#333',
-          fontSize: 12, // 调整指示器文字大小
-        },
+      center: ["45%", "55%"],
+      radius: "58%",
+      axisName: {
+        color: "#666",
+        fontSize: 12,
+        padding: [3, 5]
       },
       indicator: [
-        //416个品种的产品布局。在医药产品领城,拥有567个药品批准文号、316个品种,其中含222个中成药品种
-       { name: '产品品种', max: 500 },//416
-       { name: '药品批文', max: 600 },//567
-        { name: '医药品种类', max: 350 },//316
-        { name: '中成药品种', max: 300 },//222
-        { name: '其他领域品种', max: 100 },//100
-        { name: '医药物流覆盖', max: 20 },//云南省16
-        { name: '全球销售范围', max: 34 },//全国34甚至国外
+        { name: "产品品种", max: 3300 },
+        { name: "药品批文", max: 600 },
+        { name: "医药品种类", max: 3000 },
+        { name: "中成药品种", max: 400 },
+        { name: "非医药品种", max: 500 },
+        { name: "中药饮片", max: 1400 },
+        { name: "全球销售范围", max: 30 }
       ],
-      radius: '72%', // 调整雷达图的大小
+      splitArea: {
+        areaStyle: {
+          color: ["rgba(150, 150, 150, 0.1)"]
+        }
+      }
     },
     series: [
       {
-        name: '产品覆盖度',
-        type: 'radar',
-        data: [
-          {
-            value: [416,567,316, 222, 100, 16,34],
-            name: '产品覆盖度',
-            areaStyle: {},
-            symbol: 'circle',
-            symbolSize: 6,
-            lineStyle: {
-              color: '#3890ff',
-            },
-            areaStyle: {
-              color: 'rgba(56, 144, 255, 0.3)',
-            },
-            label: {
-              show: true, // 显示标签
-              formatter: function (params: any) {
-                return params.value; // 显示数值
-              },
-              position: 'outside', // 标签位置
-              color: '#333', // 标签字体颜色
-              fontSize: 10, // 标签字体大小
-            },
-          },
-        ],
-      },
-    ],
+        name: "产品覆盖度",
+        type: "radar",
+        data: [tengyaoData, yunnanbaiyaoData]
+      }
+    ]
   };
 
   chart.setOption(option);
-};
 
-const handleResize = () => {
-  chart?.resize();
+
+  // 添加点击事件监听
+  chart.on('click', function(params) {
+    if (params.componentType === 'title') {
+      router.push('/competitor');  // 跳转到Competitor.vue页面
+    }
+  });
+
+  window.addEventListener("resize", () => chart?.resize());
 };
 
 onMounted(() => {
   initChart();
-  window.addEventListener('resize', handleResize);
 });
 
 onUnmounted(() => {
   chart?.dispose();
-  window.removeEventListener('resize', handleResize);
+  window.removeEventListener("resize", () => chart?.resize());
 });
 </script>
 
 <style scoped>
-.chart-container {
-  margin-left: -5%;
+.YunLeiDa{
   width: 100%;
-  height: 300px;
-  background-color: rgba(75, 192, 192, 0); /* 设置背景颜色为透明 */
+  height: 100%;
+  position: relative;
 }
-.YunLeiDa-footer{
-  text-align: center;
-  color: #878484bc;
-  font-size: 9px;
+.chart-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 8px;
 }
 </style>

@@ -9,8 +9,8 @@ import TimeHistory from '../views/TimeHistory.vue'  // 注意路径是 views 不
 import Corona from '../views/Corona.vue'
 import Companies from '../views/companies.vue'
 import Yunnanbaiyao from '../views/Yunnanbaiyao.vue'
-import Tengyao from '../views/Tengyao.vue'
-import Herbal from '../views/Herbal.vue'
+import Competitor from '../views/Competitor.vue'
+
 const routes = [
   {
     path: '/',
@@ -68,9 +68,9 @@ const routes = [
     component: Yunnanbaiyao
   },
   {
-    path: '/tengyao',
-    name: 'Tengyao',
-    component: Tengyao
+    path: '/competitor',
+    name: 'Competitor',
+    component: Competitor
   }
 ]
 
