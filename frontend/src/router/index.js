@@ -5,12 +5,13 @@ import Ancient from '../views/Ancient.vue'
 import Map from '../views/Map.vue'
 import HerbalProduct from '../views/HerbalProduct.vue'
 import Hci from '../views/Hci.vue'
-import TimeHistory from '../views/TimeHistory.vue'  // 注意路径是 views 不是 components
+import TimeHistory from '../views/TimeHistory.vue'
 import Corona from '../views/Corona.vue'
 import Companies from '../views/companies.vue'
 import Yunnanbaiyao from '../views/Yunnanbaiyao.vue'
-import Tengyao from '../views/Tengyao.vue'
-import Herbal from '../views/Herbal.vue'
+import Competitor from '../views/Competitor.vue'
+import Herbal from '../views/Herbal.vue'  // 添加这行导入语句
+
 const routes = [
   {
     path: '/',
@@ -68,9 +69,9 @@ const routes = [
     component: Yunnanbaiyao
   },
   {
-    path: '/tengyao',
-    name: 'Tengyao',
-    component: Tengyao
+    path: '/competitor',
+    name: 'Competitor',
+    component: Competitor
   }
 ]
 

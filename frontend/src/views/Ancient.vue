@@ -27,6 +27,11 @@
         </div>
         <div class="hard double"><img src="/images/img_3.png" alt="滇黄精图"/></div>
       </div>
+      
+
+      <div class="hard double"><img src="/images/img_3.png" alt="滇黄精图"/></div>
+</div>
+
     </div>
   </div>
 </template>

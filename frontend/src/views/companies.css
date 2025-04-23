@@ -93,8 +93,9 @@
   background: rgba(255, 253, 245, 0.9);
   border: 1px solid #d4b483;
   border-radius: 4px;
-  box-shadow: 0 0 10px rgba(140, 78, 42, 0.1);
+  box-shadow: 0 0 10px rgba(140, 78, 42, 0.3);
   color: #5a3921;
+  z-index: 10;
 }
 
 .info-panel.right {
@@ -174,4 +175,10 @@
   cursor: pointer;
   color: #f8d36c; 
   text-decoration:none;
+}
+/* 为连接线添加动画效果 */
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
