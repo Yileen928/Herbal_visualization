@@ -2,7 +2,7 @@
 
 <template>
   <div class="doctor-skills-wordcloud">
-<p>迁徙图</p>
+<p>蒲地蓝+安宫牛黄丸迁徙图</p>
   </div>
 </template>
 
