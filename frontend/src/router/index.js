@@ -10,6 +10,7 @@ import Corona from '../views/Corona.vue'
 import Companies from '../views/companies.vue'
 import Yunnanbaiyao from '../views/Yunnanbaiyao.vue'
 import Tengyao from '../views/Tengyao.vue'
+import Herbal from '../views/Herbal.vue'
 const routes = [
   {
     path: '/',
@@ -25,6 +26,11 @@ const routes = [
     path: '/ancient',
     name: 'Ancient',
     component: Ancient
+  },
+  {
+    path: '/herbal',
+    name: 'Herbal',
+    component: Herbal
   },
   {
     path: '/map',

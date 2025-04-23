@@ -18,6 +18,7 @@
           <div ref="effectChart"></div>
         </div>
         <div class="herbal-map">
+          <button class="product" @click="goToHerbalproduct">产品</button>
           <div ref="distributionMap"></div>
         </div>
       </div>
@@ -26,6 +27,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Herbal',
   data() {
@@ -62,6 +64,9 @@ export default {
     },
     initMap() {
       // 初始化地图的方法
+    },
+    goToHerbalproduct() {
+      this.$router.push('/herbal-product')
     }
   }
 }

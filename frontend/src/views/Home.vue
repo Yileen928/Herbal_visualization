@@ -1,39 +1,26 @@
 <template>
-  <div class="home">
-    <div class="home-background">
-      <div class="home-content">
-       
-        <button @click="goToAchievement">前往成果展示</button>
-      </div>
-      <div class="home-map">
-        <YunnanMap :currentRoute="currentRoute" />
-      </div>
+  <div class="background-container">
+    <div class="corona"></div>
+    <div class="corona-container">
+      <video autoplay loop muted playsinline class="corona-video" crossorigin="anonymous" :src="coronaVideoSrc"></video>
+      <button class="corona-button" @click="goAchievement"></button>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
+<script setup>
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
-import YunnanMap from '../components/YunnanMap.vue'
 
 const router = useRouter()
-const goToAchievement = () => {
+
+const coronaVideoSrc = computed(() => new URL('/home.webm', import.meta.url).href)
+
+function goAchievement() {
   router.push('/achievement')
-}
-
-const routes = {
-  route1: { name: '普洱-大理-迪庆线' },
-  route2: { name: '普洱-保山-红河线' }
-}
-
-const currentRoute = ref('route1')
-
-const switchRoute = (routeName: string) => {
-  currentRoute.value = routeName
 }
 </script>
 
-<style>
-@import './home.css';
+<style scoped>
+@import './corona.css';
 </style>
