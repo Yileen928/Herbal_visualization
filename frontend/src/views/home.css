@@ -1,7 +1,7 @@
 /* 主容器样式 */
 .home {
   /* 设置背景图片及其属性 */
-  background-image: url('../assets/images/background.JPG');  /* 指定背景图片路径 */
+  background-image: url('../assets/images/background2.JPG');  /* 指定背景图片路径 */
   background-size: cover;      /* 确保背景图片覆盖整个容器 */
   background-position: center; /* 背景图片居中显示 */
   background-repeat: no-repeat;/* 防止背景图片重复 *//* 容器尺寸设置 */

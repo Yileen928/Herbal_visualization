@@ -7,7 +7,12 @@
     padding: 20px;
     box-sizing: border-box;
 }
-
+.button{
+    width: 10%;
+    height: 10%;
+    border: aqua solid 1px;
+    border-radius: 8px;
+}
 .herbal-detail {
     flex: 0 0 300px;
     height: calc(100vh - 40px); /* 调整计算值匹配父容器padding */

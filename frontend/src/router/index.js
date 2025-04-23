@@ -28,6 +28,11 @@ const routes = [
     component: Ancient
   },
   {
+    path: '/herbal',
+    name: 'Herbal',
+    component: Herbal
+  },
+  {
     path: '/map',
     name: 'Map',
     component: Map
