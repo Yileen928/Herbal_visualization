@@ -1,64 +1,68 @@
 .background-container {
-  width: 100%;
+  background-image: url('../assets/images/background2.JPG');  /* 指定背景图片路径 */
+  background-size: cover;      /* 确保背景图片覆盖整个容器 */
+  background-position: center; /* 背景图片居中显示 */
+  background-repeat: no-repeat;/* 防止背景图片重复 *//* 容器尺寸设置 */
+  min-height: 100vh;          /* 最小高度为视口高度 */
+  width: 100vw;              /* 宽度为视口宽度 *//* 重置默认边距 */
+  margin: 0;
+  display: flex;
+  padding: 0;  /* Flex布局设置 *//* 垂直居中 */
+  align-items: center;        /* 水平居中 */
+  text-align: center;         /* 文本居中 *//* 定位设置 */
+  position: fixed;            /* 固定定位，防止滚动 */
+  top: 0;                    /* 顶部对齐 */
+  left: 0;   
+}
+.corona{
+  flex: 1;
+  border: 2pt solid black;
   height: 100vh;
-  position: fixed;
-  overflow: hidden;
+}
+.corona-container {
+  display: flex;
+      flex: 3;
+      border: 2pt solid rgb(219, 57, 57);
+      height: 100vh;
+      flex-direction: column;
+      align-items: flex-end;
 }
 
-.corona-background {
-  position: fixed;
-  top: 0;
-  left: 0;
+.corona-video {
   width: 100%;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: #0e0e0e;
-  overflow: hidden;
+  height: auto;
+}
+.corona-button {
+  width: 100px;
+  height: 100px;
+  background: url('/images/homebutton.png');
+  background-size: cover;      /* 确保背景图片覆盖整个容器 */
+  background-position: center; /* 背景图片居中显示 */
+  background-repeat: no-repeat;/* 防止背景图片重复 *//* 容器尺寸设置 */
+  border: none;
 }
 
-.light-effect {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: all 0.2s ease;
+.corona-button:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.4),
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 30px rgba(255, 255, 255, 0.6);
+  animation: glow 1.5s ease-in-out infinite alternate;
 }
 
-.corona-background::before {
-  content: '';
-  position: absolute;
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.corona-background:hover::before {
-  opacity: 1;
-}
-.corona-bg {
-    background-size: 57%;
-    height: 100vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url(/src/assets/images/corona.jpg);
-    animation: rotate 20s linear infinite; /* 添加动画：20秒一圈，线性变化，无限循环 */
-}
-
-/* 添加旋转动画关键帧 */
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+/* 呼吸式阴影动画 */
+@keyframes glow {
+  from {
+    box-shadow:
+      0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.4),
+      0 0 30px rgba(255, 255, 255, 0.5);
+  }
+  to {
+    box-shadow:
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.7),
+      0 0 40px rgba(255, 255, 255, 0.8);
+  }
 }

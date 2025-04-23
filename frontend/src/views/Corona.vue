@@ -1,35 +1,23 @@
 <template>
   <div class="background-container">
-    <div class="corona-background" @mousemove="handleMouseMove">
-      <div class="light-effect" :style="lightPosition"></div>
-      <div class="corona-bg"></div>
+    <div class="corona"></div>
+    <div class="corona-container">
+      <video autoplay loop muted playsinline class="corona-video" crossorigin="anonymous" :src="coronaVideoSrc"></video>
+      <button class="corona-button" @click="goHome"></button>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Corona',
-  data() {
-    return {
-      mouseX: 0,
-      mouseY: 0
-    }
-  },
-  computed: {
-    lightPosition() {
-      return {
-        left: this.mouseX + 'px',
-        top: this.mouseY + 'px'
-      }
-    }
-  },
-  methods: {
-    handleMouseMove(e) {
-      this.mouseX = e.clientX;
-      this.mouseY = e.clientY;
-    }
-  }
+<script setup>
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const coronaVideoSrc = computed(() => new URL('/home.webm', import.meta.url).href)
+
+function goHome() {
+  router.push('/')
 }
 </script>
 
