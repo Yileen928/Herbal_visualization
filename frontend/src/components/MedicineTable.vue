@@ -6,7 +6,7 @@
       style="
         width: 100%;
         height: 100%;
-        color: rgba(211, 182, 148, 0.9);
+        color: rgba(233, 182, 148, 1);
         border-collapse: collapse;
         border-color: #d3d3d3;
       "
