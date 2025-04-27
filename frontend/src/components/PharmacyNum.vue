@@ -57,14 +57,14 @@ const initChart = (data) => {
         name: "药店数量",
         type: "pie",
         roseType: "radius",
-        radius: ["20%", "70%"],
+        radius: ["20%", "65%"],
         label: {
           show: true,
           formatter: (params) => params.name, // 只显示省份名称
         },
         labelLine: {
           show: true,
-          length: 15, // 设置引导线的长度
+          length: 3, // 设置引导线的长度
           lineStyle: {
             width: 1, // 设置线的宽度
             type: "solid", // 设置线的类型

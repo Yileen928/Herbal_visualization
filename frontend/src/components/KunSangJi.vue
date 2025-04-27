@@ -26,7 +26,7 @@ onMounted(() => {
         focus: 'adjacency'
       },
       nodeWidth: 0,
-      nodeGap: 10,
+      nodeGap: 8,
       layoutIterations: 0,
       data: [
         // 时间轴节点
@@ -83,7 +83,7 @@ onMounted(() => {
       },
       lineStyle: {
         color: 'gradient',
-        curveness: 0.3,
+        curveness: 0.4,
         opacity: 0.6
       }
     }]

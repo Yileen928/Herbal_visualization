@@ -9,10 +9,6 @@
             <!-- 产品覆盖-雷达图图 -->
             <YunLeiDa />
           </div>
-          <div class="chart-container" id="container7">
-            <!-- 某产品-迁徙图 -->
-            <YunMigration />
-          </div>
           <div class="chart-container" id="container2">
             <!-- 核心产品矩阵-气泡图横轴 -->
             <YunBrand />
@@ -31,7 +27,7 @@
           </div>
           <div class="chart-container" id="container5">
             <!-- 北京同仁堂某产品-词云图图 -->
-            <YunAllComment />
+            <BeiCloud />
           </div>
           <div class="chart-container" id="container6">
             <!-- 核心产品评论数-动态柱状图 -->
@@ -48,9 +44,8 @@ import { useRouter } from "vue-router";
 import YunLeiDa from '../components/YunLeiDa.vue';
 import YunCloud from "../components/YunCloud.vue";
 import YunBrand from "../components/YunBrand.vue";
-import YunMigration from "../components/YunMigration.vue";
 import YunAllProduct from "../components/YunAllProduct.vue";
-import YunAllComment from "../components/YunAllComment.vue";
+import BeiCloud from "../components/BeiCloud.vue";
 import YunIncome from "../components/YunIncome.vue";
 
 // 添加跳转方法

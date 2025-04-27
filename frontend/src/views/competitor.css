@@ -51,21 +51,21 @@
     height: calc(90vh - 100px);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1%;
   }
-  
+
   .top-row {
     display: flex;
     justify-content: space-between;
-    height: 45%;
-    gap: 5px;
+    height: 50%;
+    gap: 3px;
   }
   
   .bottom-row {
     display: flex;
     justify-content: space-between;
-    height: 45%;
-    gap: 2px;
+    height: 50%;
+    gap: 3px;
   }
   
   

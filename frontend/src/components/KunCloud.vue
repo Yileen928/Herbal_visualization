@@ -1,6 +1,6 @@
 <template>
   <div class="doctor-skills-wordcloud">
-    <div ref="wordcloudChart" style="width: 100%; height: 100%"></div>
+    <div ref="wordcloudChart" style="width: 100%; height: 110%"></div>
   </div>
 </template>
 
@@ -78,7 +78,7 @@ onMounted(() => {
           shape: "circle",
           left: "center",
           width: "100%",
-          height: "80%",
+          height: "100%",
           sizeRange: [12, 40], // 根据词频调整大小范围
           rotationRange: [-30, 30],
           rotationStep: 10,

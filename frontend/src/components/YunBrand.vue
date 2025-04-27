@@ -76,7 +76,7 @@ const colorMap: Record<string, string> = {
 // 形状映射
 const symbolMap: Record<string, string> = {
   云南白药: "circle",
-  北京同仁堂: "rect",
+  北京同仁堂: "circle",
 };
 
 function initChart() {
@@ -169,8 +169,8 @@ function initChart() {
       type: "value",
       name: "销售额（亿元）",
       min: 0,
-      max: 70,
-      interval: 5, // Y 轴刻度间隔为 5
+      max: 65,
+      interval: 5, 
       axisLabel: {
         color: "#000",
       },

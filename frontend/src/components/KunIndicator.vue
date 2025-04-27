@@ -56,7 +56,7 @@ onMounted(() => {
       },
       {
         dim: 1,
-        name: '成品检验耗时(天)',
+        name: '成品检验\n耗时(天)',
         type: 'value',
         min: 0,
         max: 10,

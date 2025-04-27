@@ -176,9 +176,3 @@
   color: #f8d36c; 
   text-decoration:none;
 }
-/* 为连接线添加动画效果 */
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
-  }
-}

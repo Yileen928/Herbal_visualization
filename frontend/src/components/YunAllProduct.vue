@@ -1,210 +1,230 @@
 <template>
-  <div class="YunAllProductd" style="width: 90%; height: 100%; margin: auto">
-    <div ref="chartRef" style="width: 100%; height: 100%"></div>
+  <div class="YunAllProductd" style="width: 110%; height: 100%; margin: auto">
+    <div ref="chartRef" style="width: 100%; height: 115%"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import * as echarts from "echarts";
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import * as echarts from 'echarts';
 
-const chartRef = ref<HTMLElement | null>(null);
-const chartInstance = ref<echarts.ECharts | null>(null);
+interface ProductData {
+  productsName: string;
+  commentsSum: number;
+}
 
-let dataList: { productsName: string; commentsSum: number }[] = [];
+const chartRef = ref<HTMLDivElement | null>(null);
+let chartInstance: echarts.ECharts | null = null;
 
-// 定义滚动参数
-const windowSize = 4; // 每次显示4个
-let currentStart = 0;
+const groupSize = 2; // 每组2个产品组成一对
+let dataList: ProductData[] = [];
 let timer: ReturnType<typeof setInterval> | null = null;
+let currentStart = 0;
 
-// 请求评论数据
-async function fetchProductComments() {
+async function fetchProductComments(): Promise<ProductData[]> {
   try {
-    const response = await fetch("http://106.55.169.134:10010/comments/all");
-    if (!response.ok) {
-      console.error("接口请求失败", response.statusText);
+    const res = await fetch('http://106.55.169.134:10010/comments/all');
+    if (!res.ok) {
+      console.error('接口请求失败:', res.statusText);
       return [];
     }
-    const data = await response.json();
-    // 过滤无效数据
-    const validData = data.filter(
-      (item: any) => item.productsName && !isNaN(item.commentsSum)
-    );
-    // 排序：评论数由低到高
-    validData.sort((a: any, b: any) => a.commentsSum - b.commentsSum);
-    return validData;
-  } catch (err) {
-    console.error("请求出错:", err);
+    const data = await res.json();
+    // 过滤有效数据，commentsSum转number，不过滤产品名
+    const filtered = data
+      .filter(
+        (item: any) =>
+          item.productsName && !isNaN(Number(item.commentsSum))
+      )
+      .map((item: any) => ({
+        productsName: item.productsName,
+        commentsSum: Number(item.commentsSum),
+      }));
+    filtered.sort((a, b) => a.commentsSum - b.commentsSum);
+    return filtered;
+  } catch (error) {
+    console.error('请求异常:', error);
     return [];
   }
 }
 
-// 初始化图表，定义完整的option（只做一次）
 function initChart() {
   if (!chartRef.value) return;
-
-  // 销毁之前的实例
-  if (chartInstance.value) {
-    chartInstance.value.dispose();
+  if (chartInstance) {
+    chartInstance.dispose();
   }
-
-  chartInstance.value = echarts.init(chartRef.value);
-
-  // 确保有足够的数据
-  if (dataList.length === 0) return;
-
-  const categories = dataList.map((item) => item.productsName);
-  const data = dataList.map((item) => item.commentsSum);
+  chartInstance = echarts.init(chartRef.value);
 
   const option = {
-    grid: {
-      left: 70,
-      right: 10,
-      bottom: 70,
-      top: 50,
-    },
     title: {
-      text: "云南白药各产品评论总数",
-      left: "center",
+      text: '产品销量对比',
+      left: 'center',
+      top: 20,
       textStyle: {
-        fontSize: 16,
-        color: "gray",
-        fontWeight: "bold",
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#666',
       },
     },
-    tooltip: {
-      trigger: "axis",
-      formatter: (params: any) => {
-        const data = params[0];
-        return `${data.name}<br/>评论数: ${data.value}`;
-      },
+tooltip: {
+  trigger: 'axis',
+  axisPointer: { type: 'shadow' },
+  formatter: function (params) {
+    const leftName = params[0].name.split(' vs ')[0]; 
+    const rightName = params[1].name.split(' vs ')[1]; 
+    const leftValue = params[0].value;
+    const rightValue = params[1].value; 
+
+    return `${leftName} VS ${rightName}<br />
+       ${leftValue.toLocaleString()} VS ${rightValue.toLocaleString()}`;
+  }
+},
+    legend: {
+      data: ['北京同仁堂', '云南白药'],
+      bottom: 4,
     },
+    grid: { left: 65, right: 20, top: 70, bottom: 70 },
     xAxis: {
-      type: "category",
-      data: categories.slice(0, Math.min(windowSize, categories.length)),
-      axisLine: { lineStyle: { color: "gray" } },
-      axisLabel: {
-        color: "gray",
-        rotate: 30,
-        interval: 0, // 强制显示所有标签
-      },
+      type: 'category',
+      data: [],
+      axisLine: { lineStyle: { color: '#666' } },
+      axisLabel: { rotate: 0, color: '#666', interval: 0 },
+      show: false // 完全隐藏 x 轴
     },
     yAxis: {
-      type: "value",
-      axisLine: { lineStyle: { color: "gray" }, show: true },
-      axisLabel: { color: "gray" },
-      min: "dataMin", // 自动计算最小值
-      max: "dataMax", // 自动计算最大值
+      type: 'value',
+      axisLine: { lineStyle: { color: '#666' } },
+      axisLabel: { color: '#666' },
+      min: 'dataMin',
+      max: 'dataMax',
+      fontsize: 8,
     },
     series: [
       {
-        type: "bar",
-        data: data.slice(0, Math.min(windowSize, data.length)),
+        name: '北京同仁堂',
+        type: 'bar',
+        data: [],
+        barGap: '15%',
         itemStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: "rgba(192, 127, 73, 0.2)" },
-            { offset: 0.5, color: "rgba(192, 127, 73, 0.4)" },
-            { offset: 1, color: "rgba(192, 127, 73, 0.5)" },
+            { offset: 0, color: 'rgba(192,127,73,0.8)' },
+            { offset: 1, color: 'rgba(192,127,73,0.3)' },
           ]),
         },
-        barWidth: "50%",
-        label: {
-          show: true,
-          position: "top",
-          formatter: "{c}",
+        label: { show: true, position: 'top' },
+      },
+      {
+        name: '云南白药',
+        type: 'bar',
+        data: [],
+        barGap: '20%',
+        itemStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+
+            { offset: 0, color: 'rgba(91,143,249,0.8)' },
+            { offset: 1, color: 'rgba(91,143,249,0.3)' },
+          ]),
         },
+        label: { show: true, position: 'top' },
       },
     ],
   };
 
-  chartInstance.value.setOption(option);
+  chartInstance.setOption(option);
 }
 
-// 更新图表显示区域
+
+function getLabel(name: string): string {
+  if (name === '云南白药' || name === '北京同仁堂') return '';
+  return name;
+}
+
 function updateChart(startIdx: number) {
-  if (!chartInstance.value || dataList.length === 0) return;
+  if (!chartInstance || dataList.length === 0) return;
 
-  const categories = dataList.map((item) => item.productsName);
-  const data = dataList.map((item) => item.commentsSum);
+  // 取4个数据，如果不足4个，则用空数据填充
+  const sliceData = dataList.slice(startIdx, startIdx + groupSize * 2);
 
-  // 计算结束索引
-  let endIdx = startIdx + windowSize - 1;
-  if (endIdx >= dataList.length) {
-    endIdx = dataList.length - 1;
+  while (sliceData.length < groupSize * 2) {
+    sliceData.push({ productsName: '', commentsSum: 0 });
   }
 
-  // 准备新的数据
-  const newCategories = categories.slice(startIdx, endIdx + 1);
-  const newData = data.slice(startIdx, endIdx + 1);
+  const categoryLabels: string[] = [];
+  const seriesA: number[] = [];
+  const seriesB: number[] = [];
 
-  chartInstance.value.setOption({
+  for (let i = 0; i < groupSize * 2; i += 2) {
+    const left = sliceData[i];
+    const right = sliceData[i + 1];
+    // x轴标签替换
+    categoryLabels.push(
+      `${getLabel(left.productsName) || '-'} vs ${getLabel(right.productsName) || '-'}`
+    );
+    seriesA.push(left.commentsSum);
+    seriesB.push(right.commentsSum);
+  }
+
+  chartInstance.setOption({
     xAxis: {
-      data: newCategories,
+      data: categoryLabels,
     },
     series: [
       {
-        data: newData,
+        name: '北京同仁堂',
+        data: seriesA,
+      },
+      {
+        name: '云南白药',
+        data: seriesB,
       },
     ],
   });
 }
 
-// 开始循环滚动
-function startScrolling() {
+function startAutoScroll() {
   if (timer) clearInterval(timer);
-
-  // 如果数据不足窗口大小，不滚动
-  if (dataList.length <= windowSize) return;
+  if (dataList.length <= groupSize * 2) return;
 
   timer = setInterval(() => {
-    currentStart++;
-    if (currentStart + windowSize > dataList.length) {
-      currentStart = 0;
-    }
+    currentStart += groupSize * 2;
+    if (currentStart >= dataList.length) currentStart = 0;
     updateChart(currentStart);
-  }, 1500);
+  }, 3000);
 }
 
-// 在组件销毁前清除定时器和图表实例
-onBeforeUnmount(() => {
-  if (timer) clearInterval(timer);
-  if (chartInstance.value) {
-    chartInstance.value.dispose();
-  }
-});
-
-// 组件挂载后执行
 onMounted(async () => {
   dataList = await fetchProductComments();
   if (dataList.length === 0) {
-    console.warn("无数据，无法渲染图表");
+    console.warn('无有效数据，图表无法渲染');
     return;
   }
-
   initChart();
-  startScrolling();
-
-  // 添加响应式调整大小
-  const resizeObserver = new ResizeObserver(() => {
-    if (chartInstance.value) {
-      chartInstance.value.resize();
-    }
-  });
+  updateChart(0);
+  startAutoScroll();
 
   if (chartRef.value) {
+    const resizeObserver = new ResizeObserver(() => {
+      chartInstance?.resize();
+    });
     resizeObserver.observe(chartRef.value);
-  }
 
-  onBeforeUnmount(() => {
-    resizeObserver.disconnect();
-  });
+    onBeforeUnmount(() => {
+      resizeObserver.disconnect();
+    });
+  }
+});
+
+onBeforeUnmount(() => {
+  if (timer) clearInterval(timer);
+  if (chartInstance) {
+    chartInstance.dispose();
+    chartInstance = null;
+  }
 });
 </script>
 
 <style scoped>
 .YunAllProductd {
   border-radius: 8px;
-  padding: 15px;
+  padding: 4px;
 }
 </style>

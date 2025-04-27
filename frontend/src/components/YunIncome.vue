@@ -1,6 +1,6 @@
 <template>
   <div class="IncomeComparison" style="width: 90%; height: 100%; margin: auto">
-    <div ref="chartRef" style="width: 100%; height: 100%"></div>
+    <div ref="chartRef" style="width: 100%; height: 105%"></div>
     <p style="color:gray;text-align:center;margin-top:10px;">近十年两家公司工业销售收入对比</p>
   </div>
 </template>
@@ -77,7 +77,7 @@ function updateChart(startIdx: number) {
         
         const tips = params.map((item: any) => `
           <div style="display:flex;align-items:center;margin:3px 0">
-            <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${item.color};margin-right:5px"></span>
+            <span style="display:inline-block;width:8px;height:12px;border-radius:50%;background:${item.color};margin-right:6px"></span>
             ${item.seriesName}: ${Number(item.value).toLocaleString()}万元
           </div>
         `).join('');

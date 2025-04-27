@@ -10,7 +10,8 @@ import Corona from '../views/Corona.vue'
 import Companies from '../views/companies.vue'
 import Yunnanbaiyao from '../views/Yunnanbaiyao.vue'
 import Competitor from '../views/Competitor.vue'
-import Herbal from '../views/Herbal.vue'  // 添加这行导入语句
+import Herbal from '../views/Herbal.vue'  
+import test from '../views/test.vue'
 
 const routes = [
   {
@@ -72,6 +73,11 @@ const routes = [
     path: '/competitor',
     name: 'Competitor',
     component: Competitor
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: test
   }
 ]
 
@@ -79,5 +85,6 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
 
 export default router

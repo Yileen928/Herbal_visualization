@@ -35,7 +35,7 @@ const initSalesChart = (chartRef: HTMLDivElement | null) => {
     const chart = echarts.init(chartRef);
     const option = {
       title: {
-        text: "2024年销售额\n(亿元)",
+        text: "2024年销售\n额(亿元)",
         left: "left",
         color: "gray",
         FontSize: 12,
