@@ -2,6 +2,7 @@ package cn.herbal.visualization.service;
 
 import cn.herbal.visualization.model.THerbs;
 import cn.herbal.visualization.model.TReturnCombination;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -12,5 +13,7 @@ import java.util.List;
 * @createDate 2025-03-25 08:57:54
 */
 public interface THerbsService extends IService<THerbs> {
+    IPage<THerbs> getHerbsByPage(int currentPage, int pageSize);
 
+    List<THerbs> searchHerbsByHerbName(String herbName);
 }

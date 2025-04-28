@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.herbal.visualization.mapper.CommentMapper">
+    <select id="getCommentCountsByProductNameAndYearMonth" parameterType="String" resultType="cn.herbal.visualization.model.CommentCount">
+        CALL GetCommentCountsByProductNameAndYearMonth(#{productName})
+    </select>
+
+    <select id="getCommentCountsByLocationAndProductName" parameterType="String" resultType="cn.herbal.visualization.model.CommentCountByLocation">
+        CALL GetCommentCountsByLocationAndProductName(#{productName})
+    </select>
+
+    <select id="getRandomCommentTextsByProductName" parameterType="String" resultType="cn.herbal.visualization.model.CommentText">
+        CALL GetRandomCommentTextsByProductName(#{productName})
+    </select>
+</mapper>

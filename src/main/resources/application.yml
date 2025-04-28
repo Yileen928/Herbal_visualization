@@ -1,13 +1,13 @@
 server:
-  port: 8080
+  port: 10010
 
 spring:
   application:
-    name: user-service
+    name: herbs
   datasource:
-    url: jdbc:mysql://localhost:3306/db_herbs?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://106.55.169.134:3306/db_herbs?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
-    password: ack22510
+    password: Herbs_item5
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       initial-size: 20
@@ -37,7 +37,10 @@ spring:
         reset-enable: false
         login-username: root
         login-password: ack27
-
+  data:
+    redis:
+      host: 106.55.169.134
+      port: 6379
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
