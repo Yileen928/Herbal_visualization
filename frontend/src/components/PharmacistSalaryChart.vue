@@ -2,16 +2,24 @@
   <div class="DoctorSalaryChart">
     <div
       ref="chart"
-      style="width: 100%; height: 350px; background-color: transparent"
+      style="width: 100%; height:100%; background-color: transparent"
     ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, onBeforeUnmount } from "vue";
 import * as echarts from "echarts";
 
-const chart = ref(null);
+const chart = ref<HTMLElement | null>(null);
+let myChart: echarts.ECharts | null = null;
+
+// 响应式调整函数
+const resizeChart = () => {
+  if (myChart) {
+    myChart.resize();
+  }
+};
 
 // 模拟获取数据的函数
 async function fetchData() {
@@ -21,20 +29,17 @@ async function fetchData() {
   const data = await response.json();
 
   // 筛选医师数据
-  const doctorData = data.filter((item) => item.job === "药师");
-
-  console.log(doctorData); // 确认获取的数据
-
+  const doctorData = data.filter((item: any) => item.job === "药师");
   return doctorData;
 }
 
-onMounted(async () => {
+const initChart = async () => {
   const doctorData = await fetchData();
 
   // 初始化 ECharts
-  if (!chart.value) return; // 确保 chart.value 有效
+  if (!chart.value) return;
 
-  const myChart = echarts.init(chart.value);
+  myChart = echarts.init(chart.value);
 
   // 定义薪资范围
   const salaryRanges = [
@@ -50,119 +55,170 @@ onMounted(async () => {
   const minSalaryCounts = salaryRanges.map(({ min, max }) => {
     return doctorData
       .filter(
-        (item) =>
+        (item: any) =>
           item.salaryType === "Min Salary" &&
           item.salary >= min &&
           item.salary < max
       )
-      .reduce((total, item) => total + item.count, 0); // 汇总数量
+      .reduce((total: number, item: any) => total + item.count, 0);
   });
 
   const maxSalaryCounts = salaryRanges.map(({ min, max }) => {
     return doctorData
       .filter(
-        (item) =>
+        (item: any) =>
           item.salaryType === "Max Salary" &&
           item.salary >= min &&
           item.salary < max
       )
-      .reduce((total, item) => total + item.count, 0); // 汇总数量
+      .reduce((total: number, item: any) => total + item.count, 0);
   });
-
-  console.log("Min Salary Counts:", minSalaryCounts);
-  console.log("Max Salary Counts:", maxSalaryCounts);
 
   const option = {
     title: {
       text: "药师薪资",
       left: "left",
-      fontSize: 11,
+      textStyle: {
+        fontSize: 14,
+      },
     },
     tooltip: {
       trigger: "axis",
+      axisPointer: {
+        type: "shadow"
+      }
     },
     xAxis: {
       type: "value",
       name: "数量",
-      fontSize: 9,
-      position: "bottom",// 将 x 轴放置在底部
+      nameTextStyle: {
+        fontSize: 12
+      },
       axisLine: {
-        show: true, // 显示 X 轴的轴线
         lineStyle: {
-          color: 'gray', // 轴线颜色
-          width: 1,      // 轴线宽度
-          type: 'solid', // 轴线样式（实线）
+          color: 'gray',
+          width: 1,
         }
       },
       axisTick: {
-        show: true, // 显示 X 轴的刻度
+        show: true,
         lineStyle: {
-          color: 'gray', // 刻度颜色
+          color: 'gray',
         }
       },
       axisLabel: {
-        show: true, // 显示 X 轴的标签
-        textStyle: {
-          color: 'gray', // 标签颜色
+        color: 'gray',
+        fontSize: 11
+      },
+      splitLine: {
+        lineStyle: {
+          type: 'dashed'
         }
       }
     },
     yAxis: {
       type: "category",
-      data: salaryRanges.map((range) => range.range), // 使用薪资范围作为 y 轴标签
+      data: salaryRanges.map((range) => range.range),
       name: "薪资范围",
-      nameGap: 0, // 增加 Y 轴名称与标签的间距
-      axisLabel: {
-        padding: [0, 0, 5, 0], // 上、右、下、左的内边距
-        fontSize: 9, // 调整字体大小
-        margin: 2, // 标签与轴之间的间距
+      nameTextStyle: {
+        fontSize: 12
       },
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: 'gray'
+        }
+      },
+      axisTick: {
+        show: false
+      },
+      axisLabel: {
+        fontSize: 11,
+        margin: 8
+      }
     },
     legend: {
-      data: ["最低薪资数量", "最高薪资数量"], // 图例显示的名称
-      top:"5%",
-      right: "5%", // 图例位置（可根据需要调整）
+      data: ["最低薪资数量", "最高薪资数量"],
+      top: "5%",
+      right: "5%",
       textStyle: {
-        color: "#333", // 图例文字颜色
-      },
+        fontSize: 12
+      }
     },
     series: [
       {
         name: "最低薪资数量",
         type: "bar",
         data: minSalaryCounts,
-        emphasis: {
-          focus: "series",
-        },
-        barWidth: "30%", // 设置柱状宽度
+        barWidth: "30%",
         itemStyle: {
-          color:  "rgba(226, 160, 109,0.5)", // 最低薪资颜色
+          color: "rgba(226, 160, 109, 0.5)",
+          borderRadius: [0, 4, 4, 0]
         },
+        label: {
+          show: false
+        },
+        emphasis: {
+          label: {
+            show: true,
+            position: 'right'
+          }
+        }
       },
       {
         name: "最高薪资数量",
         type: "bar",
         data: maxSalaryCounts,
-        emphasis: {
-          focus: "series",
-        },
-        barWidth: "30%", // 设置柱状宽度
+        barWidth: "30%",
         itemStyle: {
-          color: "rgba(226, 160, 109,1)", // 最高薪资颜色
+          color: "rgba(226, 160, 109, 1)",
+          borderRadius: [0, 4, 4, 0]
         },
-      },
+        label: {
+          show: false
+        },
+        emphasis: {
+          label: {
+            show: true,
+            position: 'right'
+          }
+        }
+      }
     ],
     grid: {
-      left: "10%", // 左侧间距
-      right: "10%", // 右侧间距
-      top: "10%", // 顶部间距
-      bottom: "10%", // 底部间距
+      left: "15%",
+      right: "15%",
+      top: "20%",
+      bottom: "15%",
+      containLabel: true
     },
+    backgroundColor: "transparent"
   };
 
   myChart.setOption(option);
-  myChart.resize(); // 确保图表适应容器大小
+  resizeChart();
+
+  // 添加窗口大小变化监听
+  window.addEventListener('resize', resizeChart);
+};
+
+onMounted(() => {
+  initChart();
+});
+
+onBeforeUnmount(() => {
+  if (myChart) {
+    // 移除监听器
+    window.removeEventListener('resize', resizeChart);
+    myChart.dispose();
+  }
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.DoctorSalaryChart {
+  width: 100%;
+  height: 100%;
+
+}
+</style>

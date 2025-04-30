@@ -1,23 +1,39 @@
 .map-container {
-  background-image: url('../assets/images/background.JPG');  /* 指定背景图片路径 */
-  background-size: cover;      /* 确保背景图片覆盖整个容器 */
-  background-position: center; /* 背景图片居中显示 */
-  background-repeat: no-repeat;/* 防止背景图片重复 *//* 容器尺寸设置 */
-  min-height: 100vh;          /* 最小高度为视口高度 */
-  width: 100vw;              /* 宽度为视口宽度 *//* 重置默认边距 */
+  background-image: url('../assets/images/background.JPG');
+  /* 指定背景图片路径 */
+  background-size: cover;
+  /* 确保背景图片覆盖整个容器 */
+  background-position: center;
+  /* 背景图片居中显示 */
+  background-repeat: no-repeat;
+  /* 防止背景图片重复 */
+  /* 容器尺寸设置 */
+  min-height: 100vh;
+  /* 最小高度为视口高度 */
+  width: 100vw;
+  /* 宽度为视口宽度 */
+  /* 重置默认边距 */
   margin: 0;
-  padding: 0;  /* Flex布局设置 */
+  padding: 0;
+  /* Flex布局设置 */
   display: flex;
-  flex-direction: column;     /* 子元素垂直排列 */
-  justify-content: center;    /* 垂直居中 */
-  align-items: center;        /* 水平居中 */
-  text-align: center;         /* 文本居中 *//* 定位设置 */
-  position: fixed;            /* 固定定位，防止滚动 */
-  top: 0;                    /* 顶部对齐 */
-  left: 0; 
+  flex-direction: column;
+  /* 子元素垂直排列 */
+  justify-content: center;
+  /* 垂直居中 */
+  align-items: center;
+  /* 水平居中 */
+  text-align: center;
+  /* 文本居中 */
+  /* 定位设置 */
+  position: fixed;
+  /* 固定定位，防止滚动 */
+  top: 0;
+  /* 顶部对齐 */
+  left: 0;
 }
 
-#china-map {
+.china-map {
   border: 1px solid #e8e8e8;
   border-radius: 8px;
   background-image: url('../assets/images/background2.JPG');
@@ -25,12 +41,12 @@
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
-  flex-direction: row-reverse; /* 改为垂直排列 */
+  flex-direction: column; /* 改为column使子元素上下排布 */
   width: 95%;
-  height: 90vh;  /* 改用视口高度 */
+  height: 90vh;
   margin: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: relative;  /* 改为相对定位 */
+  position: relative;
 }
 
 h1 {
@@ -55,6 +71,29 @@ button {
 button:hover {
   background: #9c8544;
 }
-#china-map + div[style*="南海诸岛"] {
+
+#china-map+div[style*="南海诸岛"] {
   display: none !important;
+}
+
+#bmap-container {
+  width: 100%;
+  flex: 1; /* 让地图容器占据剩余空间 */
+}
+.mapTitle {
+  width: 100%;
+  height: 2rem;
+  font-size: 20px;
+  text-align: center;
+}
+
+/* 隐藏非中国区域 */
+.BMap_mask {
+  background: #f3f3f3 !important;
+}
+
+/* 强化中国边界 */
+.BMap_boundary {
+  stroke-width: 2px !important;
+  stroke: #333 !important;
 }

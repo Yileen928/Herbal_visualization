@@ -217,10 +217,11 @@ onMounted(() => {
 
 <style scoped>
 .parallel-coordinates-chart {
-  width: 110%;
+  width: 100%;
   height: 100%;
-  border-radius: 8px;
-  padding: 15px;
+  padding: 5px;
   margin: 0 0;
+  border-radius: 8px;
+   /* background-color: #ffffffB8; */
 }
 </style>

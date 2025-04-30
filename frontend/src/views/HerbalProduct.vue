@@ -2,7 +2,7 @@
   <div class="herbal-product">
     <div class="herbal-product-background">
       <!-- 第一行：趋势图 -->
-      <div class="herbal-product-container1">
+      <div class="herbal-product-container1" @click="goToCompanies">
         <HerbalTrendChart />
         <div class="herbal-product-chart2">
           <PharmacyNum />
@@ -28,7 +28,7 @@
       <!-- 第三行：采购图表 -->
       <div class="herbal-product-container3">
         <PurchaseChart />
-        <div class="herbal-product-chart2">
+        <div class="herbal-product-chart2" @click="goToHci">
           <PharmacyType />
         </div>
       </div>  
@@ -49,6 +49,14 @@ import PharmacyNum from '../components/PharmacyNum.vue' // 药店数量
 
 const router = useRouter()
 const mapContainer = ref(null)
+
+const goToCompanies = () => {
+  router.push('/companies');
+};
+const goToHci = () => {
+  router.push('/hci');
+};
+
 
 // 城市数据
 const cityData = {

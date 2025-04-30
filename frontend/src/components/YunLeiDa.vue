@@ -1,9 +1,5 @@
 <template>
-  <div class="YunLeiDa">
-    
     <div ref="chartRef" class="chart-container"></div>
-
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -66,10 +62,10 @@ const initChart = () => {
   const option = {
     title: {
       text: "产品覆盖度对比",
-      left: "left",
+      left: "center",
       textStyle: {
-        color: "#333",
-        fontSize: 16,
+        color: "#666",
+        fontSize: 18,
         fontWeight: "bold"
       },
       //subtext: "各自的24年年报及诚通证券研究所",
@@ -188,15 +184,9 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.YunLeiDa{
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
 .chart-container {
   width: 100%;
   height: 100%;
-  position: relative;
-  border-radius: 8px;
+    background-color: transparent;
 }
 </style>

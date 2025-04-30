@@ -38,14 +38,12 @@ const initSalesChart = (chartRef: HTMLDivElement | null) => {
         text: "2024年销售\n额(亿元)",
         left: "left",
         color: "gray",
-        FontSize: 12,
+        fontSize: 12,  // 修正属性名：FontSize -> fontSize
       },
       tooltip: {
         trigger: "item",
-        formatter: function (params) {
-          // 根据系列名称判断是销售额还是利润
+        formatter: function (params: any) {  // 添加类型注解
           const unit = params.seriesName === "销售额" ? "亿元" : "万元";
-          // 根据数据索引获取对应的企业名称
           const companyName =
             params.dataIndex === 0
               ? data.huqingyutang.name
@@ -64,15 +62,15 @@ const initSalesChart = (chartRef: HTMLDivElement | null) => {
       series: [
         {
           name: "销售额",
-
           type: "gauge",
           min: 0,
           max: 5,
           splitNumber: 5,
-          radius: "100%",
+          radius: "90%",  // 调整为90%避免溢出
           axisLine: {
             lineStyle: {
-              width: 5,
+              width: 10,  // 加粗轴线
+              color: [[1, '#f5f5f5']]  // 添加轴线背景色
             },
           },
           pointer: {
@@ -99,6 +97,10 @@ const initSalesChart = (chartRef: HTMLDivElement | null) => {
       ],
     };
     chart.setOption(option);
+    // 添加窗口大小变化时的自适应
+    window.addEventListener('resize', function() {
+      chart.resize();
+    });
   }
 };
 
@@ -111,11 +113,11 @@ const initProfitChart = (chartRef: HTMLDivElement | null) => {
         text: "2024年利润\n(万元)",
         left: "left",
         color: "gray",
-        FontSize: 12,
+        fontSize: 12,  // 修正属性名
       },
       tooltip: {
         trigger: "item",
-        formatter: function (params) {
+        formatter: function (params: any) {  // 添加类型注解
           const companyName =
             params.dataIndex === 0
               ? data.huqingyutang.name
@@ -138,10 +140,11 @@ const initProfitChart = (chartRef: HTMLDivElement | null) => {
           min: 0,
           max: 10000,
           splitNumber: 4,
-          radius: "100%",
+          radius: "90%",  // 调整为90%避免溢出
           axisLine: {
             lineStyle: {
-              width: 5,
+              width: 10,  // 加粗轴线
+              color: [[1, '#f5f5f5']]  // 添加轴线背景色
             },
           },
           pointer: {
@@ -168,6 +171,10 @@ const initProfitChart = (chartRef: HTMLDivElement | null) => {
       ],
     };
     chart.setOption(option);
+    // 添加窗口大小变化时的自适应
+    window.addEventListener('resize', function() {
+      chart.resize();
+    });
   }
 };
 
@@ -184,11 +191,15 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
-  gap: 20px; /* 添加间距 */
+  height: 100vh; /* 使用视口高度确保容器足够大 */
+  gap: 20px; /* 增加间距 */
+  padding: 20px; /* 添加内边距 */
+  box-sizing: border-box; /* 确保padding不影响总尺寸 */
 }
+
 .dashboard {
-  width: 100%; /* 调整宽度 */
-  height: 100%; /* 固定高度 */
+  width: 100%;
+  height: 100%; /* 设置固定高度 */
+  border-radius: 8px; /* 添加圆角 */
 }
 </style>

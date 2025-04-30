@@ -1,6 +1,6 @@
 <template>
   <div class="doctor-skills-wordcloud">
-    <div ref="wordcloudChart" style="width: 100%; height: 110%"></div>
+    <div ref="wordcloudChart" style="width: 100%; height: 100%"></div>
   </div>
 </template>
 
@@ -121,5 +121,8 @@ onBeforeUnmount(() => {
 .doctor-skills-wordcloud {
   width: 100%;
   height: 100%;
+  border-radius: 8px;
+  padding: 5px;
+
 }
 </style>

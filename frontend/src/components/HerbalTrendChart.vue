@@ -1,16 +1,20 @@
-//中药产业趋势图 HerbalTrendChart.vue
 <template>
-  <div ref="chartRef" style="height: 350px"></div>
+<div class="herbal-trend-chart" style="height: 100%;margin-top: -5%">
+    <h3 >云南省中药材产业现状</h3>
+  <div ref="chartRef" style="height: 100%;margin-top:-10%">
+  </div>
+</div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, onUnmounted } from "vue";
 import * as echarts from "echarts";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const chartRef = ref<HTMLElement | null>(null);
 let chartInstance: echarts.ECharts | null = null;
 let timer: number | null = null;
-
 const renderChart = () => {
   if (!chartRef.value) return;
   
@@ -30,11 +34,6 @@ const renderChart = () => {
   };
 
   const option = {
-    title: {
-      text: "云南省中药产业现状",
-      subtext: "中药总产值与总产量",
-      left: "center",
-    },
     tooltip: {
       trigger: "axis",
       backgroundColor: "rgba(0, 0, 0, 0.6)",
@@ -125,6 +124,7 @@ const renderChart = () => {
   };
 
   chartInstance.setOption(option);
+  
   window.addEventListener("resize", () => chartInstance?.resize());
 
   // 自动轮播提示

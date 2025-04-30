@@ -1,9 +1,10 @@
 <template>
   <div class="companies">
     <div class="companies-background">
-      <div ref="mapContainer" class="map-container"></div>
+      <div ref="mapContainer" class="map-container">
+      </div>
       <div class="map-footer">
-        <span>数据来源：爱企查</span>
+        <span >数据来源：爱企查</span>
       </div>
 
       <!-- 右侧信息框 -->

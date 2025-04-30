@@ -1,7 +1,7 @@
 <template>
-  <div class="IncomeComparison" style="width: 90%; height: 100%; margin: auto">
-    <div ref="chartRef" style="width: 100%; height: 105%"></div>
-    <p style="color:gray;text-align:center;margin-top:10px;">近十年两家公司工业销售收入对比</p>
+  <div class="IncomeComparison">
+    <div class="Incomtitle">近十年两家公司工业销售收入对比</div>
+    <div ref="chartRef" style="width: 100%; height: 100%"></div>
   </div>
 </template>
 
@@ -64,8 +64,8 @@ function updateChart(startIdx: number) {
     backgroundColor: 'transparent',
     grid: {
       left: 60,
-      right: 30,
-      bottom: 40,
+      right: 10,
+      bottom: 80,
       top: 30,
     },
     tooltip: {
@@ -167,5 +167,14 @@ onBeforeUnmount(() => {
 <style scoped>
 .IncomeComparison {
   background-color: transparent;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+.Incomtitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 10px;
 }
 </style>

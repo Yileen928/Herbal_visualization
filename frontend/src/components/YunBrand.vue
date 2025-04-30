@@ -2,7 +2,6 @@
   <div
     class="chart-container"
     ref="chartContainer"
-    style="width: 100%; height: 100%"
   ></div>
 </template>
 
@@ -112,10 +111,10 @@ function initChart() {
   const option = {
     title: {
       text: "核心产品销售额与份额对比气泡图",
-      left: "left",
+      left: "center",
       textStyle: {
-        fontSize: 16,
-        color: "#000",
+        fontSize: 18,
+        color: "#666",
         fontWeight: "bold",
       },
     },

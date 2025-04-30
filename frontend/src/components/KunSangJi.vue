@@ -78,7 +78,7 @@ onMounted(() => {
       ],
       label: {
         color: '#333',
-        fontSize: 10,
+        fontSize: 8,
         fontWeight: 'bold'
       },
       lineStyle: {
@@ -97,7 +97,7 @@ onMounted(() => {
 
 <style scoped>
 .sankey-chart {
-  width: 110%;
+  width: 115%;
   height: 100%;
 }
 </style>

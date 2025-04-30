@@ -117,6 +117,8 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 100%;
   border-radius: 8px;
-  padding: 10px;
+  padding: 5px;
+
+  
 }
 </style>

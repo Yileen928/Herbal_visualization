@@ -1,0 +1,131 @@
+.map-container {
+  width: 100%;
+  height: 100vh; /* 使用视口高度确保全屏 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-image: url('../assets/images/background.JPG');
+  /* 指定背景图片路径 */
+  background-size: cover;
+  /* 确保背景图片覆盖整个容器 */
+  background-position: center;
+  /* 背景图片居中显示 */
+  background-repeat: no-repeat;
+}
+
+.china-map {
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 90vh;
+  margin: 20px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden; /* 防止内容溢出 */
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 24px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #9c8544;
+}
+
+#china-map+div[style*="南海诸岛"] {
+  display: none !important;
+}
+
+#bmap-container, #ynby-container {
+  width: 100%;
+  height: calc(100% - 2rem); /* 减去标题高度 */
+  position: absolute;
+  top: 2rem; /* 从标题下方开始 */
+  left: 0;
+  overflow: hidden; /* 防止地图溢出容器 */
+  z-index: 1; /* 确保地图在底层 */
+}
+
+/* 隐藏非中国区域 */
+.BMap_mask {
+  background: #f3f3f3 !important;
+}
+
+/* 强化省份边界 */
+.BMap_boundary {
+  stroke-width: 1.5px !important;
+  stroke: #666 !important;
+}
+
+/* 省份标签样式 */
+.BMap_label {
+  border: none !important;
+  background: transparent !important;
+  color: #333 !important;
+  font-weight: bold !important;
+  font-size: 12px !important;
+  z-index: 100 !important;
+}
+
+.mapTitle {
+  width: 100%;
+  height: 2rem;
+  font-size: 20px;
+  text-align: center;
+  position: relative;
+  z-index: 2; /* 确保标题在地图上方 */
+}
+
+/* 自定义提示框样式 */
+#map-tooltip {
+  position: absolute;
+  z-index: 10000;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  pointer-events: none;
+  transition: opacity 0.2s;
+  font-family: Arial, sans-serif;
+  max-width: 200px;
+  opacity: 0;
+  display: none;
+}
+
+#map-tooltip h4 {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+}
+
+#map-tooltip p {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+}
+
+#map-tooltip b {
+  color: #4CAF50;
+  font-weight: bold;
+}

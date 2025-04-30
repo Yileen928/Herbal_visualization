@@ -7,11 +7,10 @@ import HerbalProduct from '../views/HerbalProduct.vue'
 import Hci from '../views/Hci.vue'
 import TimeHistory from '../views/TimeHistory.vue'
 import Corona from '../views/Corona.vue'
-import Companies from '../views/companies.vue'
+import Companies from '../views/Companies.vue'
 import Yunnanbaiyao from '../views/Yunnanbaiyao.vue'
 import Competitor from '../views/Competitor.vue'
-import Herbal from '../views/Herbal.vue'  
-import test from '../views/test.vue'
+import Herbal from '../views/Herbal.vue'
 
 const routes = [
   {
@@ -73,11 +72,6 @@ const routes = [
     path: '/competitor',
     name: 'Competitor',
     component: Competitor
-  },
-  {
-    path: '/test',
-    name: 'test',
-    component: test
   }
 ]
 

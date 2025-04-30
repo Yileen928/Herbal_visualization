@@ -1,6 +1,6 @@
 <template>
-  <div class="YunAllProductd" style="width: 110%; height: 100%; margin: auto">
-    <div ref="chartRef" style="width: 100%; height: 115%"></div>
+  <div class="YunAllProductd">
+    <div ref="chartRef" style="width: 100%; height: 100%"></div>
   </div>
 </template>
 
@@ -224,7 +224,9 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .YunAllProductd {
-  border-radius: 8px;
-  padding: 4px;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  margin: auto;
 }
 </style>

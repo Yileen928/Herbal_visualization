@@ -1,14 +1,14 @@
 <template>
   <div class="Competitor">
     <div class="Competitor-background">
-      <h2 style="margin-top: -3%" @click="goToyunnanbaiyao">
+      <h2 class="page-title" @click="goToHci">
         云南昆中药VS杭州胡庆余堂
       </h2>
       <div class="container-grid">
-        <!-- 上排四个容器 -->
+        <!-- 上排三个容器 -->
         <div class="top-row">
           <div class="chart-container" id="container1">
-            <!-- 生产体系对比图-雷达图图 -->
+            <!-- 2024年利润及销售--仪表盘 -->
             <KunIncome />
           </div>
           <div class="chart-container" id="container7">
@@ -23,7 +23,7 @@
 
         <!-- 下排四个容器 -->
         <div class="bottom-row">
-          <div class="chart-container" id="container3">
+          <div class="chart-container" id="container3" style="height: 100%">
             <KunLeiDa />
           </div>
           <div class="chart-container" id="container4">
@@ -53,8 +53,8 @@ import KunCloud from "../components/KunCloud.vue";
 import { onMounted } from "vue";
 
 // 添加跳转方法
-const goToyunnanbaiyao = () => {
-  router.push("/yunnanbaiyao"); // 跳转到Yunnanbaiyao.vue
+const goToHci = () => {
+  router.push("/hci"); // 跳转到Hci.vue
 };
 
 const router = useRouter();

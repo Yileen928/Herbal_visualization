@@ -5,7 +5,7 @@
     <div v-else-if="commentData.length === 0" class="no-data">
       没有找到评论数据
     </div>
-    <div v-else ref="wordCloudChart" style="width: 100%; height: 110%"></div>
+    <div v-else ref="wordCloudChart" style="width: 100%; height: 100%"></div>
   </div>
 </template>
 
@@ -119,7 +119,7 @@ const initChart = () => {
         top: "center",
         width: "90%",
         height: "95%",
-        sizeRange: [12, 50],
+        sizeRange: [10, 45],
         rotationRange: [-45, 45],
         rotationStep: 15,
         gridSize: 8,
@@ -162,7 +162,7 @@ onMounted(() => {
 <style scoped>
 .CommentWordCloud {
   width: 100%;
-  height: 110%;
+  height: 100%;
   padding: 5px;
   box-sizing: border-box;
   position: relative;
@@ -174,7 +174,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 110%;
+  height: 100%;
   color: #666;
   font-size: 16px;
 }

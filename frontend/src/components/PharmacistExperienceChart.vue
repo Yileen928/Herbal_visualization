@@ -1,5 +1,5 @@
 <template>
-  <div class="DoctorExperienceChart" ref="echartsRef"></div>
+  <div class="DoctorExperienceChart" ref="echartsRef" ></div>
 </template>
 
 <script setup lang="ts">
@@ -45,9 +45,10 @@ const drawChart = (sortedData: { name: string; value: number }[]) => {
         text: '药师对工作经验的要求',
         left: 'left',
         padding: [15, 5],
-        textStyle: {
-          color: '#333' // 标题文字颜色
-        }
+      textStyle: {
+        color: "#333",
+        fontSize: 14,
+      },
       },
       tooltip: {
         trigger: 'item',
@@ -96,9 +97,9 @@ onMounted(() => {
 <style scoped>
 .DoctorExperienceChart {
   width: 100%; /* 确定图表容器的宽度 */
-  height: 370px; /* 设置图表容器的高度为固定值，确保图表显示正常 */
+   height: 100%; /* 设置图表容器的高度为固定值，确保图表显示正常 */
   margin-top: -3%; /* 调整顶部间距 */
-  background-color: #c0bab254; /* 设置背景颜色 */
   border-radius: 8px; /* 设置圆角 */
+
 }
 </style>
