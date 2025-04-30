@@ -16,7 +16,23 @@ body, html {
   align-items: center;
   width: 100vw;
   height: 100vh;
+
 }
+.progress-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  text-align: center;
+  z-index: 10;
+}
+
+.progress-container input[type="range"] {
+  width: 80%;
+  margin: 0 10px;
+}
+
 
 /* flipbook 本体设置尺寸并居中 */
 #flipbook {

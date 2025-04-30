@@ -22,28 +22,52 @@
         </div>
         <div class="page">
           <div class="page-bg" style="background-image: url('/images/背景.png');">
-            <img src="/images/滇龙胆草.png" class="page-img" alt="滇龙胆图" @click="goToHerbal('滇龙胆草')" />
+            <img src="/images/滇龙胆草.png" class="page-img" alt="滇龙胆图" @click="goToHerbal('滇龙胆')" />
           </div>
         </div>
         <div class="hard double"><img src="/images/img_3.png" alt="滇黄精图"/></div>
       </div>
-      
 
-      <div class="hard double"><img src="/images/img_3.png" alt="滇黄精图"/></div>
-</div>
+      <!-- 进度条组件 -->
+      <div class="progress-container">
+        <input
+  type="range"
+  min="1"
+  :max="totalPages"
+  v-model="currentPage"
+  @input="handleSliderChange"
+  class="progress-slider"
+/>
 
+        <span class="page-counter">{{ currentPage }} / {{ totalPages }}</span>
+      </div>
     </div>
 </template>
 
 <script setup>
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const currentPage = ref(1)
+const totalPages = 8
+let flipbookInstance = null
 
 const goToHerbal = (herbName) => {
   router.push({ path: '/herbal', query: { herbName } })
 }
+
+// 处理滑块实时输入
+const handleSliderInput = (event) => {
+  currentPage.value = parseInt(event.target.value)
+}
+
+const handleSliderChange = () => {
+  if (flipbookInstance && flipbookInstance.data('turn')) {
+    flipbookInstance.turn('page', currentPage.value)
+  }
+}
+
 
 onBeforeMount(() => {
   const script = document.createElement('script')
@@ -54,7 +78,9 @@ onBeforeMount(() => {
       console.error('turn.js still not available')
       return
     }
-    $('#flipbook').turn({
+
+    flipbookInstance = $('#flipbook')
+    flipbookInstance.turn({
       width: 1200,
       height: 800,
       autoCenter: true,
@@ -62,15 +88,19 @@ onBeforeMount(() => {
       elevation: 50,
       gradients: true,
       when: {
-        turning: function(event, page, view) {
-          // 翻页处理
+        turning: function (event, page) {
+          currentPage.value = page
         }
       }
     })
+
+    flipbookInstance.turn('page', currentPage.value)
   }
+
   script.onerror = () => {
     console.error('Error loading turn.js')
   }
+
   document.head.appendChild(script)
 })
 </script>

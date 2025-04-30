@@ -1,25 +1,29 @@
 <template>
   <div class="herbal">
     <div class="herbal-detail">
-      <h2>{{ herbalInfo.name }}</h2>
+      <!-- <h2>{{ herbalInfo.name }}</h2> -->
       <div class="info-content">
-        <p>性味：{{ herbalInfo.nature }}</p>
-        <p>功效：{{ herbalInfo.effect }}</p>
-        <p>归经：{{ herbalInfo.meridian.join('、') }}</p>
-        <p>产地：{{ herbalInfo.origin }}</p>
+        <!-- <p>性味：{{ herbalInfo.nature }}</p> -->
+        <!-- <p>功效：{{ herbalInfo.effect }}</p> -->
+        <!-- <p>归经：{{ herbalInfo.meridian.join('、') }}</p> -->
+        <!-- <p>产地：{{ herbalInfo.origin }}</p> -->
       </div>
     </div>
+
     <div class="herbal-list">
       <div class="herbal-png">
-        <img :src="herbalInfo.imageUrl || '/default-image.png'" :alt="herbalInfo.name" />
+        <!-- <img :src="herbalInfo.imageUrl || '/default-image.png'" :alt="herbalInfo.name" /> -->
+       <img src="/images/三七详情.png" alt="图片" />
       </div>
       <div class="herbal-data">
         <div class="herbal-chart">
-          <div ref="effectChart"></div>
+          <!-- <div ref="effectChart"></div> -->
+
         </div>
         <div class="herbal-map">
           <button class="product" @click="goToHerbalProduct">产品</button>
-          <div ref="distributionMap"></div>
+          <!-- <div ref="distributionMap"></div> -->
+
         </div>
       </div>
     </div>
@@ -27,12 +31,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   name: 'Herbal',
   data() {
     return {
+      /*
       herbalInfo: {
         name: '',
         nature: '',
@@ -43,8 +48,10 @@ export default {
         chartData: null,
         mapData: null
       }
+      */
     }
   },
+  /*
   async created() {
     const herbName = this.$route.query.herbName
     if (herbName) {
@@ -54,7 +61,6 @@ export default {
         })
         const data = response.data
         console.log(data)
-        // 检查数据完整性
         if (data && data.length > 0 && data[0].herb && data[0].returns) {
           this.processHerbalData(data[0])
         } else {
@@ -68,7 +74,9 @@ export default {
       }
     }
   },
+  */
   methods: {
+    /*
     processHerbalData(data) {
       const herb = data.herb
       const returnsData = data.returns
@@ -79,19 +87,18 @@ export default {
         effect: herb.efficacy || '未知功效',
         meridian: returnsData.map(item => item.returnName) || [],
         origin: herb.nationwideOrigin || herb.yunnanOrigin || '未知',
-        imageUrl: herb.image || '', // 如果 image 为空，前端可以显示默认图片
-        chartData: null, // 预留图表数据
-        mapData: null // 预留地图数据
+        imageUrl: herb.image || '',
+        chartData: null,
+        mapData: null
       }
     },
     initChart() {
-      // 初始化图表的方法
       console.log('初始化图表:', this.herbalInfo.chartData)
     },
     initMap() {
-      // 初始化地图的方法
       console.log('初始化地图:', this.herbalInfo.mapData)
     },
+    */
     goToHerbalProduct() {
       this.$router.push('/herbal-product')
     }
