@@ -42,6 +42,7 @@
         <span class="page-counter">{{ currentPage }} / {{ totalPages }}</span>
       </div>
     </div>
+    </div>
 </template>
 
 <script setup>

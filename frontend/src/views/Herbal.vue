@@ -1,43 +1,49 @@
 <template>
   <div class="herbal">
-    <div class="herbal-detail">
-      <!-- <h2>{{ herbalInfo.name }}</h2> -->
-      <div class="info-content">
-        <!-- <p>性味：{{ herbalInfo.nature }}</p> -->
-        <!-- <p>功效：{{ herbalInfo.effect }}</p> -->
-        <!-- <p>归经：{{ herbalInfo.meridian.join('、') }}</p> -->
-        <!-- <p>产地：{{ herbalInfo.origin }}</p> -->
-      </div>
-    </div>
+  <div class="herbal-info">
+    <div class="herbal-contant">
+      <div class="herbal-detail">
+        <div class="herbal-title"><!-- 标题 三七 -->
+           <div class="herbal-small"></div>
+           <div class="herbal-Classification">
+            <div class="herbal-Genus"><!-- 这是属 --></div>
+            <div class="herbal-Family"><!-- 这是科 --></div>
+           </div>
+          <h2 class="title">{{ herbalInfo.name }}</h2>
+        </div>
+        <div class="herbal-allInfor"><!-- 这是信息具体 释名之类 -->
+          <div class="herbal-name"> <p>【释名】</p><!-- 这是释名 --></div> 
+          <div class="herbal-nature"><p>【性味】{{ herbalInfo.nature }}</p></div>
+          <div class="herbal-effect"><p>【功效】{{ herbalInfo.effect }}</p></div>
+          <div class="herbal-disease"><p>【主治疾病】</p><!-- 这是疾病 --></div>
+        </div>
+        <div class="herbal-makeways"><!-- 这是炮制框 -->
 
-    <div class="herbal-list">
-      <div class="herbal-png">
-        <!-- <img :src="herbalInfo.imageUrl || '/default-image.png'" :alt="herbalInfo.name" /> -->
-       <img src="/images/三七详情.png" alt="图片" />
-      </div>
-      <div class="herbal-data">
-        <div class="herbal-chart">
-          <!-- <div ref="effectChart"></div> -->
+      
+          
 
         </div>
-        <div class="herbal-map">
-          <button class="product" @click="goToHerbalProduct">产品</button>
-          <!-- <div ref="distributionMap"></div> -->
-
-        </div>
+          
+        
       </div>
+    
+      <div class="herbal-img"><img src="/images/三七详情.png" alt=""></div>    
     </div>
+    <div class="herbal-date"></div>
+      
+  </div>
+  <div class="herbal-echarts"></div>
+    
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   name: 'Herbal',
   data() {
     return {
-      /*
       herbalInfo: {
         name: '',
         nature: '',
@@ -48,10 +54,8 @@ export default {
         chartData: null,
         mapData: null
       }
-      */
     }
   },
-  /*
   async created() {
     const herbName = this.$route.query.herbName
     if (herbName) {
@@ -61,6 +65,7 @@ export default {
         })
         const data = response.data
         console.log(data)
+        // 检查数据完整性
         if (data && data.length > 0 && data[0].herb && data[0].returns) {
           this.processHerbalData(data[0])
         } else {
@@ -74,9 +79,7 @@ export default {
       }
     }
   },
-  */
   methods: {
-    /*
     processHerbalData(data) {
       const herb = data.herb
       const returnsData = data.returns
@@ -87,18 +90,19 @@ export default {
         effect: herb.efficacy || '未知功效',
         meridian: returnsData.map(item => item.returnName) || [],
         origin: herb.nationwideOrigin || herb.yunnanOrigin || '未知',
-        imageUrl: herb.image || '',
-        chartData: null,
-        mapData: null
+        imageUrl: herb.image || '', // 如果 image 为空，前端可以显示默认图片
+        chartData: null, // 预留图表数据
+        mapData: null // 预留地图数据
       }
     },
     initChart() {
+      // 初始化图表的方法
       console.log('初始化图表:', this.herbalInfo.chartData)
     },
     initMap() {
+      // 初始化地图的方法
       console.log('初始化地图:', this.herbalInfo.mapData)
     },
-    */
     goToHerbalProduct() {
       this.$router.push('/herbal-product')
     }
