@@ -1,0 +1,74 @@
+/* 主容器样式 */
+.home {
+  /* 设置背景图片及其属性 */
+  background-image: url('../assets/images/background2.JPG');  /* 指定背景图片路径 */
+  background-size: cover;      /* 确保背景图片覆盖整个容器 */
+  background-position: center; /* 背景图片居中显示 */
+  background-repeat: no-repeat;/* 防止背景图片重复 *//* 容器尺寸设置 */
+  min-height: 100vh;          /* 最小高度为视口高度 */
+  width: 100vw;              /* 宽度为视口宽度 *//* 重置默认边距 */
+  margin: 0;
+  padding: 0;  /* Flex布局设置 */
+  display: flex;
+  flex-direction: column;     /* 子元素垂直排列 */
+  justify-content: center;    /* 垂直居中 */
+  align-items: center;        /* 水平居中 */
+  text-align: center;         /* 文本居中 *//* 定位设置 */
+  position: fixed;            /* 固定定位，防止滚动 */
+  top: 0;                    /* 顶部对齐 */
+  left: 0;                   /* 左侧对齐 */
+}
+.home-background {
+  /* 设置背景图片及其属性 */
+  background-image: url('../assets/images/background2.JPG');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: row-reverse; /* 改为垂直排列 */
+  width: 95%;
+  height: 90vh;  /* 改用视口高度 */
+  margin: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;  /* 改为相对定位 */
+}
+
+.home-content {
+  flex: 1;
+  width: 100%;
+}
+
+.home-map {
+  flex: 1;  /* 占据更多空间 */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-container {
+  /* 子容器样式 */
+  width: 80%;
+  height: 80%;
+  background-color: rgba(255, 255, 255, 0.8); /* 背景色 */
+  border-radius: 10px;                        /* 圆角边框 */
+}
+
+
+/* 按钮样式 */
+.home button {
+  padding: 10px 20px;        /* 内边距 */
+  font-size: 16px;           /* 字体大小 */
+  cursor: pointer;           /* 鼠标指针样式 */
+  margin-top: 20px;          /* 上方间距 */
+  background-color: #4CAF50; /* 按钮背景色 */
+  color: white;              /* 文字颜色 */
+  border: none;              /* 移除边框 */
+  border-radius: 4px;        /* 圆角边框 */
+  transition: background-color 0.3s; /* 背景色过渡动画 */
+}
+
+/* 按钮悬停效果 */
+.home button:hover {
+  background-color: #45a049; /* 悬停时的背景色 */
+}

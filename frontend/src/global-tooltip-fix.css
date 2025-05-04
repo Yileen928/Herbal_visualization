@@ -1,0 +1,20 @@
+/* Global fix for echarts tooltips */
+.echarts-tooltip,
+div[class^="echarts-tooltip"],
+div[class*="-tooltip"],
+.chart-container + div:not([class]) {
+  pointer-events: auto !important;
+  z-index: 99999 !important;
+}
+
+/* Ensure all chart containers have proper z-index */
+.chart-container {
+  position: relative;
+  z-index: 20;
+}
+
+/* Ensure all chart canvases can receive mouse events */
+.chart-container canvas {
+  pointer-events: auto !important;
+  z-index: 30 !important;
+}
