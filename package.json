@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@vueuse/motion": "^3.0.3",
+    "axios": "^1.8.4",
+    "chart.js": "^4.4.9",
+    "echarts-wordcloud": "^2.1.0"
+  }
+}
