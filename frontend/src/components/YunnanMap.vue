@@ -10,8 +10,8 @@ import yunnanMap from '../assets/yunnan.json'
 const mapContainer = ref<HTMLElement>()
 let chart: any = null
 
-// 定义事件
-const emit = defineEmits(['regionClick'])
+// 修改这里：将 defineEmits 的返回值赋给变量
+const emit = defineEmits(['region-click'])
 
 const option = {
   backgroundColor: 'transparent',
@@ -20,8 +20,8 @@ const option = {
     center: [101.8, 25.2],  // 调整中心点
     zoom: 1,  // 增加缩放比例
     aspectScale: 1,  // 调整地图长宽比
-    layoutCenter: ['50%', '50%'],  // 布局居中
-    layoutSize: '105%',    // 调整布局大小
+    layoutCenter: ['55%', '50%'],  // 布局居中
+    layoutSize: '85%',    // 调整布局大小
     show: true,
     roam: false,
     selectedMode: 'single',  // 添加选择模式
@@ -125,7 +125,7 @@ window.addEventListener('resize', () => {
 
 <style scoped>
 .yunnan-map {
-  width: 100%;  
+  width: 45vw;  
   height: 80vh; 
   margin: 0 auto; 
   border-radius: 8px;

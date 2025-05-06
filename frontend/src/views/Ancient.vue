@@ -10,34 +10,131 @@
             <img src="/images/三七.png" class="page-img" alt="三七图" @click="goToHerbal('三七')" />
           </div>
         </div>
+        <!-- 三七3D模型页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <ThreeModel modelPath="/models/sanqi.fbx" modelName="三七" />
+          </div>
+        </div>
+        <!-- 滇重楼图片页 -->
         <div class="page">
           <div class="page-bg" style="background-image: url('/images/背景.png');">
             <img src="/images/滇重楼.png" class="page-img" alt="滇重楼图" @click="goToHerbal('滇重楼')" />
           </div>
         </div>
+        <!-- 滇重楼3D模型页 -->
         <div class="page">
           <div class="page-bg" style="background-image: url('/images/背景.png');">
-            <img src="/images/滇黄精.png" class="page-img" alt="滇黄精图" @click="goToHerbal('滇黄精')" />
+            <ThreeModel modelPath="/models/dianchonglou.fbx" modelName="滇重楼" />
           </div>
         </div>
+        <!-- 天麻图片页 -->
         <div class="page">
           <div class="page-bg" style="background-image: url('/images/背景.png');">
-            <img src="/images/滇龙胆草.png" class="page-img" alt="滇龙胆图" @click="goToHerbal('滇龙胆')" />
+            <img src="/images/天麻.png" class="page-img" alt="天麻图" @click="goToHerbal('天麻')" />
           </div>
         </div>
-        <div class="hard double"><img src="/images/img_3.png" alt="滇黄精图"/></div>
-      </div>
-
-      <!-- 进度条组件 -->
+        <!-- 天麻3D模型页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <ThreeModel modelPath="/models/tianma.fbx" modelName="天麻" />
+          </div>
+        </div>        
+        <!-- 砂仁图片页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <img src="/images/砂仁.png" class="page-img" alt="砂仁图" @click="goToHerbal('砂仁')" />
+          </div>
+        </div>
+        <!-- 砂仁3D模型页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <ThreeModel modelPath="/models/sharen.fbx" modelName="砂仁" />
+          </div>
+        </div>
+        <!-- 灯盏花图片页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <img src="/images/灯盏花.png" class="page-img" alt="灯盏花图" @click="goToHerbal('灯盏花')" />
+          </div>
+        </div>
+        <!-- 灯盏花3D模型页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <ThreeModel modelPath="/models/dengzhanhua.fbx" modelName="灯盏花" />
+          </div>
+        </div>
+        <!-- 滇龙胆图片页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <img src="/images/滇龙胆草.png" class="page-img" alt="滇龙胆草图" @click="goToHerbal('滇龙胆')" />
+          </div>
+        </div>
+        <!-- 滇龙胆3D模型页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <ThreeModel modelPath="/models/dianlongdan.fbx" modelName="滇龙胆" />
+          </div>
+        </div>        
+        <!-- 云木香图片页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <img src="/images/云木香.png" class="page-img" alt="云木香图" @click="goToHerbal('云木香')" />
+          </div>
+        </div>
+        <!-- 云木香3D模型页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <ThreeModel modelPath="/models/yunmuxiang.fbx" modelName="云木香" />
+          </div>
+        </div>  
+        <!-- 云茯苓图片页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <img src="/images/云茯苓.png" class="page-img" alt="云茯苓图" @click="goToHerbal('云茯苓')" />
+          </div>
+        </div>
+        <!-- 云茯苓3D模型页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <ThreeModel modelPath="/models/云茯苓.fbx" modelName="云茯苓" />
+          </div>
+        </div> 
+        <!-- 云当归图片页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <img src="/images/云当归.png" class="page-img" alt="云当归图" @click="goToHerbal('云当归')" />
+          </div>
+        </div>
+        <!-- 云当归3D模型页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <ThreeModel modelPath="/models/云当归.fbx" modelName="云当归" />
+          </div>
+        </div>             
+        <!-- 铁皮石斛图片页 -->
+          <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <img src="/images/铁皮石斛.png" class="page-img" alt="铁皮石斛图" @click="goToHerbal('铁皮石斛')" />
+          </div>
+        </div>
+        <!-- 铁皮石斛3D模型页 -->
+        <div class="page">
+          <div class="page-bg" style="background-image: url('/images/背景.png');">
+            <ThreeModel modelPath="/models/铁皮石斛.fbx" modelName="铁皮石斛" />
+          </div>
+        </div>       
+        </div>        
+       <!-- 进度条组件 -->
       <div class="progress-container">
         <input
-  type="range"
-  min="1"
-  :max="totalPages"
-  v-model="currentPage"
-  @input="handleSliderChange"
-  class="progress-slider"
-/>
+        type="range"
+        min="1"
+        :max="totalPages"
+        v-model="currentPage"
+        @input="handleSliderChange"
+        class="progress-slider"
+      />
 
         <span class="page-counter">{{ currentPage }} / {{ totalPages }}</span>
       </div>
@@ -48,6 +145,7 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import ThreeModel from '../components/ThreeModel.vue'
 
 const router = useRouter()
 const currentPage = ref(1)
