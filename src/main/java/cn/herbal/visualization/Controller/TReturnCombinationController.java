@@ -45,6 +45,19 @@ public class TReturnCombinationController {
     public List<Map<String, Object>> getReturnCombinationsByHerbName(@RequestParam String herbName) {
         List<TReturnCombination> combinations = returnCombinationService.getReturnCombinationsByHerbName(herbName);
 
+        // 按herbName精确匹配优先排序
+        combinations.sort((c1, c2) -> {
+            String name1 = c1.getHerb().getHerbName();
+            String name2 = c2.getHerb().getHerbName();
+
+            boolean exactMatch1 = name1.equals(herbName);
+            boolean exactMatch2 = name2.equals(herbName);
+
+            if (exactMatch1 && !exactMatch2) return -1;
+            if (!exactMatch1 && exactMatch2) return 1;
+            return 0;
+        });
+
         Map<Long, Map<String, Object>> herbMap = new HashMap<>();
 
         for (TReturnCombination combination : combinations) {
@@ -61,6 +74,20 @@ public class TReturnCombinationController {
             ((List<Object>) herbMap.get(herbId).get("returns")).add(combination.getRet());
         }
 
-        return new ArrayList<>(herbMap.values());
+        // 将结果转换为List时，确保精确匹配的排在前面
+        List<Map<String, Object>> result = new ArrayList<>(herbMap.values());
+        result.sort((m1, m2) -> {
+            String name1 = ((THerbs) m1.get("herb")).getHerbName();
+            String name2 = ((THerbs) m2.get("herb")).getHerbName();
+
+            boolean exactMatch1 = name1.equals(herbName);
+            boolean exactMatch2 = name2.equals(herbName);
+
+            if (exactMatch1 && !exactMatch2) return -1;
+            if (!exactMatch1 && exactMatch2) return 1;
+            return 0;
+        });
+
+        return result;
     }
 }

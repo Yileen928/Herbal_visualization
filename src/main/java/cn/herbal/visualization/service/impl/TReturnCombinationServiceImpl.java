@@ -55,6 +55,20 @@ public class TReturnCombinationServiceImpl extends ServiceImpl<TReturnCombinatio
             returnCombinations = baseMapper.findByHerbName(herbName);
             long endTime = System.currentTimeMillis();
             logger.info("Database query took {} ms", endTime - startTime);
+
+            // 缓存前也进行排序
+            returnCombinations.sort((c1, c2) -> {
+                String name1 = c1.getHerb().getHerbName();
+                String name2 = c2.getHerb().getHerbName();
+
+                boolean exactMatch1 = name1.equals(herbName);
+                boolean exactMatch2 = name2.equals(herbName);
+
+                if (exactMatch1 && !exactMatch2) return -1;
+                if (!exactMatch1 && exactMatch2) return 1;
+                return 0;
+            });
+
             redisTemplate.opsForValue().set(cacheKey, returnCombinations, CACHE_DURATION, TimeUnit.SECONDS);
         }
 
