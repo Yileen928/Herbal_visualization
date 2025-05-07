@@ -3,7 +3,11 @@
     <div class="book-wrapper">
       <div id="flipbook">
         <div class="hard double"><img src="/images/首页.png" alt="封面首页" /></div>
-        <div class="page"><img src="/images/兰茂.png" alt="兰茂图" /></div>
+                <!-- 兰茂视频页 -->
+        <div class="page">
+          <video ref="lanmaoVideo"src="/videos/lanmao.mp4"class="page-video" controls preload="auto">
+          ></video>
+        </div>
         <div class="page"><img src="/images/介绍.png" alt="介绍图"/></div>
         <div class="page">
           <div class="page-bg" style="background-image: url('/images/背景.png');">
