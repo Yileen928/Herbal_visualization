@@ -1,6 +1,7 @@
 <template>
   <div class="Achievement">
-    <div class="Achievement-background">
+    <div class="intro-animation" v-show="showIntro"></div>
+    <div class="Achievement-background" :class="{ 'fade-in': !showIntro }">
       <div class="Achievement-content">
         <!-- 默认内容 -->
         <div v-if="!selectedRegion" class="region-detail default-content">
@@ -35,6 +36,16 @@ import YizuRegion from '../components/AreaYizu.vue'
 
 const router = useRouter()
 const selectedRegion = ref('')
+const showIntro = ref(true)  // 添加控制动画显示的状态
+
+onMounted(() => {
+  // GIF 播放 4 秒后淡出
+  setTimeout(() => {
+    showIntro.value = false
+  }, 2000)
+  
+  handleRegionClick('大理')
+})
 
 const regionComponents = {
   '大理': markRaw(DaliRegion),
@@ -60,4 +71,31 @@ onMounted(() => {
 
 <style scoped>
 @import './achievement.css';
+
+.intro-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/转场.gif');  
+  background-size: cover;
+  background-position: center;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.intro-animation[v-show="false"] {
+  opacity: 0;
+}
+
+.Achievement-background {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.Achievement-background.fade-in {
+  opacity: 1;
+}
 </style>

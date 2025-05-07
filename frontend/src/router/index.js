@@ -6,7 +6,6 @@ import Map from '../views/Map.vue'
 import HerbalProduct from '../views/HerbalProduct.vue'
 import Hci from '../views/Hci.vue'
 import TimeHistory from '../views/TimeHistory.vue'
-import Corona from '../views/Corona.vue'
 import Companies from '../views/Companies.vue'
 import Yunnanbaiyao from '../views/Yunnanbaiyao.vue'
 import Competitor from '../views/Competitor.vue'
@@ -52,11 +51,6 @@ const routes = [
     path: '/time-history',
     name: 'TimeHistory',
     component: TimeHistory
-  },
-  {
-    path: '/corona',
-    name: 'Corona',
-    component: Corona
   },
   {
     path: '/companies',

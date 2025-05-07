@@ -1,74 +1,141 @@
-/* 主容器样式 */
 .home {
-  /* 设置背景图片及其属性 */
-  background-image: url('../assets/images/background2.JPG');  /* 指定背景图片路径 */
+  background-image: url('../assets/images/background2.JPG');
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
   background-size: cover;      /* 确保背景图片覆盖整个容器 */
   background-position: center; /* 背景图片居中显示 */
-  background-repeat: no-repeat;/* 防止背景图片重复 *//* 容器尺寸设置 */
-  min-height: 100vh;          /* 最小高度为视口高度 */
-  width: 100vw;              /* 宽度为视口宽度 *//* 重置默认边距 */
-  margin: 0;
-  padding: 0;  /* Flex布局设置 */
-  display: flex;
-  flex-direction: column;     /* 子元素垂直排列 */
-  justify-content: center;    /* 垂直居中 */
-  align-items: center;        /* 水平居中 */
-  text-align: center;         /* 文本居中 *//* 定位设置 */
-  position: fixed;            /* 固定定位，防止滚动 */
-  top: 0;                    /* 顶部对齐 */
-  left: 0;                   /* 左侧对齐 */
-}
-.home-background {
-  /* 设置背景图片及其属性 */
-  background-image: url('../assets/images/background2.JPG');
-  background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
+}
+
+.main-content {
   display: flex;
-  flex-direction: row-reverse; /* 改为垂直排列 */
-  width: 95%;
-  height: 90vh;  /* 改用视口高度 */
-  margin: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: relative;  /* 改为相对定位 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in;
 }
 
-.home-content {
+.main-content.fade-in {
+  opacity: 1;
+}
+
+.right-container {
   flex: 1;
-  width: 100%;
+  border-right: 2px solid #8B4513;  /* 修改为右边框 */
+/* 添加淡棕色背景 */
 }
 
-.home-map {
-  flex: 1;  /* 占据更多空间 */
-  width: 100%;
+
+.left-container {
+  flex: 1;
+  border-left: 2px solid #8B4513;  /* 修改为左边框 */
+ /* 添加淡棕色背景 */
+}
+.homeleft {
+  margin-top: 15vh;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.home-container {
-  /* 子容器样式 */
-  width: 80%;
-  height: 80%;
-  background-color: rgba(255, 255, 255, 0.8); /* 背景色 */
-  border-radius: 10px;                        /* 圆角边框 */
+.homeleftpic {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;  /* 保持图片比例 */ /* 添加内边距，避免图片贴近边框 */
+  animation: rotate 20s linear infinite;  /* 添加旋转动画 */
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.intro-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/首页.gif');  /* 修改GIF路径 */
+  background-size: cover;
+  background-position: center;
+  z-index: 100;
+  transition: opacity 1s ease-out;
 }
 
 
-/* 按钮样式 */
-.home button {
-  padding: 10px 20px;        /* 内边距 */
-  font-size: 16px;           /* 字体大小 */
-  cursor: pointer;           /* 鼠标指针样式 */
-  margin-top: 20px;          /* 上方间距 */
-  background-color: #4CAF50; /* 按钮背景色 */
-  color: white;              /* 文字颜色 */
-  border: none;              /* 移除边框 */
-  border-radius: 4px;        /* 圆角边框 */
-  transition: background-color 0.3s; /* 背景色过渡动画 */
+.title {
+  writing-mode: vertical-rl;
+  text-align: center;
+  font-size: 155px;
+  font-weight: 400;
+  margin: 0;
+  color: #756565;
+  font-family: 'LiangPeiShengXiaoJian',sans-serif;
+  line-height: 1.2;
 }
 
-/* 按钮悬停效果 */
-.home button:hover {
-  background-color: #45a049; /* 悬停时的背景色 */
+.subtitle {
+  writing-mode: vertical-rl;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 400;
+  margin-top: 164pt;
+  color: #756565;
+  font-family: 'LiangPeiShengXiaoJian',sans-serif;
+  line-height: 1.5;
+}
+
+.vertical-text {
+  display: inline-block;
+  margin: 10px 0;
+}
+
+.vertical-text-small {
+  display: inline-block;
+  margin: 4px 0;  /* 恢复副标题字间距 */
+}
+
+.text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0 20px;
+  position: relative;
+  gap: 20px;  /* 恢复标题和副标题之间的间距 */
+}
+
+.button-container {
+  position: absolute;
+  right: -7vw;  /* 调整按钮位置，使其更靠近文字 */
+  top: 80%;
+  transform: translateY(-50%);
+  z-index: 10;  /* 确保按钮在上层 */
+}
+
+.challenge-button {
+  width: 120px;  /* 增加按钮大小 */
+  height: 120px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  display: block;  /* 确保图片正确显示 */
+}
+
+.challenge-button:hover {
+  transform: scale(1.2);
 }

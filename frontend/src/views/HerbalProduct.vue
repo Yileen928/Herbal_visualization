@@ -14,7 +14,7 @@
           <div
             id="map-container"
             ref="mapContainer"
-            style="width: 100%; height: 500px"
+            style="width: 100%; height: 530px"
           ></div>
           <div class="map-footer">
             <span>数据来源：数字云药平台、中医百科网站</span>
@@ -46,7 +46,7 @@ import MedicineTable from'../components/MedicineTable.vue' // 药品表格
 import PurchaseChart from '../components/PurchaseChart.vue' // 采购投入赋码图
 import PharmacyType from '../components/PharmacyType.vue' // 药店类型
 import PharmacyNum from '../components/PharmacyNum.vue' // 药店数量
-
+import 'echarts-gl'  // 需要安装并引入这个包
 const router = useRouter()
 const mapContainer = ref(null)
 
@@ -100,8 +100,9 @@ onMounted(() => {
         padding: [20, 0, 0, 0]
       },
     },
-    gird:{
-      top: '100%',
+    grid: {
+      top: '10%',
+      bottom: '10%'
     },
     tooltip: {
       trigger: 'item',
@@ -122,30 +123,78 @@ onMounted(() => {
     visualMap: {
       min: 0,
       max: 40,
-      left: 'left',
-      top: 'bottom',
+      left: '5%',
+      bottom: '5%',
       text: ['高', '低'],
       calculable: true,
       inRange: {
         color: ['#E8C4A3', '#C07F49'],
       },
+      textStyle: {
+        color: '#333'
+      }
     },
     series: [
       {
         name: '中药材品种',
-        type: 'map',
+        type: 'map3D',
         map: 'yunnan',
-        roam: false,
+        roam: true,
+        aspectScale: 0.85,
+        layoutCenter: ['50%', '50%'],
+        layoutSize: '95%',
+        label: {
+          show: false  // 将 show 设置为 false，隐藏标签
+        },
+        itemStyle: {
+          areaColor: '#E8C4A3',
+          borderColor: '#fff',
+          borderWidth: 1,
+          opacity: 1
+        },
         emphasis: {
           label: {
-            show: true,
+            show: false,  // 悬停时也不显示标签
+            color: '#fff',
+            fontSize: 13,
+            fontWeight: 'bold'
           },
+          itemStyle: {
+            areaColor: '#C07F49',
+            opacity: 1,
+            shadowBlur: 20,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        },
+        viewControl: {
+          distance: 150,      // 保持视角距离
+          alpha: 50,          // 调整俯仰角度，使视角更加平缓
+          beta: 0,            // 初始旋转角度
+          autoRotate: true,   // 保持自动旋转
+          autoRotateSpeed: 3, // 降低旋转速度，使其更加平滑
+          damping: 0.9,       // 增加阻尼系数，减少卡顿
+          rotateSensitivity: 0, // 禁用鼠标旋转，避免干扰
+          zoomSensitivity: 0,   // 禁用缩放
+          panSensitivity: 0,    // 禁用平移
+          animation: true,
+          animationDurationUpdate: 1500, // 增加动画时长
+          animationEasingUpdate: 'linear' // 使用线性缓动，更加流畅
+        },
+        light: {
+          main: {
+            intensity: 1.2,
+            shadow: true
+          },
+          ambient: {
+            intensity: 0.3
+          }
         },
         data: Object.entries(cityData).map(([name, data]) => ({
           name,
           value: data.medicineCount,
+          height: data.medicineCount * 0.8  // 将高度系数从 2 降低到 0.8
         })),
-      },
+      }
     ],
   }
 

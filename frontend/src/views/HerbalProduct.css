@@ -20,16 +20,25 @@
 .herbal-product-background {
   /* 设置背景图片及其属性 */
   background-image: url('../assets/images/background2.JPG');
+  min-height: 100vh;          /* 最小高度为视口高度 */
+  width: 100vw;              /* 宽度为视口宽度 *//* 重置默认边距 */
+  margin: 0;
+
+  align-items: center;        /* 水平居中 */
+  text-align: center;         /* 文本居中 *//* 定位设置 */
+  position: fixed;            /* 固定定位，防止滚动 */
+  top: 0;                    /* 顶部对齐 */
+  left: 0;  
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
-  flex-direction: row-reverse; /* 改为垂直排列 */
-  width: 95%;
-  height: 90vh;  /* 改用视口高度 */
-  margin: 20px;
+  flex-direction: row-reverse; /* 改为垂直排列 *//* 改用视口高度 */
+  padding: 5pt;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: relative;  /* 改为相对定位 */
+ /* 改为相对定位 */
+  justify-content: center;    /* 垂直居中 */
+ 
 }
 .herbal-product-container1{
     /* border: 2pt solid black;*/
