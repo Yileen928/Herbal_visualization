@@ -1,5 +1,5 @@
 <template>
-  <div ref="chartRef" style="width: 100%; height: 500px;"></div>
+  <div ref="chartRef" style="width: 60vw; height: 35vh;margin: 0;"></div>
 </template>
 
 <script>
@@ -83,16 +83,36 @@ export default {
         nodeMap.forEach((depth, name) => {
           let color;
           switch(depth) {
-            case 0: color = '#7BC074'; break; // 药用部位 - 绿色
-            case 1: color = '#709EF1'; break; // 阴阳属性 - 蓝色
-            case 2: color = '#F59363'; break; // 手足部位 - 橙色
-            case 3: color = '#E062AE'; break; // 经络 - 紫色
-            default: color = '#999';
+            case 0: {
+              // 根据药用部位分配不同颜色
+              if (name.includes('根')) {
+                color = '#B7A28E';  // 根部 - 深褐色
+              } else if (name.includes('茎')) {
+                color = '#B8A38F';  // 茎部 - 浅褐色
+              } else if (name.includes('叶')) {
+                color = '#E7D0BA';  // 叶部 - 浅绿褐色
+              } else if (name.includes('花')) {
+                color = '#F3E0D5';  // 花部 - 粉色
+              } else {
+                color = '#DBC1B5';  // 其他部位 - 中性色
+              }
+              break;
+            }
+            case 1: color = '#E7D0BA'; break;  // 阴阳属性
+            case 2: color = '#B3BCAE'; break;  // 手足部位
+            case 3: {
+              // 经络层使用多种颜色
+              const colors = ['#CD866D', '#B3BCAE', '#707263', '#57625B'];
+              const randomIndex = Math.floor(Math.random() * colors.length);
+              color = colors[randomIndex];
+              break;
+            }
+            default: color = '#E4CB97';
           }
           nodes.push({ 
             name,
             itemStyle: { color },
-            depth // 显式设置层级确保正确排序
+            depth
           });
         });
 
@@ -175,21 +195,27 @@ export default {
               focus: 'adjacency'
             },
             lineStyle: {
+              color: 'source',
               curveness: 0.5,
-              opacity: 0.3
+              opacity: 0.4,  // 降低透明度使颜色更柔和
+              gradient: {
+                enable: true
+              }
             },
-            nodeAlign: 'right',
-            layoutIterations: 0,
+            nodeAlign: 'left',
+            layoutIterations: 32,
+            left: '5%',
+            right: '5%',
             label: {
               color: '#333',
               fontSize: 12,
-              position: 'right' // 确保标签显示在节点右侧
+              position: 'right'
             },
             levels: [
-              { depth: 0, itemStyle: { color: '#7BC074' } },
-              { depth: 1, itemStyle: { color: '#709EF1' } },
-              { depth: 2, itemStyle: { color: '#F59363' } },
-              { depth: 3, itemStyle: { color: '#E062AE' } }
+              { depth: 0, itemStyle: { color: '#B7A28E' } },
+              { depth: 1, itemStyle: { color: '#E7D0BA' } },
+              { depth: 2, itemStyle: { color: '#F3E0D5' } },
+              // 第四层不设置固定颜色，使用随机分配的颜色
             ]
           }]
         };

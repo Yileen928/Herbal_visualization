@@ -19,6 +19,9 @@
           <div class="herbal-disease"><p>【主治疾病】{{herbalInfo.indications}}</p></div>
         </div>
         <div class="herbal-makeways"><!-- 这是炮制框 -->
+          <div class="herbal-makeways-title">
+            <h3 class="makeways-title">炮制方法</h3>
+          </div>
           <img :src="herbalInfo.Preparation" alt="炮制" style="width: 557px; height: 94%; margin-top: 5pt;">
         </div>
         
@@ -27,11 +30,11 @@
       <div class="herbal-img"><img :src="herbalInfo.herbImageArt" alt=""></div>    
     </div>
     <div class="herbal-data">
-      <div class="herbal-data-ancient">
-
+      <div class="herbal-data-ancient" @click="goToAncient">
+        <Zigzag :herbName="herbalInfo.name" />
       </div>
-      <div class="herbal-data-map">
-        <button class="map-button" @click="goToMap">查看分布地图</button>
+      <div class="herbal-data-map" @click="goToHerbalProduct">
+        <YunnanMap :herbName="herbalInfo.name" />
       </div>
       
     </div>
@@ -39,9 +42,13 @@
   </div>
   <div class="herbal-echarts">
     <div class="herbal-food">
-
+      <div class="herbal-food-title">
+        <h3 class="food-title">药膳搭配</h3>
+      </div>  
+      <img :src="herbalInfo.food" alt="药膳" style="width: 638px; height: 187px; margin-top: 5%;">
     </div>
     <div class="herbal-picture">
+      <SankeyChart :herbName="herbalInfo.name" />
     </div>
   </div>
     
@@ -50,9 +57,18 @@
 
 <script>
 import axios from 'axios'
+import SankeyChart from '../components/SankeyChart.vue'
+import Zigzag from '../components/Zigzag_area.vue'
+import YunnanMap from '../components/HerbalMap.vue'
+
 
 export default {
   name: 'Herbal',
+  components: {
+    SankeyChart, // Add a comma here
+    Zigzag, // Ensure Zigzag is correctly registered
+    YunnanMap
+  },
   data() {
     return {
       herbalInfo: {
@@ -67,6 +83,7 @@ export default {
         Preparation: '',
         meridian: [],
         origin: '',
+        food: '',
         chartData: null,
         mapData: null
       }
@@ -76,7 +93,7 @@ export default {
     const herbName = this.$route.query.herbName
     if (herbName) {
       try {
-        const response = await axios.get(`http://106.55.169.134:10010/herbs/search`, {
+        const response = await axios.get(`http://121.4.116.71:10010/herbs/search`, {
           params: { herbName: decodeURIComponent(herbName) }
         })
         const data = response.data
@@ -112,6 +129,7 @@ export default {
         origin: herb.nationwideOrigin || herb.yunnanOrigin || '未知',
         herbImageArt: herb.herbImageArt || '', // 如果 image 为空，前端可以显示默认图片
         Preparation: herb.herbImagePreparation || '',// 炮制
+        food: herb.herbImage4 || '',// 药膳
         chartData: null, // 预留图表数据
         mapData: null // 预留地图数据
       }
@@ -132,6 +150,11 @@ export default {
         path: '/map',
         query: { herbName: this.herbalInfo.name }
       })
+    },
+    goToAncient() {
+      this.$router.push({
+        path: '/ancient',
+      })
     }
   }
 }
@@ -139,12 +162,7 @@ export default {
 
 <style>
 @import './Herbal.css';
-.herbal-data-map {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
+
 
 .map-button {
   padding: 10px 20px;
@@ -160,4 +178,13 @@ export default {
 .map-button:hover {
   background-color: #45a049;
 }
+
+.herbal-charts-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+
 </style>

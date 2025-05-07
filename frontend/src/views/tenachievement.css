@@ -1,0 +1,28 @@
+.ten-achievement {
+  background-image: url('/images/tenachievement.svg');
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  background-size: cover;      /* 确保背景图片覆盖整个容器 */
+  background-position: center; /* 背景图片居中显示 */
+  background-repeat: no-repeat;
+}
+.background-container {
+  background-image: url('../assets/images/background2.JPG');
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  background-size: cover;      /* 确保背景图片覆盖整个容器 */
+  background-position: center; /* 背景图片居中显示 */
+  background-repeat: no-repeat;
+}

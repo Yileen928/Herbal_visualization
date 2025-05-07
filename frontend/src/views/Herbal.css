@@ -10,7 +10,7 @@
     background-position: center;
     background-repeat: no-repeat;
     margin: 0;
-    padding: 0;
+    padding: 1vh 1vw;
     position: fixed;
     top: 0;
     left: 0;
@@ -21,60 +21,62 @@
 .button{
     width: 10%;
     height: 10%;
-    border: aqua solid 1px;
+    
     border-radius: 8px;
 }
 .herbal-info{
     display: flex;
     flex: 2;
-    border: aqua solid 1px;
+    
     box-sizing: border-box; /* 确保padding计入总宽高 */
 }
 
 
 .herbal-contant{
     display: flex;
-    border: 2pt rgb(192, 127, 127) solid;
     flex: 5;
 }
 .herbal-data{
     display: flex;
     flex-direction: column;
     flex: 2;
-    border: rgb(84, 203, 80) solid 2px;
+    
     
 }
 .title{
     flex: 3;
-    font-size: 80px;
-    font-weight: bold;
+    font-size: 85px;
+    font-weight: 400;
     color: #fdfdfd;
     font-family: 'LiangPeiShengXiaoJian',sans-serif;   
 }
 
 .herbal-small{
-    flex: 1;
-    border: rgb(136, 136, 223) solid 1px;
+    flex: 2;
+    
 
 }
 .herbal-Classification{
-    flex: 2;
-    border: rgb(9, 9, 236) solid 1px;
-    font-size: 20px;
-    line-height: 1.5;
-    margin: 0 auto;
-    padding: 20px 0;
+    flex: 1.2;
+    font-family: 'LiangPeiShengXiaoJian', sans-serif;
+    font-size: 34px;
+    padding: 9px 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
 }
 
 .herbal-border{
     width: 90px;
-    border: rgb(9, 9, 236) solid 1px;
+   
 }
 
+
+.herbal-picture{
+    flex: 5.3;
+
+    
+}
 @font-face {
     font-family: 'LiangPeiShengXiaoJian';
     src: url('../assets/fonts/LiangPeiShengXiaoJian-1.ttf') format('truetype');
@@ -84,20 +86,19 @@
 
 .herbal-echarts {
     flex: 1;
-    border: rgb(136, 136, 223) solid 1px;
     display: flex;
 
 }
 .herbal-img {
 flex: 5.3;
-border: rgb(168, 249, 6) solid 1px;
+
 }
 
 .herbal-detail {
     flex: 4.7;
     display: flex;
     flex-direction: column;
-    border: rgb(145, 4, 4) solid 1px;
+    
 }
 
 .herbal img {
@@ -116,27 +117,68 @@ border: rgb(168, 249, 6) solid 1px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     
 }
-
+.herbal-makeways-title{
+    flex: 2.4;
+    background: rgba(158, 173, 128, 0.41);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 30%;
+    margin: 5pt;
+    border-radius: 10px;
+}
+.herbal-food-title{
+    flex: 0.4;
+    background: rgba(158, 173, 128, 0.41);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    width: 30%;
+    margin: 5pt;
+    display: flex; 
+    justify-content: center; 
+    border-radius: 10px;
+}
 .herbal-allInfor{
     flex: 5;
     display: flex;
     flex-direction: column;
-    border: rgb(192, 127, 127) solid 2px;
+    
 }
 .herbal-makeways{
     flex: 2.8;
+    display: flex;
+    flex-direction: column;
+
+}
+.herbal-makeways img{
+    flex: 7.6;
+}
+.makeways-title{
+    font-family: 'LiangPeiShengXiaoJian', sans-serif;
+    font-size: 34px;
+    color: #fdfdfd;
+    font-weight: 400;
+    margin: 5pt;
+}
+.food-title{
+    font-family: 'LiangPeiShengXiaoJian', sans-serif;
+    font-size: 34px;
+    color: #fdfdfd;
+    font-weight: 400;
+    margin: 5pt;
 }
 .herbal-data-ancient{
     flex: 5;
-    border: rgb(192, 127, 127) solid 2px;
+    
+    
 }
 .herbal-data-map{
     flex: 5;
-    border: rgb(64, 55, 55) solid 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .herbal-food{
-    flex: 4;
-    border: rgb(192, 127, 127) solid 2px;
+    flex: 2.7;
+    display: flex;
+    flex-direction: column;
 }
 
 

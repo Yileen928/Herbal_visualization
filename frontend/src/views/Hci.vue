@@ -1,7 +1,7 @@
 <template>
   <div class="hci">
     <div class="hci-background">
-      <h1>各省药师医师招聘数量</h1>
+      <h1 @click="goToTenAchievement" style="cursor: pointer;">各省药师医师招聘数量</h1>
       <div class="container-grid" style="gap: 12%">
         <!-- 上排三个容器 -->
         <div class="top-row" style="height: 40%; margin-top: -4%">
@@ -82,6 +82,10 @@ import DoctorSkillsWordCloud from "../components/DoctorSkillsWordCloud.vue";
 import DoctorPharmactist from "../components/DoctorPharmactist.vue";
 
 const router = useRouter();
+
+const goToTenAchievement = () => {
+  router.push('/ten-achievement');
+};
 </script>
 
 <style>

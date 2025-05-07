@@ -10,6 +10,7 @@ import Companies from '../views/Companies.vue'
 import Yunnanbaiyao from '../views/Yunnanbaiyao.vue'
 import Competitor from '../views/Competitor.vue'
 import Herbal from '../views/Herbal.vue'
+import TenAchievement from '../views/tenachievement.vue'
 
 const routes = [
   {
@@ -66,6 +67,11 @@ const routes = [
     path: '/competitor',
     name: 'Competitor',
     component: Competitor
+  },
+  {
+    path: '/ten-achievement',
+    name: 'TenAchievement',
+    component: TenAchievement
   }
 ]
 
