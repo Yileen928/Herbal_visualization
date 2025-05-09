@@ -1,7 +1,7 @@
 <template>
   <div class="Competitor">
     <div class="Competitor-background">
-      <h2 class="page-title" @click="goToHci">
+      <h2 class="page-title" @click="goToRecruitment">
         云南昆中药VS杭州胡庆余堂
       </h2>
       <div class="container-grid">
@@ -53,8 +53,8 @@ import KunCloud from "../components/KunCloud.vue";
 import { onMounted } from "vue";
 
 // 添加跳转方法
-const goToHci = () => {
-  router.push("/hci"); // 跳转到Hci.vue
+const goToRecruitment = () => {
+  router.push("/herbal-recruitment"); // 跳转到Hci.vue
 };
 
 const router = useRouter();

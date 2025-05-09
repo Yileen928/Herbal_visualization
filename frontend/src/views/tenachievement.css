@@ -1,5 +1,5 @@
 .ten-achievement {
-  background-image: url('/images/tenachievement.svg');
+  background-image: url('https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/tenachievement.svg');
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -25,4 +25,14 @@
   background-size: cover;      /* 确保背景图片覆盖整个容器 */
   background-position: center; /* 背景图片居中显示 */
   background-repeat: no-repeat;
+}
+.button-hci {
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #56a05800;
+  color: white;
+  width: 19%;
+  height: 23%;
 }
