@@ -153,7 +153,7 @@ import ThreeModel from '../components/ThreeModel.vue'
 
 const router = useRouter()
 const currentPage = ref(1)
-const totalPages = 8
+const totalPages = 22
 let flipbookInstance = null
 
 const goToHerbal = (herbName) => {
