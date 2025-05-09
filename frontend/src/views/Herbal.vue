@@ -93,7 +93,7 @@ export default {
     const herbName = this.$route.query.herbName
     if (herbName) {
       try {
-        const response = await axios.get(`http://121.4.116.71:10010/herbs/search`, {
+        const response = await axios.get(`/api/herbs/search`, {
           params: { herbName: decodeURIComponent(herbName) }
         })
         const data = response.data

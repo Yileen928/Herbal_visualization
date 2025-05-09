@@ -12,7 +12,7 @@ let chartInstance = null;
 const fetchData = async () => {
   try {
     const response = await fetch(
-      "http://106.55.169.134:10010/store/type/counts"
+      "/api/store/type/counts"
     );
     if (!response.ok) {
       throw new Error("网络请求失败");

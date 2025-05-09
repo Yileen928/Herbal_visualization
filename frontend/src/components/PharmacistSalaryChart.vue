@@ -24,7 +24,7 @@ const resizeChart = () => {
 // 模拟获取数据的函数
 async function fetchData() {
   const response = await fetch(
-    "http://106.55.169.134:10010/medical/pay/counts"
+    "/api/medical/pay/counts"
   );
   const data = await response.json();
 

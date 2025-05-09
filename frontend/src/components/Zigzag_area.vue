@@ -62,7 +62,7 @@ export default {
     async fetchData(name) {
       try {
         const res = await axios.get(
-          `http://121.4.116.71:10010/book/search?herbsName=${encodeURIComponent(
+          `/api/book/search?herbsName=${encodeURIComponent(
             name
           )}`
         );

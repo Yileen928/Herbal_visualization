@@ -35,7 +35,7 @@ const staticData = [
  */
 const fetchApiData = async () => {
   try {
-    const response = await axios.get('http://106.55.169.134:10010/yearOcc/all', {
+    const response = await axios.get('/api/yearOcc/all', {
       timeout: 5000 // 5秒超时
     })
     return response.data.map((item: any) => ({

@@ -34,7 +34,7 @@ let autoTimer: any = null;
 // 请求单个产品数据
 const fetchProductData = async (productName: string) => {
   const res = await fetch(
-    `http://106.55.169.134:10010/product/countDate?productName=${encodeURIComponent(
+    `/api/product/countDate?productName=${encodeURIComponent(
       productName
     )}`
   );

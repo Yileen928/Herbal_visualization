@@ -23,8 +23,8 @@ onMounted(() => {
   /* ==================== 数据获取与处理 ==================== */
   Promise.all([
     // 同时获取两种药品数据
-    fetch('http://106.55.169.134:10010/product/countPlace?productName=云南白药蒲地蓝消炎片').then(res => res.json()),
-    fetch('http://106.55.169.134:10010/product/countPlace?productName=安宫牛黄丸').then(res => res.json())
+    fetch('/api/product/countPlace?productName=云南白药蒲地蓝消炎片').then(res => res.json()),
+    fetch('/api/product/countPlace?productName=安宫牛黄丸').then(res => res.json())
   ])
     .then(([data1, data2]) => {
       // 数据存储容器

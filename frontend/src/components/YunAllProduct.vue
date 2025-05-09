@@ -23,7 +23,7 @@ let currentStart = 0;
 
 async function fetchProductComments(): Promise<ProductData[]> {
   try {
-    const res = await fetch('http://106.55.169.134:10010/comments/all');
+    const res = await fetch('/api/comments/all');
     if (!res.ok) {
       console.error('接口请求失败:', res.statusText);
       return [];

@@ -1,110 +1,16 @@
-/* 主容器样式 - 覆盖整个视口作为背景 */
-.hci {
-  /* 背景图片设置 */
-  background-image: url('../assets/images/background.JPG');
-  background-size: cover;       /* 背景图覆盖整个容器 */
-  background-position: center;  /* 背景图居中 */
-  background-repeat: no-repeat; /* 背景图不重复 */
+
+  .background-container {
+    background-image: url('../assets/images/background2.JPG');
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    background-size: cover;      /* 确保背景图片覆盖整个容器 */
+    background-position: center; /* 背景图片居中显示 */
+    background-repeat: no-repeat;
+  }
   
-  /* 尺寸和定位 */
-  min-height: 100vh;            /* 最小高度为视口高度 */
-  width: 100vw;                 /* 宽度为视口宽度 */
-  margin: 0;
-  padding: 0;
-  
-  /* 弹性布局设置 */
-  display: flex;
-  flex-direction: column;       /* 垂直排列子元素 */
-  justify-content: center;      /* 垂直居中 */
-  align-items: center;          /* 水平居中 */
-  text-align: center;
-  
-  /* 固定定位 */
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-/* 内容背景容器 - 半透明毛玻璃效果 */
-.hci-background {
-  /* 尺寸设置 */
-  width: 90%;                  /* 宽度为父容器的90% */
-  height: 90vh;                /* 高度为视口的90% */
-  
-  /* 弹性布局 */
-  display: flex;
-  flex-direction: column;      /* 垂直排列 */
-  justify-content: center;     /* 垂直居中 */
-  align-items: center;         /* 水平居中 */
-  
-  /* 边框和间距 */
-  margin: 20px;
-  border: #45a049 1px solid;   /* 绿色边框 */
-  border-radius: 10px;         /* 圆角边框 */
-  padding: 20px;
-  
-  /* 背景效果 */
-  position: relative;
-  z-index: 2;
-  background-color: rgba(255, 255, 255, 0.3);  /* 半透明白色背景 */
-  backdrop-filter: blur(5px);                  /* 毛玻璃效果 */
-}
-
-/* 标题样式 */
-.hci h1 {
-  color: #333;                 /* 深灰色文字 */
-  position: relative;
-  top: -6%;                    /* 向上微调位置 */
-  margin-bottom: 20px;         /* 底部间距 */
-}
-
-/* 图表网格容器 - 包含上下两行 */
-.container-grid {
-  width: 100%;                /* 宽度填满父容器 */
-  display: flex;
-  flex-direction: column;      /* 垂直排列两行 */
-  gap: 20px;                   /* 行间距 */
-  background-color:transparent;
-}
-
-/* 顶部行 - 包含3个图表容器 */
-.top-row {
-  display: flex;
-  justify-content: space-between;  /* 子元素平均分布 */
-  height: 40%;                     
-  gap: 20px;                       /* 图表间距 */
-  background-color:transparent;
-}
-
-/* 底部行 - 包含4个图表容器 */
-.bottom-row {
-  display: flex;
-  justify-content: space-between;  /* 子元素平均分布 */
-  height: 35%;                     
-  gap: 20px;                       /* 图表间距 */
-  background-color:transparent;
-}
-
-/* 图表容器通用样式 */
-.chart-container {
-  border-radius: 8px;                          /* 圆角 */
-  padding: 10px;                               /* 内边距 */
-  background-color:transparent;
-  flex: 1;                                     /* 弹性填充可用空间 */
-}
-
-/* 顶部行图表容器 - 3个平均分配 */
-.top-row .chart-container {
-  /* flex: 1 1 30%;                           */
-  /* background-color:transparent; */
-}
-
-
-div #container3.chart-container{
-  width: 100%;
-  height: 90%;
-}
-/* 底部行图表容器 - 4个平均分配 */
-.bottom-row .chart-container {
-  flex: 1 1 25%;  /* 基础尺寸25%，可伸缩 */
-}

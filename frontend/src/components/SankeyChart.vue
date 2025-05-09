@@ -37,7 +37,7 @@ export default {
     },
     async fetchData(herbName) {
       try {
-        const response = await axios.get(`http://121.4.116.71:10010/song/search?herbsName=${herbName}`);
+        const response = await axios.get(`/api/song/search?herbsName=${herbName}`);
         const rawData = response?.data || [];
         
         console.log('原始数据:', rawData);

@@ -30,7 +30,7 @@ const fetchData = async () => {
     loading.value = true;
     error.value = null;
     const response = await fetch(
-      "http://106.55.169.134:10010/medical/skills/top20"
+      "/api/medical/skills/top20"
     );
     if (!response.ok) throw new Error("网络响应不正常");
     const data = await response.json();

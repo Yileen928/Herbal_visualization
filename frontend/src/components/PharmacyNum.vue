@@ -23,7 +23,7 @@ const provinceInfo = ref([]); // 用于存储省会信息
 const fetchPharmacyData = async () => {
   try {
     const response = await fetch(
-      "http://106.55.169.134:10010/store/city/counts"
+      "/api/store/city/counts"
     );
     const data = await response.json();
     return data;
