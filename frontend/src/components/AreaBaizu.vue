@@ -5,13 +5,13 @@
         <h3>白族医药</h3>
         <div class="dali-Pagodas">
           <div class="pagodas pagodas-left" @click="showContent('left')">
-            <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//左塔.svg" alt="左塔">
+            <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/左塔.svg" alt="左塔">
           </div>
           <div class="pagodas pagodas-center" @click="showContent('center')">
-            <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//中塔.svg" alt="中塔">
+            <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/中塔.svg" alt="中塔">
           </div>
           <div class="pagodas pagodas-right" @click="showContent('right')">
-            <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//右塔.svg" alt="右塔">
+            <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/右塔.svg" alt="右塔">
           </div>
         </div>
       </div>
@@ -36,9 +36,9 @@
   const currentView = ref('pagodas');
   
   const detailImages = {
-    left: "https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//历史沿革.svg",
-    center: "https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//医教融合.png",
-    right: "https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//现代白族医药发展.png"
+    left: "https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/历史沿革.svg",
+    center: "https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/医教融合.png",
+    right: "https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/现代白族医药发展.png"
   };
   
   const detailImage = computed(() => detailImages[currentView.value]);
@@ -124,7 +124,7 @@
     z-index: 10;
     width: 56px;
     height: 63px;
-    background: url(https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//三塔返回.svg);
+    background: url(https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/三塔返回.svg);
     background-size: cover;
     transition: all 0.3s;
   }

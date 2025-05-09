@@ -19,7 +19,7 @@
         <img :src="navItems[activeIndex].detailImage" :alt="navItems[activeIndex].title + '的详细图片'" class="detail-image">
       </div>
       <div v-else class="placeholder">
-        <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族默认.png" alt="/placeholder">
+        <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族默认.png" alt="/placeholder">
       </div>
     </div>
   </div>
@@ -31,36 +31,36 @@ import { ref } from 'vue';
 // 导航数据
 const navItems = ref([
   {
-    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族导航1.png',
-    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族1.png',
+    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族导航1.png',
+    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族1.png',
   },
   {
-    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族导航2.png',
-    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族2.png',
+    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族导航2.png',
+    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族2.png',
 
   },
   {
-    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族导航3.png',
+    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族导航3.png',
     title: '彝族节日',
-    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//detail-festival.jpg',
+    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/detail-festival.jpg',
     description: '火把节是彝族最盛大的传统节日...'
   },
   {
-    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族导航4.png',
+    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族导航4.png',
     title: '彝族饮食',
-    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//detail-food.jpg',
+    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/detail-food.jpg',
     description: '彝族饮食以苦荞、土豆、羊肉为主...'
   },
   {
-    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族导航5.png',
+    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族导航5.png',
     title: '彝族音乐',
-    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//detail-music.jpg',
+    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/detail-music.jpg',
     description: '彝族民歌形式多样，月琴是特色乐器...'
   },
   {
-    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族导航6.png',
+    icon: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族导航6.png',
     title: '彝族文字',
-    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//detail-writing.jpg',
+    detailImage: 'https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/detail-writing.jpg',
     description: '彝文是世界上最古老的文字之一...'
   }
 ]);
@@ -83,7 +83,7 @@ const showDetail = (index) => {
 .Navigationbar {
   display: flex;
   flex: 2;
-  background: url(https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//彝族导航.png);
+  background: url(https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/彝族导航.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 95% 95%;

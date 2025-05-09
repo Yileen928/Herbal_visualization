@@ -78,7 +78,7 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('	https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//转场.gif');  
+  background-image: url('	https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images/转场.gif');  
   background-size: cover;
   background-position: center;
   z-index: 100;
