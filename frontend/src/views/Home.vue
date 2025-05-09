@@ -6,7 +6,7 @@
       <div class="main-content" :class="{ 'fade-in': !showIntro }">
         <div class="left-container">
           <div class="homeleft">
-            <img src="/images/首页左侧.png" alt="首页左侧" class="homeleftpic">
+            <img src="	https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//首页左侧.png" alt="首页左侧" class="homeleftpic">
           </div>
         </div>
         <div class="text-container">
@@ -36,7 +36,7 @@
           </h2>
           <div class="button-container">
             <img 
-              src="/images/homebutton.png" 
+              src="	https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//homebutton.png" 
               alt="跳转按钮" 
               class="challenge-button"
               @click="goAchievement"

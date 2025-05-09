@@ -2,12 +2,12 @@
     <div class="Kunming-region">
       <div class="detail-content">
         <router-link to="/ancient">
-          <img src="/images/acientbutton.png" alt="acientbutton" class="ancientbutton">
+          <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//acientbutton.png" alt="acientbutton" class="ancientbutton">
         </router-link>
       </div>
        
       <div class="detail-section">
-        <img src="/images/兰茂生平.png" alt="兰茂" class="lanmao">
+        <img src="https://csx-1333791515.cos.ap-chengdu.myqcloud.com/herbs_pc_jt/images//兰茂生平.png" alt="兰茂" class="lanmao">
       </div>
     </div>
   </template>
