@@ -37,7 +37,7 @@
     flex: 7.8;
   }
   .ancientbutton{
-    position: absolute;
+  position: absolute;
   bottom: 40%;
   left: 50%;
   transform: translateX(-50%);

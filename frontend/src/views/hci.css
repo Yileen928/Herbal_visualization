@@ -13,4 +13,19 @@
     background-position: center; /* 背景图片居中显示 */
     background-repeat: no-repeat;
   }
+  .Hcibutton {
+    position: absolute;
+    bottom: 24%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 60%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .Hcibutton:hover{
+    transform: scale(1);
+  }
   
