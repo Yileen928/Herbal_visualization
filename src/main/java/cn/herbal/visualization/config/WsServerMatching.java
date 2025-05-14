@@ -25,7 +25,7 @@ public class WsServerMatching {
 
     private static final Queue<String> hostQueue = new ConcurrentLinkedQueue<>();
     private static final Queue<String> clientQueue = new ConcurrentLinkedQueue<>();
-    private static final Map<String, MatchPair> matchPairs = new ConcurrentHashMap<>();
+    private static final Map<String, MatchGroup> matchGroups = new ConcurrentHashMap<>();
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
     private final Map<String, ScheduledFuture<?>> pendingMatches = new ConcurrentHashMap<>();
@@ -105,7 +105,7 @@ public class WsServerMatching {
             log.info("用户 {} 加入客户端队列，当前客户端队列大小: {}", userId, clientQueue.size());
         }
 
-        sendMessage(session, "role_selected", "你已选择" + (role.equals("HOST") ? "主机" : "客户端") + "角色");
+        sendMessage(session, "role_selected", "你已选择" + (role.equals("HOST")? "主机" : "客户端") + "角色");
         tryToMatchUsers();
     }
 
@@ -123,7 +123,7 @@ public class WsServerMatching {
             clientQueue.remove(userId);
         }
 
-        String newRole = "HOST".equals(currentRole) ? "CLIENT" : "HOST";
+        String newRole = "HOST".equals(currentRole)? "CLIENT" : "HOST";
         userRoles.put(userId, newRole);
 
         if ("HOST".equals(newRole)) {
@@ -132,31 +132,51 @@ public class WsServerMatching {
             clientQueue.add(userId);
         }
 
-        sendMessage(session, "role_switched", "你已切换到" + (newRole.equals("HOST") ? "主机" : "客户端") + "角色");
+        sendMessage(session, "role_switched", "你已切换到" + (newRole.equals("HOST")? "主机" : "客户端") + "角色");
         tryToMatchUsers();
     }
 
     void handleHerbNameMessage(String hostId, String message) {
+        if (hostId == null) {
+            log.error("主机ID为空，无法处理药材名称消息");
+            return;
+        }
+
         try {
             JSONObject jsonMessage = new JSONObject(message);
             String herbName = jsonMessage.getString("herbName");
 
-            MatchPair match = matchPairs.get(hostId);
-            if (match == null || !match.getHostId().equals(hostId)) {
+            MatchGroup match = matchGroups.get(hostId);
+            if (match == null) {
                 log.warn("未找到用户 {} 的匹配信息", hostId);
                 return;
             }
 
-            String clientId = match.getClientId();
-            Session clientSession = users.get(clientId);
-            if (clientSession == null || !clientSession.isOpen()) {
-                log.warn("客户端 {} 会话不存在或已关闭", clientId);
+            String client1Id = match.getClient1Id();
+            String client2Id = match.getClient2Id();
+
+            if (client1Id == null) {
+                log.warn("未找到用户 {} 的从机1信息", hostId);
                 return;
             }
 
+            Session client1Session = users.get(client1Id);
+            Session client2Session = client2Id != null ? users.get(client2Id) : null;
+
             String outMessage = String.format("{\"action\":\"herb_selected\",\"herbName\":\"%s\"}", herbName);
-            clientSession.getBasicRemote().sendText(outMessage);
-            log.info("已将药材 {} 发送给客户端 {}，消息内容: {}", herbName, clientId, outMessage);
+
+            // 发送给第一个从机
+            if (client1Session != null && client1Session.isOpen()) {
+                client1Session.getBasicRemote().sendText(outMessage);
+                log.info("已将药材 {} 发送给从机1 {}", herbName, client1Id);
+            }
+
+            // 如果存在第二个从机，也发送消息
+            if (client2Session != null && client2Session.isOpen()) {
+                client2Session.getBasicRemote().sendText(outMessage);
+                log.info("已将药材 {} 发送给从机2 {}", herbName, client2Id);
+            }
+
         } catch (JSONException | IOException e) {
             log.error("处理药材名称消息失败: {}", e.getMessage(), e);
         }
@@ -184,8 +204,13 @@ public class WsServerMatching {
             clientQueue.remove(userId);
         }
 
-        matchPairs.entrySet().removeIf(entry ->
-                entry.getValue().getHostId().equals(userId) || entry.getValue().getClientId().equals(userId));
+        // 移除包含该用户的匹配组
+        matchGroups.entrySet().removeIf(entry -> {
+            MatchGroup group = entry.getValue();
+            return group.getHostId().equals(userId) ||
+                    group.getClient1Id().equals(userId) ||
+                    (group.getClient2Id() != null && group.getClient2Id().equals(userId));
+        });
 
         users.remove(userId);
         tryToMatchUsers();
@@ -195,7 +220,7 @@ public class WsServerMatching {
     public void onError(Session session, Throwable error) {
         String userId = sessionToUserId.get(session);
         log.error("用户 {} 会话 {} 发生错误: {}",
-                userId != null ? userId : "未知",
+                userId != null? userId : "未知",
                 session.getId(),
                 error.getMessage(),
                 error);
@@ -204,23 +229,50 @@ public class WsServerMatching {
     private void tryToMatchUsers() {
         log.info("尝试匹配用户，主机队列大小: {}, 客户端队列大小: {}", hostQueue.size(), clientQueue.size());
 
-        hostQueue.removeIf(matchPairs::containsKey);
-        clientQueue.removeIf(matchPairs::containsKey);
+        hostQueue.removeIf(matchGroups::containsKey);
+        clientQueue.removeIf(userId -> matchGroups.containsKey(userId) ||
+                matchGroups.values().stream().anyMatch(g -> g.getClient2Id() != null && g.getClient2Id().equals(userId)));
 
+        // 首先处理主机和客户端的一对一匹配
         while (!hostQueue.isEmpty() && !clientQueue.isEmpty()) {
             String hostId = hostQueue.poll();
             String clientId = clientQueue.poll();
 
             if (hostId != null && clientId != null &&
-                    !matchPairs.containsKey(hostId) && !matchPairs.containsKey(clientId)) {
+                    !matchGroups.containsKey(hostId) &&!matchGroups.containsKey(clientId)) {
 
-                MatchPair match = new MatchPair(hostId, clientId);
-                matchPairs.put(hostId, match);
-                matchPairs.put(clientId, match);
+                MatchGroup match = new MatchGroup(hostId, clientId, null);
+                matchGroups.put(hostId, match);
+                matchGroups.put(clientId, match);
 
                 log.info("匹配成功: 主机 {} 和客户端 {}", hostId, clientId);
-                sendMatchInfo(hostId, true);
-                sendMatchInfo(clientId, false);
+                sendMatchInfo(hostId, clientId, null);
+            }
+        }
+
+        // 然后尝试将额外的客户端添加到已有匹配组中
+        if (!clientQueue.isEmpty()) {
+            String extraClientId = clientQueue.poll();
+            if (extraClientId != null && !matchGroups.containsKey(extraClientId)) {
+                // 查找可以添加第二个客户端的匹配组
+                MatchGroup groupToAdd = matchGroups.values().stream()
+                        .filter(g -> g.getClient2Id() == null)
+                        .findFirst()
+                        .orElse(null);
+
+                if (groupToAdd != null) {
+                    groupToAdd.setClient2Id(extraClientId);
+                    matchGroups.put(extraClientId, groupToAdd);
+
+                    log.info("添加额外客户端成功: 主机 {}，客户端 {} 和 {}",
+                            groupToAdd.getHostId(), groupToAdd.getClient1Id(), extraClientId);
+
+                    // 通知所有三方
+                    sendMatchInfo(groupToAdd.getHostId(), groupToAdd.getClient1Id(), extraClientId);
+                } else {
+                    // 没有合适的组可以添加，将客户端放回队列
+                    clientQueue.add(extraClientId);
+                }
             }
         }
 
@@ -252,24 +304,54 @@ public class WsServerMatching {
         });
     }
 
-    private void sendMatchInfo(String userId, boolean isHost) {
-        Session session = users.get(userId);
-        if (session == null || !session.isOpen()) {
-            return;
-        }
-
+    private void sendMatchInfo(String hostId, String client1Id, String client2Id) {
         try {
-            MatchPair match = matchPairs.get(userId);
-            String role = isHost ? "HOST" : "CLIENT";
-            String opponentId = isHost ? match.getClientId() : match.getHostId();
+            // 发送给主机
+            Session hostSession = users.get(hostId);
+            if (hostSession != null && hostSession.isOpen()) {
+                String message = createMatchMessage("HOST", client1Id, client2Id);
+                hostSession.getBasicRemote().sendText(message);
+                log.info("已将匹配信息发送给主机 {}，消息内容: {}", hostId, message);
+            }
 
-            String message = String.format("{\"action\":\"matched\",\"role\":\"%s\",\"opponentId\":\"%s\"}",
-                    role, opponentId);
+            // 发送给第一个客户端
+            Session client1Session = users.get(client1Id);
+            if (client1Session != null && client1Session.isOpen()) {
+                String message = createMatchMessage("CLIENT", hostId, client2Id);
+                client1Session.getBasicRemote().sendText(message);
+                log.info("已将匹配信息发送给客户端 {}，消息内容: {}", client1Id, message);
+            }
 
-            session.getBasicRemote().sendText(message);
-            log.info("已将匹配信息发送给用户 {}，消息内容: {}", userId, message);
+            // 如果有第二个客户端，发送给第二个客户端
+            if (client2Id != null) {
+                Session client2Session = users.get(client2Id);
+                if (client2Session != null && client2Session.isOpen()) {
+                    String message = createMatchMessage("CLIENT", hostId, client1Id);
+                    client2Session.getBasicRemote().sendText(message);
+                    log.info("已将匹配信息发送给客户端 {}，消息内容: {}", client2Id, message);
+                }
+            }
         } catch (Exception e) {
-            log.error("发送匹配信息给用户 {} 失败: {}", userId, e.getMessage(), e);
+            log.error("发送匹配信息失败: {}", e.getMessage(), e);
+        }
+    }
+
+    private String createMatchMessage(String role, String opponent1Id, String opponent2Id) {
+        try {
+            JSONObject message = new JSONObject();
+            message.put("action", "matched");
+            message.put("role", role);
+            message.put("opponent1Id", opponent1Id);
+
+            if (opponent2Id != null) {
+                message.put("opponent2Id", opponent2Id);
+            }
+
+            return message.toString();
+        } catch (JSONException e) {
+            log.error("创建匹配消息失败: {}", e.getMessage(), e);
+            return String.format("{\"action\":\"matched\",\"role\":\"%s\",\"opponent1Id\":\"%s\"}",
+                    role, opponent1Id);
         }
     }
 
@@ -298,21 +380,31 @@ public class WsServerMatching {
         log.info("WebSocket服务器资源清理完成");
     }
 
-    static class MatchPair {
+    static class MatchGroup {
         private final String hostId;
-        private final String clientId;
+        private final String client1Id;
+        private String client2Id;
 
-        public MatchPair(String hostId, String clientId) {
+        public MatchGroup(String hostId, String client1Id, String client2Id) {
             this.hostId = hostId;
-            this.clientId = clientId;
+            this.client1Id = client1Id;
+            this.client2Id = client2Id;
         }
 
         public String getHostId() {
             return hostId;
         }
 
-        public String getClientId() {
-            return clientId;
+        public String getClient1Id() {
+            return client1Id;
+        }
+
+        public String getClient2Id() {
+            return client2Id;
+        }
+
+        public void setClient2Id(String client2Id) {
+            this.client2Id = client2Id;
         }
     }
 }

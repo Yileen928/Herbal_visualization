@@ -5,9 +5,9 @@ spring:
   application:
     name: herbs
   datasource:
-    url: jdbc:mysql://106.55.169.134:3306/db_herbs?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://121.4.116.71:3306/db_herbs?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
-    password: Root123456@
+    password: CSX22510ack@
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       initial-size: 20
@@ -39,7 +39,7 @@ spring:
         login-password: ack27
   data:
     redis:
-      host: 106.55.169.134
+      host: 121.4.116.71
       port: 6379
 mybatis-plus:
   configuration:

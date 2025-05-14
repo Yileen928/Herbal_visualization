@@ -10,9 +10,11 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-//                .allowedOrigins("*")
-                .allowedOriginPatterns("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowCredentials(true).maxAge(3600);
+                .allowedOrigins("https://www.herbvis.cn") // 允许前端域名
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*") // 必须显式允许所有 headers
+                .exposedHeaders("Content-Length", "Content-Range") // 暴露这些头
+                .allowCredentials(true)
+                .maxAge(3600);
     }
 }
