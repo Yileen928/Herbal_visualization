@@ -15,7 +15,7 @@
 - 前端：Vue3 + Vite
 - 3D渲染：Three.js
 - 模型格式：FBX
-- 后端：Java（尚未实现）
+- 后端：Java
 
 ## 快速开始
 

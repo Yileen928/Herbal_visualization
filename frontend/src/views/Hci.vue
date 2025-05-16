@@ -50,5 +50,5 @@ export default {
 </script>
 
 <style scoped>
-@import './Hci.css';
+@import './hci.css';
 </style>
