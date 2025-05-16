@@ -2,51 +2,71 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.herbal.mapper.THerbsMapper">
+<mapper namespace="cn.herbal.visualization.mapper.THerbsMapper">
 
-    <resultMap id="BaseResultMap" type="com.herbal.domain.THerbs">
-            <id property="id" column="id" jdbcType="BIGINT"/>
+    <resultMap id="BaseResultMap" type="cn.herbal.visualization.model.THerbs">
+            <id property="herbId" column="herb_id" jdbcType="BIGINT"/>
             <result property="herbName" column="herb_name" jdbcType="VARCHAR"/>
             <result property="standardName" column="standard_name" jdbcType="VARCHAR"/>
+            <result property="herbRelease" column="herb_release" jdbcType="VARCHAR"/>
+            <result property="herbDepartment" column="herb_department" jdbcType="VARCHAR"/>
+            <result property="herbGenus" column="herb_genus" jdbcType="VARCHAR"/>
+            <result property="herbImage1" column="herb_image1" jdbcType="VARCHAR"/>
+            <result property="herbImage2" column="herb_image2" jdbcType="VARCHAR"/>
+            <result property="herbImage3" column="herb_image3" jdbcType="VARCHAR"/>
+            <result property="herbImageHead" column="herb_image_head" jdbcType="VARCHAR"/>
+            <result property="herbImageArt" column="herb_image_art" jdbcType="VARCHAR"/>
+            <result property="herbImagePreparation" column="herb_image_preparation" jdbcType="VARCHAR"/>
+            <result property="herbImage4" column="herb_image4" jdbcType="VARCHAR"/>
+            <result property="herbImage5" column="herb_image5" jdbcType="VARCHAR"/>
+            <result property="herbImage6" column="herb_image6" jdbcType="VARCHAR"/>
+            <result property="herbImage7" column="herb_image7" jdbcType="VARCHAR"/>
+            <result property="herbVideo" column="herb_video" jdbcType="VARCHAR"/>
             <result property="source" column="source" jdbcType="VARCHAR"/>
             <result property="nationwideOrigin" column="nationwide_origin" jdbcType="VARCHAR"/>
             <result property="yunnanOrigin" column="yunnan_origin" jdbcType="VARCHAR"/>
-            <result property="category" column="category" jdbcType="VARCHAR"/>
+            <result property="medicinalPart" column="medicinal_part" jdbcType="VARCHAR"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>
             <result property="flavor" column="flavor" jdbcType="VARCHAR"/>
             <result property="theory" column="theory" jdbcType="VARCHAR"/>
-            <result property="preparation" column="Preparation" jdbcType="VARCHAR"/>
+            <result property="preparation" column="preparation" jdbcType="VARCHAR"/>
             <result property="efficacy" column="efficacy" jdbcType="VARCHAR"/>
+            <result property="indications" column="indications" jdbcType="VARCHAR"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="bigint1" column="bigint1" jdbcType="BIGINT"/>
-            <result property="bigint2" column="bigint2" jdbcType="BIGINT"/>
-            <result property="bigint3" column="bigint3" jdbcType="BIGINT"/>
-            <result property="bigint4" column="bigint4" jdbcType="BIGINT"/>
-            <result property="decimal1" column="decimal1" jdbcType="DECIMAL"/>
-            <result property="decimal2" column="decimal2" jdbcType="DECIMAL"/>
-            <result property="decimal3" column="decimal3" jdbcType="DECIMAL"/>
-            <result property="decimal4" column="decimal4" jdbcType="DECIMAL"/>
-            <result property="varchar1" column="varchar1" jdbcType="VARCHAR"/>
-            <result property="varchar2" column="varchar2" jdbcType="VARCHAR"/>
-            <result property="varchar3" column="varchar3" jdbcType="VARCHAR"/>
-            <result property="varchar4" column="varchar4" jdbcType="VARCHAR"/>
-            <result property="datetime1" column="datetime1" jdbcType="TIMESTAMP"/>
-            <result property="datetime2" column="datetime2" jdbcType="TIMESTAMP"/>
-            <result property="datetime3" column="datetime3" jdbcType="TIMESTAMP"/>
-            <result property="datetime4" column="datetime4" jdbcType="TIMESTAMP"/>
+            <result property="reservedBigint1" column="reserved_bigint1" jdbcType="BIGINT"/>
+            <result property="reservedBigint2" column="reserved_bigint2" jdbcType="BIGINT"/>
+            <result property="reservedBigint3" column="reserved_bigint3" jdbcType="BIGINT"/>
+            <result property="reservedBigint4" column="reserved_bigint4" jdbcType="BIGINT"/>
+            <result property="reservedDecimal1" column="reserved_decimal1" jdbcType="DECIMAL"/>
+            <result property="reservedDecimal2" column="reserved_decimal2" jdbcType="DECIMAL"/>
+            <result property="reservedDecimal3" column="reserved_decimal3" jdbcType="DECIMAL"/>
+            <result property="reservedDecimal4" column="reserved_decimal4" jdbcType="DECIMAL"/>
+            <result property="reservedVarchar1" column="reserved_varchar1" jdbcType="VARCHAR"/>
+            <result property="reservedVarchar2" column="reserved_varchar2" jdbcType="VARCHAR"/>
+            <result property="reservedVarchar3" column="reserved_varchar3" jdbcType="VARCHAR"/>
+            <result property="reservedVarchar4" column="reserved_varchar4" jdbcType="VARCHAR"/>
+            <result property="reservedDatetime1" column="reserved_datetime1" jdbcType="TIMESTAMP"/>
+            <result property="reservedDatetime2" column="reserved_datetime2" jdbcType="TIMESTAMP"/>
+            <result property="reservedDatetime3" column="reserved_datetime3" jdbcType="TIMESTAMP"/>
+            <result property="reservedDatetime4" column="reserved_datetime4" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,herb_name,standard_name,
-        source,nationwide_origin,yunnan_origin,
-        category,description,flavor,
-        theory,Preparation,efficacy,
-        create_time,update_time,bigint1,
-        bigint2,bigint3,bigint4,
-        decimal1,decimal2,decimal3,
-        decimal4,varchar1,varchar2,
-        varchar3,varchar4,datetime1,
-        datetime2,datetime3,datetime4
+        herb_id,herb_name,standard_name,
+        herb_release,herb_department,herb_genus,
+        herb_image1,herb_image2,herb_image3,
+        herb_image_head,herb_image_art,herb_image_preparation,
+        herb_image4,herb_image5,herb_image6,
+        herb_image7,herb_video,source,
+        nationwide_origin,yunnan_origin,medicinal_part,
+        description,flavor,theory,
+        preparation,efficacy,indications,
+        create_time,update_time,reserved_bigint1,
+        reserved_bigint2,reserved_bigint3,reserved_bigint4,
+        reserved_decimal1,reserved_decimal2,reserved_decimal3,
+        reserved_decimal4,reserved_varchar1,reserved_varchar2,
+        reserved_varchar3,reserved_varchar4,reserved_datetime1,
+        reserved_datetime2,reserved_datetime3,reserved_datetime4
     </sql>
 </mapper>

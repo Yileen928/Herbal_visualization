@@ -1,9 +1,47 @@
 server:
-  port: 8080
+  port: 10010
 
 spring:
+  application:
+    name: herbs
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/db_herbs?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://121.4.116.71:3306/db_herbs?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
-    password: ack22510
+    password: CSX22510ack@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 20
+      min-idle: 20
+      max-active: 50
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+      filter:
+        stat:
+          merge-sql: true
+          slow-sql-millis: 50
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      web-stat-filter:
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        enabled: true
+        url-pattern: "/druid/*"
+        reset-enable: false
+        login-username: root
+        login-password: ack27
+  data:
+    redis:
+      host: 121.4.116.71
+      port: 6379
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl

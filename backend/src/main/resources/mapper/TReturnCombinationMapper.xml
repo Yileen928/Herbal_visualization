@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.herbal.visualization.mapper.TReturnCombinationMapper">
+
+    <resultMap id="BaseResultMap" type="cn.herbal.visualization.model.TReturnCombination">
+        <id property="combinationId" column="combination_id" jdbcType="BIGINT"/>
+        <result property="herbId" column="herb_id" jdbcType="BIGINT"/>
+        <result property="returnId" column="return_id" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="reservedBigint1" column="reserved_bigint1" jdbcType="BIGINT"/>
+        <result property="reservedBigint2" column="reserved_bigint2" jdbcType="BIGINT"/>
+        <result property="reservedBigint3" column="reserved_bigint3" jdbcType="BIGINT"/>
+        <result property="reservedBigint4" column="reserved_bigint4" jdbcType="BIGINT"/>
+        <result property="reservedDecimal1" column="reserved_decimal1" jdbcType="DECIMAL"/>
+        <result property="reservedDecimal2" column="reserved_decimal2" jdbcType="DECIMAL"/>
+        <result property="reservedDecimal3" column="reserved_decimal3" jdbcType="DECIMAL"/>
+        <result property="reservedDecimal4" column="reserved_decimal4" jdbcType="DECIMAL"/>
+        <result property="reservedVarchar1" column="reserved_varchar1" jdbcType="VARCHAR"/>
+        <result property="reservedVarchar2" column="reserved_varchar2" jdbcType="VARCHAR"/>
+        <result property="reservedVarchar3" column="reserved_varchar3" jdbcType="VARCHAR"/>
+        <result property="reservedVarchar4" column="reserved_varchar4" jdbcType="VARCHAR"/>
+        <result property="reservedDatetime1" column="reserved_datetime1" jdbcType="TIMESTAMP"/>
+        <result property="reservedDatetime2" column="reserved_datetime2" jdbcType="TIMESTAMP"/>
+        <result property="reservedDatetime3" column="reserved_datetime3" jdbcType="TIMESTAMP"/>
+        <result property="reservedDatetime4" column="reserved_datetime4" jdbcType="TIMESTAMP"/>
+
+        <!-- Association for THerbs -->
+        <association property="herb" javaType="cn.herbal.visualization.model.THerbs">
+            <id property="herbId" column="herb_id"/>
+            <result property="herbName" column="herb_name"/>
+            <result property="standardName" column="standard_name"/>
+            <result property="herbRelease" column="herb_release"/>
+            <result property="herbDepartment" column="herb_department"/>
+            <result property="herbGenus" column="herb_genus"/>
+            <result property="herbImage1" column="herb_image1"/>
+            <result property="herbImage2" column="herb_image2"/>
+            <result property="herbImage3" column="herb_image3"/>
+            <result property="herbImageHead" column="herb_image_head"/>
+            <result property="herbImageArt" column="herb_image_art"/>
+            <result property="herbImagePreparation" column="herb_image_preparation"/>
+            <result property="herbImage4" column="herb_image4"/>
+            <result property="herbImage5" column="herb_image5"/>
+            <result property="herbImage6" column="herb_image6"/>
+            <result property="herbImage7" column="herb_image7"/>
+            <result property="herbVideo" column="herb_video"/>
+            <result property="source" column="source"/>
+            <result property="nationwideOrigin" column="nationwide_origin"/>
+            <result property="yunnanOrigin" column="yunnan_origin"/>
+            <result property="medicinalPart" column="medicinal_part"/>
+            <result property="description" column="description"/>
+            <result property="flavor" column="flavor"/>
+            <result property="theory" column="theory"/>
+            <result property="preparation" column="preparation"/>
+            <result property="efficacy" column="efficacy"/>
+            <result property="indications" column="indications"/>
+            <result property="createTime" column="herb_create_time"/>
+            <result property="updateTime" column="herb_update_time"/>
+            <result property="reservedBigint1" column="herb_reserved_bigint1"/>
+            <result property="reservedBigint2" column="herb_reserved_bigint2"/>
+            <result property="reservedBigint3" column="herb_reserved_bigint3"/>
+            <result property="reservedBigint4" column="herb_reserved_bigint4"/>
+            <result property="reservedDecimal1" column="herb_reserved_decimal1"/>
+            <result property="reservedDecimal2" column="herb_reserved_decimal2"/>
+            <result property="reservedDecimal3" column="herb_reserved_decimal3"/>
+            <result property="reservedDecimal4" column="herb_reserved_decimal4"/>
+            <result property="reservedVarchar1" column="herb_reserved_varchar1"/>
+            <result property="reservedVarchar2" column="herb_reserved_varchar2"/>
+            <result property="reservedVarchar3" column="herb_reserved_varchar3"/>
+            <result property="reservedVarchar4" column="herb_reserved_varchar4"/>
+            <result property="reservedDatetime1" column="herb_reserved_datetime1"/>
+            <result property="reservedDatetime2" column="herb_reserved_datetime2"/>
+            <result property="reservedDatetime3" column="herb_reserved_datetime3"/>
+            <result property="reservedDatetime4" column="herb_reserved_datetime4"/>
+        </association>
+
+        <!-- Association for TReturn -->
+        <association property="ret" javaType="cn.herbal.visualization.model.TReturn">
+            <id property="returnId" column="return_id"/>
+            <result property="returnName" column="return_name"/>
+            <result property="parentId" column="parent_id"/>
+            <result property="createTime" column="return_create_time"/>
+            <result property="updateTime" column="return_update_time"/>
+            <result property="reservedBigint1" column="return_reserved_bigint1"/>
+            <result property="reservedBigint2" column="return_reserved_bigint2"/>
+            <result property="reservedBigint3" column="return_reserved_bigint3"/>
+            <result property="reservedBigint4" column="return_reserved_bigint4"/>
+            <result property="reservedDecimal1" column="return_reserved_decimal1"/>
+            <result property="reservedDecimal2" column="return_reserved_decimal2"/>
+            <result property="reservedDecimal3" column="return_reserved_decimal3"/>
+            <result property="reservedDecimal4" column="return_reserved_decimal4"/>
+            <result property="reservedVarchar1" column="return_reserved_varchar1"/>
+            <result property="reservedVarchar2" column="return_reserved_varchar2"/>
+            <result property="reservedVarchar3" column="return_reserved_varchar3"/>
+            <result property="reservedVarchar4" column="return_reserved_varchar4"/>
+            <result property="reservedDatetime1" column="return_reserved_datetime1"/>
+            <result property="reservedDatetime2" column="return_reserved_datetime2"/>
+            <result property="reservedDatetime3" column="return_reserved_datetime3"/>
+            <result property="reservedDatetime4" column="return_reserved_datetime4"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        combination_id, herb_id, return_id,
+        create_time, update_time, reserved_bigint1,
+        reserved_bigint2, reserved_bigint3, reserved_bigint4,
+        reserved_decimal1, reserved_decimal2, reserved_decimal3,
+        reserved_decimal4, reserved_varchar1, reserved_varchar2,
+        reserved_varchar3, reserved_varchar4, reserved_datetime1,
+        reserved_datetime2, reserved_datetime3, reserved_datetime4
+    </sql>
+
+    <select id="findByHerbName" resultMap="BaseResultMap">
+        SELECT
+            t_rc.combination_id,
+            t_rc.herb_id,
+            t_rc.return_id,
+            t_rc.create_time,
+            t_rc.update_time,
+            t_rc.reserved_bigint1,
+            t_rc.reserved_bigint2,
+            t_rc.reserved_bigint3,
+            t_rc.reserved_bigint4,
+            t_rc.reserved_decimal1,
+            t_rc.reserved_decimal2,
+            t_rc.reserved_decimal3,
+            t_rc.reserved_decimal4,
+            t_rc.reserved_varchar1,
+            t_rc.reserved_varchar2,
+            t_rc.reserved_varchar3,
+            t_rc.reserved_varchar4,
+            t_rc.reserved_datetime1,
+            t_rc.reserved_datetime2,
+            t_rc.reserved_datetime3,
+            t_rc.reserved_datetime4,
+
+            t_h.herb_name,
+            t_h.standard_name,
+            t_h.herb_release,
+            t_h.herb_department,
+            t_h.herb_genus,
+            t_h.herb_image1,
+            t_h.herb_image2,
+            t_h.herb_image3,
+            t_h.herb_image_head,
+            t_h.herb_image_art,
+            t_h.herb_image_preparation,
+            t_h.herb_image4,
+            t_h.herb_image5,
+            t_h.herb_image6,
+            t_h.herb_image7,
+            t_h.herb_video,
+            t_h.source,
+            t_h.nationwide_origin,
+            t_h.yunnan_origin,
+            t_h.medicinal_part,
+            t_h.description,
+            t_h.flavor,
+            t_h.theory,
+            t_h.preparation,
+            t_h.efficacy,
+            t_h.indications,
+            t_h.create_time AS herb_create_time,
+            t_h.update_time AS herb_update_time,
+            t_h.reserved_bigint1 AS herb_reserved_bigint1,
+            t_h.reserved_bigint2 AS herb_reserved_bigint2,
+            t_h.reserved_bigint3 AS herb_reserved_bigint3,
+            t_h.reserved_bigint4 AS herb_reserved_bigint4,
+            t_h.reserved_decimal1 AS herb_reserved_decimal1,
+            t_h.reserved_decimal2 AS herb_reserved_decimal2,
+            t_h.reserved_decimal3 AS herb_reserved_decimal3,
+            t_h.reserved_decimal4 AS herb_reserved_decimal4,
+            t_h.reserved_varchar1 AS herb_reserved_varchar1,
+            t_h.reserved_varchar2 AS herb_reserved_varchar2,
+            t_h.reserved_varchar3 AS herb_reserved_varchar3,
+            t_h.reserved_varchar4 AS herb_reserved_varchar4,
+            t_h.reserved_datetime1 AS herb_reserved_datetime1,
+            t_h.reserved_datetime2 AS herb_reserved_datetime2,
+            t_h.reserved_datetime3 AS herb_reserved_datetime3,
+            t_h.reserved_datetime4 AS herb_reserved_datetime4,
+
+            t_r.return_name,
+            t_r.parent_id,
+            t_r.create_time AS return_create_time,
+            t_r.update_time AS return_update_time,
+            t_r.reserved_bigint1 AS return_reserved_bigint1,
+            t_r.reserved_bigint2 AS return_reserved_bigint2,
+            t_r.reserved_bigint3 AS return_reserved_bigint3,
+            t_r.reserved_bigint4 AS return_reserved_bigint4,
+            t_r.reserved_decimal1 AS return_reserved_decimal1,
+            t_r.reserved_decimal2 AS return_reserved_decimal2,
+            t_r.reserved_decimal3 AS return_reserved_decimal3,
+            t_r.reserved_decimal4 AS return_reserved_decimal4,
+            t_r.reserved_varchar1 AS return_reserved_varchar1,
+            t_r.reserved_varchar2 AS return_reserved_varchar2,
+            t_r.reserved_varchar3 AS return_reserved_varchar3,
+            t_r.reserved_varchar4 AS return_reserved_varchar4,
+            t_r.reserved_datetime1 AS return_reserved_datetime1,
+            t_r.reserved_datetime2 AS return_reserved_datetime2,
+            t_r.reserved_datetime3 AS return_reserved_datetime3,
+            t_r.reserved_datetime4 AS return_reserved_datetime4
+
+        FROM
+            t_return_combination t_rc
+                JOIN
+            t_herbs t_h ON t_rc.herb_id = t_h.herb_id
+                JOIN
+            t_return t_r ON t_rc.return_id = t_r.return_id
+        WHERE
+            t_h.herb_name LIKE CONCAT('%', #{herbName}, '%')
+    </select>
+</mapper>

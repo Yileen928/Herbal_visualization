@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.herbal.visualization.mapper.MedicalJobsMapper">
+    <select id="getCityNameCounts" resultType="cn.herbal.visualization.model.CityNameCount">
+        CALL GetCityNameCounts()
+    </select>
+
+    <select id="getWorkExperienceCounts" statementType="CALLABLE" resultType="cn.herbal.visualization.model.WorkExperienceCount">
+        CALL GetWorkExperienceCounts()
+    </select>
+
+    <select id="getPayCounts" statementType="CALLABLE" resultType="cn.herbal.visualization.model.PayCount">
+        CALL GetPayCounts()
+    </select>
+
+    <select id="getTop20SkillRequirements" statementType="CALLABLE" resultType="cn.herbal.visualization.model.SkillRequirement">
+        CALL GetTop20SkillRequirements()
+    </select>
+</mapper>
