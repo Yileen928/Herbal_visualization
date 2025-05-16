@@ -5,8 +5,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.2.3</version>
+		<relativePath/>
 	</parent>
 	<groupId>cn.herbal.visualization</groupId>
 	<artifactId>Herbal_visualization</artifactId>
@@ -28,6 +28,8 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -82,6 +84,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		<!-- 移除重复的JSON依赖，只保留必要的 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -100,38 +103,31 @@
 			<artifactId>gson</artifactId>
 			<version>2.8.9</version>
 		</dependency>
+		<!-- 更新到正确的版本号 -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20250107</version>
+			<version>20231013</version>
 		</dependency>
-		<dependency>
-			<groupId>com.vaadin.external.google</groupId>
-			<artifactId>android-json</artifactId>
-			<version>0.0.20131108.vaadin1</version>
-			<scope>compile</scope>
-		</dependency>
+		<!-- 移除 android-json，因为它可能与其他JSON库冲突 -->
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!-- 合并两个 maven-compiler-plugin 配置 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<source>17</source>
+					<target>17</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
 						</path>
 					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -148,5 +144,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
