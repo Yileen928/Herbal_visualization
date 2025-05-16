@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -42,26 +43,37 @@ public class THerbsServiceImpl extends ServiceImpl<THerbsMapper, THerbs>
     @Override
     public List<THerbs> searchHerbsByHerbName(String herbName) {
         String cacheKey = CACHE_KEY_SEARCH_BY_HERB_NAME + herbName;
-        List<THerbs> herbsList = (List<THerbs>) redisTemplate.opsForValue().get(cacheKey);
+        List<THerbs> herbsList = null;
 
-        if (herbsList == null) {
-            logger.info("Cache miss for {}", cacheKey);
-            long startTime = System.currentTimeMillis();
-            QueryWrapper<THerbs> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("herb_name", herbName); // 使用eq进行精确查询
-            herbsList = baseMapper.selectList(queryWrapper);
-            long endTime = System.currentTimeMillis();
-            logger.info("Database query took {} ms", endTime - startTime);
+        try {
+            // 尝试从Redis获取缓存
+            herbsList = (List<THerbs>) redisTemplate.opsForValue().get(cacheKey);
 
-            // 只有查询结果不为空时才缓存
-            if (herbsList != null && !herbsList.isEmpty()) {
-                redisTemplate.opsForValue().set(cacheKey, herbsList, CACHE_DURATION, TimeUnit.SECONDS);
-                logger.info("Cached results for {}", cacheKey);
+            if (herbsList == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                QueryWrapper<THerbs> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("herb_name", herbName); // 使用eq进行精确查询
+                herbsList = baseMapper.selectList(queryWrapper);
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (herbsList != null && !herbsList.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, herbsList, CACHE_DURATION, TimeUnit.SECONDS);
+                    logger.info("Cached results for {}", cacheKey);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
             }
-        } else {
-            logger.info("Cache hit for {}", cacheKey);
+        } catch (Exception e) {
+            logger.error("Error occurred while searching herbs by name from cache", e);
+            // 缓存失效时直接查询数据库
+            QueryWrapper<THerbs> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("herb_name", herbName);
+            herbsList = baseMapper.selectList(queryWrapper);
         }
 
-        return herbsList;
+        return herbsList != null ? herbsList : Collections.emptyList();
     }
 }

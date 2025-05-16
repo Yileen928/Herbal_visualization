@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -31,37 +32,64 @@ public class MedicineStoreServiceImpl implements MedicineStoreService {
     @Override
     public List<ProvinceCount> getProvinceCounts() {
         String cacheKey = CACHE_KEY_PROVINCE_COUNTS;
-        List<ProvinceCount> provinceCounts = (List<ProvinceCount>) redisTemplate.opsForValue().get(cacheKey);
+        List<ProvinceCount> provinceCounts = null;
 
-        if (provinceCounts == null) {
-            logger.info("Cache miss for {}", cacheKey);
-            long startTime = System.currentTimeMillis();
+        try {
+            // 尝试从Redis获取缓存
+            provinceCounts = (List<ProvinceCount>) redisTemplate.opsForValue().get(cacheKey);
+
+            if (provinceCounts == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                provinceCounts = medicineStoreMapper.getProvinceCounts();
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (provinceCounts != null && !provinceCounts.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, provinceCounts, CACHE_DURATION, TimeUnit.SECONDS);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while getting province counts from cache", e);
+            // 缓存失效时直接查询数据库
             provinceCounts = medicineStoreMapper.getProvinceCounts();
-            long endTime = System.currentTimeMillis();
-            logger.info("Database query took {} ms", endTime - startTime);
-            redisTemplate.opsForValue().set(cacheKey, provinceCounts, CACHE_DURATION, TimeUnit.SECONDS);
-        } else {
-            logger.info("Cache hit for {}", cacheKey);
         }
-        return provinceCounts;
+
+        return provinceCounts != null ? provinceCounts : Collections.emptyList();
     }
 
     @Override
     public List<TypeCount> getTypeCounts() {
         String cacheKey = CACHE_KEY_TYPE_COUNTS;
-        List<TypeCount> typeCounts = (List<TypeCount>) redisTemplate.opsForValue().get(cacheKey);
+        List<TypeCount> typeCounts = null;
 
-        if (typeCounts == null) {
-            logger.info("Cache miss for {}", cacheKey);
-            long startTime = System.currentTimeMillis();
+        try {
+            // 尝试从Redis获取缓存
+            typeCounts = (List<TypeCount>) redisTemplate.opsForValue().get(cacheKey);
+
+            if (typeCounts == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                typeCounts = medicineStoreMapper.getTypeCounts();
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (typeCounts != null && !typeCounts.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, typeCounts, CACHE_DURATION, TimeUnit.SECONDS);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while getting type counts from cache", e);
+            // 缓存失效时直接查询数据库
             typeCounts = medicineStoreMapper.getTypeCounts();
-            long endTime = System.currentTimeMillis();
-            logger.info("Database query took {} ms", endTime - startTime);
-            redisTemplate.opsForValue().set(cacheKey, typeCounts, CACHE_DURATION, TimeUnit.SECONDS);
-        } else {
-            logger.info("Cache hit for {}", cacheKey);
         }
 
-        return typeCounts;
+        return typeCounts != null ? typeCounts : Collections.emptyList();
     }
 }

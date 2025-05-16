@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,36 +34,64 @@ public class TCommentsServiceImpl extends ServiceImpl<TCommentsMapper, TComments
     @Override
     public List<TComments> findByProductsName(String productsName) {
         String cacheKey = CACHE_KEY_FIND_BY_PRODUCTS_NAME + productsName;
-        List<TComments> comments = (List<TComments>) redisTemplate.opsForValue().get(cacheKey);
+        List<TComments> comments = null;
 
-        if (comments == null) {
-            logger.info("Cache miss for {}", cacheKey);
-            long startTime = System.currentTimeMillis();
+        try {
+            // 尝试从Redis获取缓存
+            comments = (List<TComments>) redisTemplate.opsForValue().get(cacheKey);
+
+            if (comments == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                comments = baseMapper.selectByProductsName(productsName);
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (comments != null && !comments.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, comments, CACHE_DURATION, TimeUnit.SECONDS);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while getting comments by product name from cache", e);
+            // 缓存失效时直接查询数据库
             comments = baseMapper.selectByProductsName(productsName);
-            long endTime = System.currentTimeMillis();
-            logger.info("Database query took {} ms", endTime - startTime);
-            redisTemplate.opsForValue().set(cacheKey, comments, CACHE_DURATION, TimeUnit.SECONDS);
-        } else {
-            logger.info("Cache hit for {}", cacheKey);
         }
-        return comments;
+
+        return comments != null ? comments : Collections.emptyList();
     }
 
     @Override
     public List<TComments> findAll() {
         String cacheKey = "allComments";
-        List<TComments> comments = (List<TComments>) redisTemplate.opsForValue().get(cacheKey);
+        List<TComments> comments = null;
 
-        if (comments == null) {
-            logger.info("Cache miss for {}", cacheKey);
-            long startTime = System.currentTimeMillis();
+        try {
+            // 尝试从Redis获取缓存
+            comments = (List<TComments>) redisTemplate.opsForValue().get(cacheKey);
+
+            if (comments == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                comments = list();
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (comments != null && !comments.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, comments, CACHE_DURATION, TimeUnit.SECONDS);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while getting all comments from cache", e);
+            // 缓存失效时直接查询数据库
             comments = list();
-            long endTime = System.currentTimeMillis();
-            logger.info("Database query took {} ms", endTime - startTime);
-            redisTemplate.opsForValue().set(cacheKey, comments, CACHE_DURATION, TimeUnit.SECONDS);
-        } else {
-            logger.info("Cache hit for {}", cacheKey);
         }
-        return comments;
+
+        return comments != null ? comments : Collections.emptyList();
     }
 }

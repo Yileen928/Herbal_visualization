@@ -33,80 +33,128 @@ public class MedicalJobsServiceImpl implements MedicalJobsService {
     @Override
     public List<CityNameCount> getCityNameCounts() {
         String cacheKey = CACHE_KEY_CITY_NAME_COUNTS;
-        List<CityNameCount> cityNameCounts = (List<CityNameCount>) redisTemplate.opsForValue().get(cacheKey);
+        List<CityNameCount> cityNameCounts = null;
 
-        if (cityNameCounts == null) {
-            // 缓存未命中
-            System.out.println("Cache miss for " + cacheKey);
-            long startTime = System.currentTimeMillis();
+        try {
+            // 尝试从Redis获取缓存
+            cityNameCounts = (List<CityNameCount>) redisTemplate.opsForValue().get(cacheKey);
+
+            if (cityNameCounts == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                cityNameCounts = cityMapper.getCityNameCounts();
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (cityNameCounts != null && !cityNameCounts.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, cityNameCounts, CACHE_DURATION, TimeUnit.SECONDS);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while getting city name counts from cache", e);
+            // 缓存失效时直接查询数据库
             cityNameCounts = cityMapper.getCityNameCounts();
-            long endTime = System.currentTimeMillis();
-            System.out.println("Database query took " + (endTime - startTime) + " ms");
-            // 将结果存入缓存
-            redisTemplate.opsForValue().set(cacheKey, cityNameCounts, CACHE_DURATION, TimeUnit.SECONDS);
-        } else {
-            // 缓存命中
-            System.out.println("Cache hit for " + cacheKey);
         }
 
-        return cityNameCounts;
+        return cityNameCounts != null ? cityNameCounts : Collections.emptyList();
     }
 
     @Override
     public List<WorkExperienceCount> getWorkExperienceCounts() {
         String cacheKey = CACHE_KEY_WORK_EXPERIENCE_COUNTS;
-        List<WorkExperienceCount> workExperienceCounts = (List<WorkExperienceCount>) redisTemplate.opsForValue().get(cacheKey);
+        List<WorkExperienceCount> workExperienceCounts = null;
 
-        if (workExperienceCounts == null) {
-            logger.info("Cache miss for {}", cacheKey);
-            long startTime = System.currentTimeMillis();
+        try {
+            // 尝试从Redis获取缓存
+            workExperienceCounts = (List<WorkExperienceCount>) redisTemplate.opsForValue().get(cacheKey);
+
+            if (workExperienceCounts == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                workExperienceCounts = cityMapper.getWorkExperienceCounts();
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (workExperienceCounts != null && !workExperienceCounts.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, workExperienceCounts, CACHE_DURATION, TimeUnit.SECONDS);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while getting work experience counts from cache", e);
+            // 缓存失效时直接查询数据库
             workExperienceCounts = cityMapper.getWorkExperienceCounts();
-            long endTime = System.currentTimeMillis();
-            logger.info("Database query took {} ms", endTime - startTime);
-            redisTemplate.opsForValue().set(cacheKey, workExperienceCounts, CACHE_DURATION, TimeUnit.SECONDS);
-        } else {
-            logger.info("Cache hit for {}", cacheKey);
         }
 
-        return workExperienceCounts;
+        return workExperienceCounts != null ? workExperienceCounts : Collections.emptyList();
     }
 
     @Override
     public List<PayCount> getPayCounts() {
         String cacheKey = CACHE_KEY_PAY_COUNTS;
-        List<PayCount> payCounts = (List<PayCount>) redisTemplate.opsForValue().get(cacheKey);
+        List<PayCount> payCounts = null;
 
-        if (payCounts == null) {
-            logger.info("Cache miss for {}", cacheKey);
-            long startTime = System.currentTimeMillis();
+        try {
+            // 尝试从Redis获取缓存
+            payCounts = (List<PayCount>) redisTemplate.opsForValue().get(cacheKey);
+
+            if (payCounts == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                payCounts = cityMapper.getPayCounts();
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (payCounts != null && !payCounts.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, payCounts, CACHE_DURATION, TimeUnit.SECONDS);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while getting pay counts from cache", e);
+            // 缓存失效时直接查询数据库
             payCounts = cityMapper.getPayCounts();
-            long endTime = System.currentTimeMillis();
-            logger.info("Database query took {} ms", endTime - startTime);
-            redisTemplate.opsForValue().set(cacheKey, payCounts, CACHE_DURATION, TimeUnit.SECONDS);
-        } else {
-            logger.info("Cache hit for {}", cacheKey);
         }
 
-        return payCounts;
+        return payCounts != null ? payCounts : Collections.emptyList();
     }
 
     @Override
     public List<SkillRequirement> getTop20SkillRequirements() {
         String cacheKey = CACHE_KEY_SKILL_REQUIREMENTS;
-        List<SkillRequirement> skillRequirements = (List<SkillRequirement>) redisTemplate.opsForValue().get(cacheKey);
+        List<SkillRequirement> skillRequirements = null;
 
-        if (skillRequirements == null) {
-            logger.info("Cache miss for {}", cacheKey);
-            long startTime = System.currentTimeMillis();
+        try {
+            // 尝试从Redis获取缓存
+            skillRequirements = (List<SkillRequirement>) redisTemplate.opsForValue().get(cacheKey);
+
+            if (skillRequirements == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                skillRequirements = cityMapper.getTop20SkillRequirements();
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (skillRequirements != null && !skillRequirements.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, skillRequirements, CACHE_DURATION, TimeUnit.SECONDS);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while getting skill requirements from cache", e);
+            // 缓存失效时直接查询数据库
             skillRequirements = cityMapper.getTop20SkillRequirements();
-            long endTime = System.currentTimeMillis();
-            logger.info("Database query took {} ms", endTime - startTime);
-            redisTemplate.opsForValue().set(cacheKey, skillRequirements, CACHE_DURATION, TimeUnit.SECONDS);
-        } else {
-            logger.info("Cache hit for {}", cacheKey);
         }
 
-        return skillRequirements;
+        return skillRequirements != null ? skillRequirements : Collections.emptyList();
     }
-
 }

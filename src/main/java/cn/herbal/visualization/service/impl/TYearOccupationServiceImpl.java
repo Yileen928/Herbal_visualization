@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,26 +34,33 @@ public class TYearOccupationServiceImpl extends ServiceImpl<TYearOccupationMappe
     @Override
     public List<TYearOccupation> getAllyo() {
         String cacheKey = CACHE_KEY_ALL_YEAR_OCCUPATIONS;
-        List<TYearOccupation> yearOccupations = (List<TYearOccupation>) redisTemplate.opsForValue().get(cacheKey);
+        List<TYearOccupation> yearOccupations = null;
 
-        if (yearOccupations == null) {
-            logger.info("Cache miss for {}", cacheKey);
-            long startTime = System.currentTimeMillis();
-            yearOccupations = this.list(); // 查询数据库
-            long endTime = System.currentTimeMillis();
-            logger.info("Database query took {} ms", endTime - startTime);
+        try {
+            // 尝试从Redis获取缓存
+            yearOccupations = (List<TYearOccupation>) redisTemplate.opsForValue().get(cacheKey);
 
-            // 缓存查询结果
-            redisTemplate.opsForValue().set(cacheKey, yearOccupations, CACHE_DURATION, TimeUnit.SECONDS);
-            logger.info("Cached results for {}", cacheKey);
-        } else {
-            logger.info("Cache hit for {}", cacheKey);
+            if (yearOccupations == null) {
+                logger.info("Cache miss for {}", cacheKey);
+                long startTime = System.currentTimeMillis();
+                yearOccupations = this.list(); // 查询数据库
+                long endTime = System.currentTimeMillis();
+                logger.info("Database query took {} ms", endTime - startTime);
+
+                // 只有查询结果不为空时才缓存
+                if (yearOccupations != null && !yearOccupations.isEmpty()) {
+                    redisTemplate.opsForValue().set(cacheKey, yearOccupations, CACHE_DURATION, TimeUnit.SECONDS);
+                    logger.info("Cached results for {}", cacheKey);
+                }
+            } else {
+                logger.info("Cache hit for {}", cacheKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while getting all year occupations from cache", e);
+            // 缓存失效时直接查询数据库
+            yearOccupations = this.list();
         }
 
-        return yearOccupations;
+        return yearOccupations != null ? yearOccupations : Collections.emptyList();
     }
 }
-
-
-
-
