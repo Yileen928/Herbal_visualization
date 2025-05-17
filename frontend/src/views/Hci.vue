@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     connectAndPlay() {
-      this.socket = new WebSocket("ws://121.4.116.71:10010/match");
+      this.socket = new WebSocket("ws://156.226.178.65:10010/match");
 
       this.socket.onopen = () => {
         this.connected = true;
