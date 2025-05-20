@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios'  // 改回原来的导入
 import SankeyChart from '../components/SankeyChart.vue'
 import Zigzag from '../components/Zigzag_area.vue'
 import YunnanMap from '../components/HerbalMap.vue'
@@ -93,7 +93,8 @@ export default {
     const herbName = this.$route.query.herbName
     if (herbName) {
       try {
-        const response = await axios.get(`/api/herbs/search`, {
+        const response = await axios.get('/herbs/search', {  // 移除/api前缀
+          baseURL: '/api',  // 添加baseURL配置
           params: { herbName: decodeURIComponent(herbName) }
         })
         const data = response.data

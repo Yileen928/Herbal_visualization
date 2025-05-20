@@ -6,14 +6,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://www.herbvis.cn") // 允许前端域名
+                .allowedOrigins("http://localhost:80", "http://localhost", "http://localhost:3000") // 添加前端容器地址
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*") // 必须显式允许所有 headers
-                .exposedHeaders("Content-Length", "Content-Range") // 暴露这些头
+                .allowedHeaders("*")
+                .exposedHeaders("Content-Length", "Content-Range")
                 .allowCredentials(true)
                 .maxAge(3600);
     }

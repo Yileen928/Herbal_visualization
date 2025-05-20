@@ -35,8 +35,9 @@ const staticData = [
  */
 const fetchApiData = async () => {
   try {
-    const response = await axios.get('/api/yearOcc/all', {
-      timeout: 5000 // 5秒超时
+    const response = await axios.get('/yearOcc/all', {  // 移除重复的 /api 前缀
+      timeout: 5000, // 5秒超时
+      baseURL: '/api'  // 添加baseURL配置
     })
     return response.data.map((item: any) => ({
       year: item.occupationYear,

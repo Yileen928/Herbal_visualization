@@ -37,7 +37,10 @@ export default {
     },
     async fetchData(herbName) {
       try {
-        const response = await axios.get(`/api/song/search?herbsName=${herbName}`);
+        const response = await axios.get('/song/search', {  // 移除/api前缀
+          baseURL: '/api',  // 添加baseURL配置
+          params: { herbsName: herbName }  // 使用params正确传递参数
+        });
         const rawData = response?.data || [];
         
         console.log('原始数据:', rawData);

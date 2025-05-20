@@ -12,7 +12,9 @@ const echartsRef = ref<HTMLElement | null>(null);
 // 获取药师工作经验数据
 const fetchData = async () => {
   try {
-    const response = await axios.get('/api/medical/experience/counts');
+    const response = await axios.get('/medical/experience/counts', {  // 移除/api前缀
+      baseURL: '/api'  // 添加baseURL配置
+    });
     const data = response.data;
 
     // 过滤出药师的数据

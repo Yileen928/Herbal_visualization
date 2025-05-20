@@ -61,11 +61,10 @@ export default {
     },
     async fetchData(name) {
       try {
-        const res = await axios.get(
-          `/api/book/search?herbsName=${encodeURIComponent(
-            name
-          )}`
-        );
+        const res = await axios.get('/book/search', {
+          baseURL: '/api',
+          params: { herbsName: encodeURIComponent(name) }
+        });
         const list = Array.isArray(res.data) ? res.data : [];
         if (list.length === 0 && this.fallbackData[name]) {
           console.warn("API无数据，使用备用数据");
